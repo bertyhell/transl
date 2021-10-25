@@ -9,7 +9,11 @@
     "hasura-migrate-status": "hasura migrate status --database-name transl-db",
     "hasura-squash": "hasura migrate squash --name <feature-name> --from <start-migration-version> --database-name transl-db",
     "hasura-skip-migrations": "hasura migrate apply --skip-execution --database-name transl-db",
-    "generate-database-types": "zeus http://localhost:8080/v1/graphql ./frontend/generated --ts --reactQuery --header=x-hasura-admin-secret:GnTCxnsmYWLy7qDXzR8LfwXULEcyr3JnThh3SXSd3"
+    "generate-database-types": "zeus http://localhost:8080/v1/graphql ./frontend/generated --ts --reactQuery --header=x-hasura-admin-secret:GnTCxnsmYWLy7qDXzR8LfwXULEcyr3JnThh3SXSd3",
+    "hasura-create-required-seed": "hasura seed create required_seed --database-name transl-db --from-table languages",
+    "hasura-create-develop-seed": "hasura seed create develop_seed --database-name transl-db --from-table companies --from-table company_user_link --from-table project_language --from-table project_terms --from-table projects --from-table translation_statuses --from-table translations --from-table user_project_link --from-table users\n",
+    "seed-database-production": "hasura seed apply --file seeds/transl-db/1635184567311_required_seed.sql",
+    "seed-database-development": "hasura seed apply"
   },
   "keywords": [
     "translations",
