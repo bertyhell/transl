@@ -1,0 +1,7 @@
+- "!include public_languages.yaml"
+- "!include public_project_language.yaml"
+- "!include public_project_terms.yaml"
+- "!include public_projects.yaml"
+- "!include public_translations.yaml"
+- "!include public_user_project_link.yaml"
+- "!include public_users.yaml"
