@@ -1,0 +1,3 @@
+table:
+  name: translation_statuses
+  schema: public

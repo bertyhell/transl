@@ -1,4 +1,13 @@
 SET check_function_bodies = false;
+CREATE TABLE public.companies (
+    id uuid DEFAULT public.gen_random_uuid() NOT NULL,
+    name text NOT NULL
+);
+CREATE TABLE public.company_user_link (
+    id uuid NOT NULL,
+    user_id uuid NOT NULL,
+    company_id uuid NOT NULL
+);
 CREATE TABLE public.languages (
     id uuid DEFAULT public.gen_random_uuid() NOT NULL,
     iso_code text NOT NULL,
@@ -17,7 +26,13 @@ CREATE TABLE public.project_terms (
 );
 CREATE TABLE public.projects (
     id uuid DEFAULT public.gen_random_uuid() NOT NULL,
-    name text NOT NULL
+    name text NOT NULL,
+    company_id uuid NOT NULL
+);
+CREATE TABLE public.translation_statuses (
+    id uuid DEFAULT public.gen_random_uuid() NOT NULL,
+    name text NOT NULL,
+    project_id uuid NOT NULL
 );
 CREATE TABLE public.translations (
     id uuid DEFAULT public.gen_random_uuid() NOT NULL,
@@ -37,6 +52,10 @@ CREATE TABLE public.users (
     email text NOT NULL,
     password text NOT NULL
 );
+ALTER TABLE ONLY public.companies
+    ADD CONSTRAINT companies_pkey PRIMARY KEY (id);
+ALTER TABLE ONLY public.company_user_link
+    ADD CONSTRAINT company_user_link_pkey PRIMARY KEY (id);
 ALTER TABLE ONLY public.languages
     ADD CONSTRAINT languages_pkey PRIMARY KEY (id);
 ALTER TABLE ONLY public.project_language
@@ -45,18 +64,26 @@ ALTER TABLE ONLY public.project_terms
     ADD CONSTRAINT project_terms_pkey PRIMARY KEY (id);
 ALTER TABLE ONLY public.projects
     ADD CONSTRAINT projects_pkey PRIMARY KEY (id);
+ALTER TABLE ONLY public.translation_statuses
+    ADD CONSTRAINT translation_statuses_pkey PRIMARY KEY (id);
 ALTER TABLE ONLY public.translations
     ADD CONSTRAINT translations_pkey PRIMARY KEY (id);
 ALTER TABLE ONLY public.user_project_link
     ADD CONSTRAINT user_project_link_pkey PRIMARY KEY (id);
 ALTER TABLE ONLY public.users
     ADD CONSTRAINT users_pkey PRIMARY KEY (id);
+ALTER TABLE ONLY public.company_user_link
+    ADD CONSTRAINT company_user_link_company_id_fkey FOREIGN KEY (company_id) REFERENCES public.companies(id) ON UPDATE CASCADE ON DELETE CASCADE;
+ALTER TABLE ONLY public.company_user_link
+    ADD CONSTRAINT company_user_link_user_id_fkey FOREIGN KEY (user_id) REFERENCES public.users(id) ON UPDATE CASCADE ON DELETE CASCADE;
 ALTER TABLE ONLY public.project_language
     ADD CONSTRAINT project_language_language_id_fkey FOREIGN KEY (language_id) REFERENCES public.languages(id) ON UPDATE CASCADE ON DELETE CASCADE;
 ALTER TABLE ONLY public.project_language
     ADD CONSTRAINT project_language_project_id_fkey FOREIGN KEY (project_id) REFERENCES public.projects(id) ON UPDATE CASCADE ON DELETE CASCADE;
 ALTER TABLE ONLY public.project_terms
     ADD CONSTRAINT project_terms_project_id_fkey FOREIGN KEY (project_id) REFERENCES public.projects(id) ON UPDATE CASCADE ON DELETE CASCADE;
+ALTER TABLE ONLY public.translation_statuses
+    ADD CONSTRAINT translation_statuses_project_id_fkey FOREIGN KEY (project_id) REFERENCES public.projects(id) ON UPDATE CASCADE ON DELETE CASCADE;
 ALTER TABLE ONLY public.translations
     ADD CONSTRAINT translations_key_id_fkey FOREIGN KEY (key_id) REFERENCES public.project_terms(id) ON UPDATE CASCADE ON DELETE CASCADE;
 ALTER TABLE ONLY public.user_project_link

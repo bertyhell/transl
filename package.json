@@ -5,7 +5,9 @@
   "description": "Opensource Translation manager",
   "main": "index.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "hasura-open-console": "hasura console",
+    "hasura-migrate-status": "hasura migrate status --database-name transl-db",
+    "hasura-squash": "hasura migrate squash --name <feature-name> --from <start-migration-version> --database-name transl-db"
   },
   "keywords": [
     "translations",
