@@ -1,0 +1,14 @@
+.c-key-value-editor .c-keyvalue-label {
+	line-height: 36px;
+}
+
+.c-keyvalue-label.c-keyvalue-path {
+	line-height: 15px;
+	font-size: 11px;
+	color: #666;
+}
+
+.align-right {
+	display: flex;
+	flex-direction: row-reverse;
+}

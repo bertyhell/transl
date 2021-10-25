@@ -1,0 +1,31 @@
+.nav-item {
+	border: 1px solid #FFF;
+	border-width: 0 0 1px 0;
+	padding: 10px 20px;
+	width: 100%;
+	cursor: pointer;
+	text-align: left;
+	user-select: none;
+	display: flex;
+
+	.icon {
+		transition: transform 0.2s ease-out;
+		opacity: 0.2;
+	}
+
+	&.collapsed .icon {
+		transform: rotateZ(-90deg);
+	}
+
+	> span {
+		flex-grow: 1;
+	}
+
+	&:first-child {
+		border-width: 1px 0 1px 0;
+	}
+
+	&:hover {
+		background-color: #eee;
+	}
+}

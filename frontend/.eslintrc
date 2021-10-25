@@ -1,0 +1,89 @@
+{
+  "root": true,
+  "settings": {
+    "react": {
+      "version": "detect"
+    }
+  },
+  "extends": [
+    "eslint:recommended",
+    "plugin:react/recommended",
+    "eslint-config-prettier",
+    "plugin:import/typescript",
+    "plugin:import/warnings"
+  ],
+  "plugins": ["prettier", "simple-import-sort"],
+  "parserOptions": {
+    "ecmaVersion": 2020,
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": true
+    }
+  },
+  "env": {
+    "browser": true,
+    "es6": true,
+    "node": true,
+    "jest": true
+  },
+  "globals": {
+    "__DEV__": false
+  },
+  "rules": {
+    "no-unused-vars": ["warn", { "ignoreRestSiblings": true }],
+    "react/display-name": 0,
+    "react/forbid-prop-types": 0,
+    "react/jsx-filename-extension": 0,
+    "react/jsx-props-no-spreading": 0,
+    "react/prop-types": [1, { "skipUndeclared": true }],
+    "simple-import-sort/imports": ["error", {
+      "groups": [
+        // Packages.
+        // Things that start with a letter (or digit or underscore), or `@` followed by a letter.
+        ["^@?\\w"],
+        // Absolute imports and other imports such as Vue-style `@/foo`.
+        // Anything not matched in another group.
+        ["^"],
+        // Relative imports.
+        // Anything that starts with a dot.
+        ["^\\."],
+        // Side effect imports.
+        ["^\\u0000"]
+      ]
+    }]
+  },
+  "overrides": [
+    {
+      "files": "**/*.+(ts|tsx)",
+      "parser": "@typescript-eslint/parser",
+      "parserOptions": {
+        "project": "./tsconfig.json"
+      },
+      "plugins": ["@typescript-eslint/eslint-plugin", "react-hooks", "typescript-sort-keys", "sort-keys-fix"],
+      "extends": [
+        "plugin:@typescript-eslint/eslint-recommended",
+        "plugin:@typescript-eslint/recommended",
+        "eslint-config-prettier/@typescript-eslint"
+      ],
+      "rules": {
+        "@typescript-eslint/explicit-function-return-type": 0,
+        "@typescript-eslint/explicit-module-boundary-types": 0,
+        "@typescript-eslint/interface-name-prefix": 0,
+        "@typescript-eslint/no-empty-function": 0,
+        "typescript-sort-keys/interface": 1,
+        "typescript-sort-keys/string-enum": 1,
+        "react/jsx-sort-props": 1,
+        "sort-keys-fix/sort-keys-fix": 1,
+        "@typescript-eslint/no-unused-vars": ["warn", { "argsIgnorePattern": "^_" }],
+        "@typescript-eslint/camelcase": 0
+      }
+    },
+    {
+      "files": "**/*.styled.+(tsx)",
+      "rules": {
+        "@typescript-eslint/no-unused-vars": 0,
+        "@typescript-eslint/ban-ts-comment": 0
+      }
+    }
+  ]
+}

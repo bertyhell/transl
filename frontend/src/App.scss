@@ -1,0 +1,8 @@
+.main-app {
+  text-align: center;
+  display: flex;
+
+  .main-view {
+    width: calc(100% - 300px);
+  }
+}

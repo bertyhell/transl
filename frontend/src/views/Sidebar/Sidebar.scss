@@ -1,0 +1,24 @@
+.sidebar-nav {
+	background-color: #ddd;
+	width: 300px;
+	height: 100vh;
+	padding-top: 20px;
+
+	a {
+		text-decoration: none;
+		color: black;
+	}
+
+	> .nav-item {
+		padding-top: 20px;
+		padding-bottom: 20px;
+	}
+
+	> div > .nav-item {
+		padding-left: 40px;
+	}
+
+	> div > div > .nav-item {
+		padding-left: 60px;
+	}
+}
