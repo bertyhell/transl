@@ -28,5 +28,8 @@ services:
       HASURA_GRAPHQL_ENABLED_LOG_TYPES: startup, http-log, webhook-log, websocket-log, query-log
       ## uncomment next line to set an admin secret
       HASURA_GRAPHQL_ADMIN_SECRET: "GnTCxnsmYWLy7qDXzR8LfwXULEcyr3JnThh3SXSd3"
+    volumes:
+      - ./migrations:/hasura-migrations
+      - ./metadata:/hasura-metadata
 volumes:
   db_data:
