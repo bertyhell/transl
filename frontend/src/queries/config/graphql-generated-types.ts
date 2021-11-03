@@ -2147,9 +2147,9 @@ export type Projects = {
   company_id: Scalars['Int'];
   id: Scalars['Int'];
   /** An array relationship */
-  languages: Array<Project_Language_Link>;
+  language_links: Array<Project_Language_Link>;
   /** An aggregate relationship */
-  languages_aggregate: Project_Language_Link_Aggregate;
+  language_links_aggregate: Project_Language_Link_Aggregate;
   name: Scalars['String'];
   /** An array relationship */
   statuses: Array<Translation_Statuses>;
@@ -2168,7 +2168,7 @@ export type Projects = {
 
 
 /** columns and relationships of "projects" */
-export type ProjectsLanguagesArgs = {
+export type ProjectsLanguage_LinksArgs = {
   distinct_on?: Maybe<Array<Project_Language_Link_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
   offset?: Maybe<Scalars['Int']>;
@@ -2178,7 +2178,7 @@ export type ProjectsLanguagesArgs = {
 
 
 /** columns and relationships of "projects" */
-export type ProjectsLanguages_AggregateArgs = {
+export type ProjectsLanguage_Links_AggregateArgs = {
   distinct_on?: Maybe<Array<Project_Language_Link_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
   offset?: Maybe<Scalars['Int']>;
@@ -2319,7 +2319,7 @@ export type Projects_Bool_Exp = {
   company?: Maybe<Companies_Bool_Exp>;
   company_id?: Maybe<Int_Comparison_Exp>;
   id?: Maybe<Int_Comparison_Exp>;
-  languages?: Maybe<Project_Language_Link_Bool_Exp>;
+  language_links?: Maybe<Project_Language_Link_Bool_Exp>;
   name?: Maybe<String_Comparison_Exp>;
   statuses?: Maybe<Translation_Statuses_Bool_Exp>;
   terms?: Maybe<Project_Terms_Bool_Exp>;
@@ -2346,7 +2346,7 @@ export type Projects_Insert_Input = {
   company?: Maybe<Companies_Obj_Rel_Insert_Input>;
   company_id?: Maybe<Scalars['Int']>;
   id?: Maybe<Scalars['Int']>;
-  languages?: Maybe<Project_Language_Link_Arr_Rel_Insert_Input>;
+  language_links?: Maybe<Project_Language_Link_Arr_Rel_Insert_Input>;
   name?: Maybe<Scalars['String']>;
   statuses?: Maybe<Translation_Statuses_Arr_Rel_Insert_Input>;
   terms?: Maybe<Project_Terms_Arr_Rel_Insert_Input>;
@@ -2416,7 +2416,7 @@ export type Projects_Order_By = {
   company?: Maybe<Companies_Order_By>;
   company_id?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
-  languages_aggregate?: Maybe<Project_Language_Link_Aggregate_Order_By>;
+  language_links_aggregate?: Maybe<Project_Language_Link_Aggregate_Order_By>;
   name?: Maybe<Order_By>;
   statuses_aggregate?: Maybe<Translation_Statuses_Aggregate_Order_By>;
   terms_aggregate?: Maybe<Project_Terms_Aggregate_Order_By>;
@@ -4454,12 +4454,19 @@ export type Uuid_Comparison_Exp = {
   _nin?: Maybe<Array<Scalars['uuid']>>;
 };
 
+export type GetProjectQueryVariables = Exact<{
+  projectUuid?: Maybe<Scalars['uuid']>;
+}>;
+
+
+export type GetProjectQuery = { __typename?: 'query_root', projects: Array<{ __typename?: 'projects', name: string, statuses: Array<{ __typename?: 'translation_statuses', uuid: any, name: string }>, language_links: Array<{ __typename?: 'project_language_link', uuid: any, language: { __typename?: 'languages', iso_code: string, name: string, uuid: any } }>, user_links: Array<{ __typename?: 'user_project_link', uuid: any, user: { __typename?: 'users', first_name: string, last_name: string, email: string, uuid: any } }>, company: { __typename?: 'companies', name: string, uuid: any } }> };
+
 export type GetProjectsQueryVariables = Exact<{
   userUuid?: Maybe<Scalars['uuid']>;
 }>;
 
 
-export type GetProjectsQuery = { __typename?: 'query_root', projects: Array<{ __typename?: 'projects', name: string, uuid: any, languages: Array<{ __typename?: 'project_language_link', uuid: any, language: { __typename?: 'languages', iso_code: string, uuid: any } }>, company: { __typename?: 'companies', name: string, uuid: any } }> };
+export type GetProjectsQuery = { __typename?: 'query_root', projects: Array<{ __typename?: 'projects', name: string, uuid: any, language_links: Array<{ __typename?: 'project_language_link', uuid: any, language: { __typename?: 'languages', iso_code: string, uuid: any } }>, company: { __typename?: 'companies', name: string, uuid: any } }> };
 
 export type GetTranslationsQueryVariables = Exact<{
   projectUuid?: Maybe<Scalars['uuid']>;
@@ -4471,12 +4478,57 @@ export type GetTranslationsQueryVariables = Exact<{
 export type GetTranslationsQuery = { __typename?: 'query_root', project_terms: Array<{ __typename?: 'project_terms', key: string, description?: string | null | undefined, uuid: any, translations: Array<{ __typename?: 'translations', translation_value?: string | null | undefined, uuid: any, translation_status?: { __typename?: 'translation_statuses', name: string, uuid: any } | null | undefined }> }>, project_terms_aggregate: { __typename?: 'project_terms_aggregate', aggregate?: { __typename?: 'project_terms_aggregate_fields', count: number } | null | undefined } };
 
 
+export const GetProjectDocument = `
+    query getProject($projectUuid: uuid) {
+  projects(where: {uuid: {_eq: $projectUuid}}) {
+    name
+    statuses {
+      uuid
+      name
+    }
+    language_links {
+      language {
+        iso_code
+        name
+        uuid
+      }
+      uuid
+    }
+    user_links {
+      user {
+        first_name
+        last_name
+        email
+        uuid
+      }
+      uuid
+    }
+    company {
+      name
+      uuid
+    }
+  }
+}
+    `;
+export const useGetProjectQuery = <
+      TData = GetProjectQuery,
+      TError = unknown
+    >(
+      dataSource: { endpoint: string, fetchParams?: RequestInit },
+      variables?: GetProjectQueryVariables,
+      options?: UseQueryOptions<GetProjectQuery, TError, TData>
+    ) =>
+    useQuery<GetProjectQuery, TError, TData>(
+      variables === undefined ? ['getProject'] : ['getProject', variables],
+      fetcher<GetProjectQuery, GetProjectQueryVariables>(dataSource.endpoint, dataSource.fetchParams || {}, GetProjectDocument, variables),
+      options
+    );
 export const GetProjectsDocument = `
     query getProjects($userUuid: uuid) {
   projects(where: {user_links: {user: {uuid: {_eq: $userUuid}}}}) {
     name
     uuid
-    languages {
+    language_links {
       uuid
       language {
         iso_code

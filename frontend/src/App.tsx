@@ -3,9 +3,9 @@ import { QueryClient, QueryClientProvider } from 'react-query';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { QueryParamProvider } from 'use-query-params';
 
-import { ProjectDetails } from './views/ProjectDetails';
+import { ProjectDetail } from './views/ProjectDetail';
 import { Sidebar } from './views/Sidebar/Sidebar';
-import { TranslationEditor } from './views/TranslationEditor';
+import { TranslationEditor } from './views/TranslationEditor/TranslationEditor';
 
 import './App.scss';
 
@@ -20,11 +20,11 @@ function App() {
             <Sidebar />
             <div className='main-view'>
               <Switch>
-                <Route path='/projects/:projectId/:languageId'>
+                <Route path='/projects/:projectUuid/translations'>
                   <TranslationEditor />
                 </Route>
-                <Route path='/projects/:projectId'>
-                  <ProjectDetails />
+                <Route path='/projects/:projectUuid/details'>
+                  <ProjectDetail />
                 </Route>
               </Switch>
             </div>

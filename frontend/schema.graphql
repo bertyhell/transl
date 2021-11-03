@@ -1042,7 +1042,7 @@ type projects {
     company_id: Int!
     id: Int!
     "An array relationship"
-    languages(
+    language_links(
         "distinct select on columns"
         distinct_on: [project_language_link_select_column!],
         "limit the number of rows returned"
@@ -1055,7 +1055,7 @@ type projects {
         where: project_language_link_bool_exp
     ): [project_language_link!]!
     "An aggregate relationship"
-    languages_aggregate(
+    language_links_aggregate(
         "distinct select on columns"
         distinct_on: [project_language_link_select_column!],
         "limit the number of rows returned"
@@ -3363,7 +3363,7 @@ input projects_bool_exp {
     company: companies_bool_exp
     company_id: Int_comparison_exp
     id: Int_comparison_exp
-    languages: project_language_link_bool_exp
+    language_links: project_language_link_bool_exp
     name: String_comparison_exp
     statuses: translation_statuses_bool_exp
     terms: project_terms_bool_exp
@@ -3382,7 +3382,7 @@ input projects_insert_input {
     company: companies_obj_rel_insert_input
     company_id: Int
     id: Int
-    languages: project_language_link_arr_rel_insert_input
+    language_links: project_language_link_arr_rel_insert_input
     name: String
     statuses: translation_statuses_arr_rel_insert_input
     terms: project_terms_arr_rel_insert_input
@@ -3425,7 +3425,7 @@ input projects_order_by {
     company: companies_order_by
     company_id: order_by
     id: order_by
-    languages_aggregate: project_language_link_aggregate_order_by
+    language_links_aggregate: project_language_link_aggregate_order_by
     name: order_by
     statuses_aggregate: translation_statuses_aggregate_order_by
     terms_aggregate: project_terms_aggregate_order_by

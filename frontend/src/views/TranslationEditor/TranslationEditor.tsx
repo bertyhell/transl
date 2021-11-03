@@ -2,14 +2,14 @@ import React, { FunctionComponent, ReactNode, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { ArrayParam, useQueryParam } from 'use-query-params';
 
-import { Pagination } from '../components/Pagination/Pagination';
-import { Table } from '../components/Table/Table';
-import { TextArea } from '../components/TextArea/TextArea';
-import { TextInput } from '../components/TextInput/TextInput';
-import { $t } from '../helpers/i18n';
-import { useTableSort } from '../hooks/useTableSort';
-import { DATABASE_CONFIG } from '../queries/config/database.constants';
-import { useGetTranslationsQuery } from '../queries/config/graphql-generated-types';
+import { Pagination } from '../../components/Pagination/Pagination';
+import { Table } from '../../components/Table/Table';
+import { TextArea } from '../../components/TextArea/TextArea';
+import { TextInput } from '../../components/TextInput/TextInput';
+import { $t } from '../../helpers/i18n';
+import { useTableSort } from '../../hooks/useTableSort';
+import { DATABASE_CONFIG } from '../../queries/config/database.constants';
+import { useGetTranslationsQuery } from '../../queries/config/graphql-generated-types';
 
 import './TranslationEditor.scss';
 
@@ -31,7 +31,7 @@ const ENTRIES_PER_PAGE = 20;
 export const TranslationEditor: FunctionComponent = () => {
   const { projectUuid } = useParams<{ projectUuid: string }>();
   // const [languageCodes, setLanguageCodes] = useQueryParam('language-codes', ArrayParam);
-  const [languageCodes] = useQueryParam('language-codes', ArrayParam);
+  const [languageCodes] = useQueryParam('languageCodes', ArrayParam);
   const [page, setPage] = useState<number>(0);
   const { data } = useGetTranslationsQuery(
     DATABASE_CONFIG,
