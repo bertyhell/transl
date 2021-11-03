@@ -1,0 +1,21 @@
+query getCompaniesAndProjects($userUuid: uuid) {
+    companies(where: {projects: {user_links: {user: {uuid: {_eq: $userUuid}}}}}) {
+        projects {
+            name
+            uuid
+            language_links {
+                uuid
+                language {
+                    iso_code
+                    uuid
+                }
+            }
+            company {
+                name
+                uuid
+            }
+        }
+        name
+        uuid
+    }
+}

@@ -4454,19 +4454,19 @@ export type Uuid_Comparison_Exp = {
   _nin?: Maybe<Array<Scalars['uuid']>>;
 };
 
+export type GetCompaniesAndProjectsQueryVariables = Exact<{
+  userUuid?: Maybe<Scalars['uuid']>;
+}>;
+
+
+export type GetCompaniesAndProjectsQuery = { __typename?: 'query_root', companies: Array<{ __typename?: 'companies', name: string, uuid: any, projects: Array<{ __typename?: 'projects', name: string, uuid: any, language_links: Array<{ __typename?: 'project_language_link', uuid: any, language: { __typename?: 'languages', iso_code: string, uuid: any } }>, company: { __typename?: 'companies', name: string, uuid: any } }> }> };
+
 export type GetProjectQueryVariables = Exact<{
   projectUuid?: Maybe<Scalars['uuid']>;
 }>;
 
 
 export type GetProjectQuery = { __typename?: 'query_root', projects: Array<{ __typename?: 'projects', name: string, statuses: Array<{ __typename?: 'translation_statuses', uuid: any, name: string }>, language_links: Array<{ __typename?: 'project_language_link', uuid: any, language: { __typename?: 'languages', iso_code: string, name: string, uuid: any } }>, user_links: Array<{ __typename?: 'user_project_link', uuid: any, user: { __typename?: 'users', first_name: string, last_name: string, email: string, uuid: any } }>, company: { __typename?: 'companies', name: string, uuid: any } }> };
-
-export type GetProjectsQueryVariables = Exact<{
-  userUuid?: Maybe<Scalars['uuid']>;
-}>;
-
-
-export type GetProjectsQuery = { __typename?: 'query_root', projects: Array<{ __typename?: 'projects', name: string, uuid: any, language_links: Array<{ __typename?: 'project_language_link', uuid: any, language: { __typename?: 'languages', iso_code: string, uuid: any } }>, company: { __typename?: 'companies', name: string, uuid: any } }> };
 
 export type GetTranslationsQueryVariables = Exact<{
   projectUuid?: Maybe<Scalars['uuid']>;
@@ -4478,6 +4478,42 @@ export type GetTranslationsQueryVariables = Exact<{
 export type GetTranslationsQuery = { __typename?: 'query_root', project_terms: Array<{ __typename?: 'project_terms', key: string, description?: string | null | undefined, uuid: any, translations: Array<{ __typename?: 'translations', translation_value?: string | null | undefined, uuid: any, translation_status?: { __typename?: 'translation_statuses', name: string, uuid: any } | null | undefined }> }>, project_terms_aggregate: { __typename?: 'project_terms_aggregate', aggregate?: { __typename?: 'project_terms_aggregate_fields', count: number } | null | undefined } };
 
 
+export const GetCompaniesAndProjectsDocument = `
+    query getCompaniesAndProjects($userUuid: uuid) {
+  companies(where: {projects: {user_links: {user: {uuid: {_eq: $userUuid}}}}}) {
+    projects {
+      name
+      uuid
+      language_links {
+        uuid
+        language {
+          iso_code
+          uuid
+        }
+      }
+      company {
+        name
+        uuid
+      }
+    }
+    name
+    uuid
+  }
+}
+    `;
+export const useGetCompaniesAndProjectsQuery = <
+      TData = GetCompaniesAndProjectsQuery,
+      TError = unknown
+    >(
+      dataSource: { endpoint: string, fetchParams?: RequestInit },
+      variables?: GetCompaniesAndProjectsQueryVariables,
+      options?: UseQueryOptions<GetCompaniesAndProjectsQuery, TError, TData>
+    ) =>
+    useQuery<GetCompaniesAndProjectsQuery, TError, TData>(
+      variables === undefined ? ['getCompaniesAndProjects'] : ['getCompaniesAndProjects', variables],
+      fetcher<GetCompaniesAndProjectsQuery, GetCompaniesAndProjectsQueryVariables>(dataSource.endpoint, dataSource.fetchParams || {}, GetCompaniesAndProjectsDocument, variables),
+      options
+    );
 export const GetProjectDocument = `
     query getProject($projectUuid: uuid) {
   projects(where: {uuid: {_eq: $projectUuid}}) {
@@ -4521,38 +4557,6 @@ export const useGetProjectQuery = <
     useQuery<GetProjectQuery, TError, TData>(
       variables === undefined ? ['getProject'] : ['getProject', variables],
       fetcher<GetProjectQuery, GetProjectQueryVariables>(dataSource.endpoint, dataSource.fetchParams || {}, GetProjectDocument, variables),
-      options
-    );
-export const GetProjectsDocument = `
-    query getProjects($userUuid: uuid) {
-  projects(where: {user_links: {user: {uuid: {_eq: $userUuid}}}}) {
-    name
-    uuid
-    language_links {
-      uuid
-      language {
-        iso_code
-        uuid
-      }
-    }
-    company {
-      name
-      uuid
-    }
-  }
-}
-    `;
-export const useGetProjectsQuery = <
-      TData = GetProjectsQuery,
-      TError = unknown
-    >(
-      dataSource: { endpoint: string, fetchParams?: RequestInit },
-      variables?: GetProjectsQueryVariables,
-      options?: UseQueryOptions<GetProjectsQuery, TError, TData>
-    ) =>
-    useQuery<GetProjectsQuery, TError, TData>(
-      variables === undefined ? ['getProjects'] : ['getProjects', variables],
-      fetcher<GetProjectsQuery, GetProjectsQueryVariables>(dataSource.endpoint, dataSource.fetchParams || {}, GetProjectsDocument, variables),
       options
     );
 export const GetTranslationsDocument = `

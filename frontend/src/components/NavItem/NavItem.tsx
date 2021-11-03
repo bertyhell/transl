@@ -2,7 +2,7 @@ import classnames from 'classnames';
 import React, { FunctionComponent, useState } from 'react';
 import { Link } from 'react-router-dom';
 
-import { Icon } from '../../icons/Icon';
+import { Icon } from '../icons/Icon';
 
 import './NavItem.scss';
 

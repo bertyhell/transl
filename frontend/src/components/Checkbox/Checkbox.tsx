@@ -1,7 +1,7 @@
 import classnames from 'classnames';
 import React, { ChangeEvent, FunctionComponent, ReactNode } from 'react';
 
-export interface CheckboxPropsSchema {
+export interface CheckboxProps {
   checked?: boolean;
   className?: string;
   disabled?: boolean;
@@ -10,7 +10,7 @@ export interface CheckboxPropsSchema {
   onChange?: (checked: boolean) => void;
 }
 
-export const Checkbox: FunctionComponent<CheckboxPropsSchema> = ({
+export const Checkbox: FunctionComponent<CheckboxProps> = ({
   className,
   label,
   id,

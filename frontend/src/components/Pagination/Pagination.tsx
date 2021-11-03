@@ -1,11 +1,11 @@
 import classnames from 'classnames';
 import React, { FunctionComponent } from 'react';
 
-import { Icon } from '../../icons/Icon';
+import { Icon } from '../icons/Icon';
 
 import './Pagination.scss';
 
-export interface PaginationPropsSchema {
+export interface PaginationProps {
   className?: string;
   currentPage?: number;
   displayCount?: number;
@@ -13,7 +13,7 @@ export interface PaginationPropsSchema {
   pageCount: number;
 }
 
-export const Pagination: FunctionComponent<PaginationPropsSchema> = ({
+export const Pagination: FunctionComponent<PaginationProps> = ({
   className,
   pageCount,
   displayCount = 5,

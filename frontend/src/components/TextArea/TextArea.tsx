@@ -6,7 +6,7 @@ import { useCallbackRef } from '../../hooks/useCallbackRef';
 
 import './TextArea.scss';
 
-export interface TextAreaPropsSchema {
+export interface TextAreaProps {
   className?: string;
   disabled?: boolean;
   height?: 'auto' | 'small' | 'medium' | 'large';
@@ -20,7 +20,7 @@ export interface TextAreaPropsSchema {
   width?: 'xsmall' | 'small' | 'medium' | 'large';
 }
 
-export const TextArea: FunctionComponent<TextAreaPropsSchema> = ({
+export const TextArea: FunctionComponent<TextAreaProps> = ({
   className,
   id,
   name,

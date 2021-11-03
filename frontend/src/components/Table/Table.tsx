@@ -2,33 +2,33 @@ import classnames from 'classnames';
 import { isNil, isString } from 'lodash-es';
 import React, { FunctionComponent, ReactNode } from 'react';
 
-import { IconName } from '../../icons';
-import { Icon } from '../../icons/Icon';
 import { Checkbox } from '../Checkbox/Checkbox';
+import { IconName } from '../icons';
+import { Icon } from '../icons/Icon';
 
 import './Table.scss';
 
 export enum ColumnWidth {
   /* eslint-disable typescript-sort-keys/string-enum */
-  'Col-1' = '1',
-  'Col-2' = '2',
-  'Col-3' = '3',
-  'Col-4' = '4',
-  'Col-5' = '5',
-  'Col-6' = '6',
-  'Col-7' = '7',
-  'Col-8' = '8',
-  'Col-9' = '9',
-  'Col-10' = '10',
-  'Col-11' = '11',
-  'Col-12' = '12',
-  'Col-13' = '13',
-  'Col-14' = '14',
-  'Col-15' = '15',
+  'col_1' = '1',
+  'col_2' = '2',
+  'col_3' = '3',
+  'col_4' = '4',
+  'col_5' = '5',
+  'col_6' = '6',
+  'col_7' = '7',
+  'col_8' = '8',
+  'col_9' = '9',
+  'col_10' = '10',
+  'col_11' = '11',
+  'col_12' = '12',
+  'col_13' = '13',
+  'col_14' = '14',
+  'col_15' = '15',
   /* eslint-enable typescript-sort-keys/string-enum */
 }
 
-export type TableColumnSchema = {
+export type TableColumn = {
   col?: ColumnWidth;
   dataType?: 'string' | 'dateTime' | 'boolean' | 'number';
   icon?: IconName;
@@ -42,7 +42,7 @@ export interface TableProps {
   align?: boolean;
   children?: ReactNode;
   className?: string;
-  columns?: TableColumnSchema[];
+  columns?: TableColumn[];
   data?: Record<string, unknown>[];
   emptyStateMessage?: string;
   horizontal?: boolean;
@@ -118,7 +118,7 @@ export const Table: FunctionComponent<TableProps> = ({
     }
   };
 
-  const renderHeading = (heading: TableColumnSchema) => {
+  const renderHeading = (heading: TableColumn) => {
     const { id, col, sortable, label, icon, tooltip } = heading;
 
     const isColumnSorted = sortColumn === id;

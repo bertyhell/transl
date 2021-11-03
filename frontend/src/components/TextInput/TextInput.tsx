@@ -1,12 +1,12 @@
 import classnames from 'classnames';
 import React, { ChangeEvent, FunctionComponent, KeyboardEvent } from 'react';
 
-import { IconName } from '../../icons';
-import { Icon } from '../../icons/Icon';
+import { IconName } from '../icons';
+import { Icon } from '../icons/Icon';
 
 type InputType = 'password' | 'text' | 'email' | 'search' | 'number' | 'tel' | 'url';
 
-export interface TextInputPropsSchema {
+export interface TextInputProps {
   ariaLabel?: string;
   className?: string;
   disabled?: boolean;
@@ -20,7 +20,7 @@ export interface TextInputPropsSchema {
   value?: string;
 }
 
-export const TextInput: FunctionComponent<TextInputPropsSchema> = ({
+export const TextInput: FunctionComponent<TextInputProps> = ({
   className,
   id,
   disabled = false,

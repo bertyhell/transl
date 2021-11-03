@@ -3,6 +3,7 @@ import { QueryClient, QueryClientProvider } from 'react-query';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { QueryParamProvider } from 'use-query-params';
 
+import { CompanyDetail } from './views/CompanyDetail';
 import { ProjectDetail } from './views/ProjectDetail';
 import { Sidebar } from './views/Sidebar/Sidebar';
 import { TranslationEditor } from './views/TranslationEditor/TranslationEditor';
@@ -22,6 +23,9 @@ function App() {
               <Switch>
                 <Route path='/projects/:projectUuid/translations'>
                   <TranslationEditor />
+                </Route>
+                <Route path='/companies/:companyUuid/details'>
+                  <CompanyDetail />
                 </Route>
                 <Route path='/projects/:projectUuid/details'>
                   <ProjectDetail />
