@@ -21,4 +21,3 @@
     "react-query": "^3.28.0"
   }
 }
-hasura migrate squash --name init --from 1635942523327 --database-name transl
