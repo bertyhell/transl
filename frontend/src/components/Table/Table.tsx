@@ -8,8 +8,28 @@ import { Checkbox } from '../Checkbox/Checkbox';
 
 import './Table.scss';
 
+export enum ColumnWidth {
+  /* eslint-disable typescript-sort-keys/string-enum */
+  'Col-1' = '1',
+  'Col-2' = '2',
+  'Col-3' = '3',
+  'Col-4' = '4',
+  'Col-5' = '5',
+  'Col-6' = '6',
+  'Col-7' = '7',
+  'Col-8' = '8',
+  'Col-9' = '9',
+  'Col-10' = '10',
+  'Col-11' = '11',
+  'Col-12' = '12',
+  'Col-13' = '13',
+  'Col-14' = '14',
+  'Col-15' = '15',
+  /* eslint-enable typescript-sort-keys/string-enum */
+}
+
 export type TableColumnSchema = {
-  col?: '1' | '2' | '3' | '4' | '5' | '6' | '7' | '8' | '9' | '10' | '11' | '12' | '13' | '14' | '15';
+  col?: ColumnWidth;
   dataType?: 'string' | 'dateTime' | 'boolean' | 'number';
   icon?: IconName;
   id: string;

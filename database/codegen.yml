@@ -1,0 +1,14 @@
+overwrite: true
+schema:
+  - ${REACT_APP_GRAPHQL_ENDPOINT}:
+      headers:
+        X-Hasura-Admin-Secret: ${HASURA_GRAPHQL_ADMIN_SECRET}
+documents: "../frontend/src/**/*.graphql"
+generates:
+  ../frontend/src/queries/config/graphql-generated-types.ts:
+    plugins:
+      - typescript
+      - typescript-operations
+      - typescript-react-query
+    config:
+      fetcher: fetch
