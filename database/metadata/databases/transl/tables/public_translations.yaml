@@ -1,0 +1,13 @@
+table:
+  name: translations
+  schema: public
+object_relationships:
+- name: project_language_link
+  using:
+    foreign_key_constraint_on: project_language_link_id
+- name: term
+  using:
+    foreign_key_constraint_on: term_id
+- name: translation_status
+  using:
+    foreign_key_constraint_on: translation_status_id
