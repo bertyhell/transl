@@ -7,7 +7,6 @@
     "hasura-migrate-status": "hasura migrate status --database-name transl",
     "hasura-squash": "hasura migrate squash --name <feature-name> --from <start-migration-version> --database-name transl",
     "hasura-skip-migrations": "hasura migrate apply --skip-execution --database-name transl",
-    "generate-database-types-old": "zeus http://localhost:8080/v1/graphql ../frontend/src/generated --ts --reactQuery --header=x-hasura-admin-secret:my-admin-secret-you-should-change-this",
     "hasura-create-required-seed": "hasura seed create required_seed --database-name transl --from-table languages",
     "hasura-create-develop-seed": "hasura seed create develop_seed --database-name transl --from-table companies --from-table company_user_link --from-table project_language_link --from-table project_terms --from-table projects --from-table translation_statuses --from-table translations --from-table user_project_link --from-table users\n",
     "seed-database-production": "hasura seed apply --file seeds/transl/1635184567311_required_seed.sql --database-name transl",
@@ -15,7 +14,6 @@
     "generate-database-types": "dotenv -e ../.env graphql-codegen --config codegen.yml"
   },
   "dependencies": {
-    "graphql-zeus": "^3.3.2",
     "hasura-cli": "^2.0.9",
     "react-query": "^3.28.0"
   },
