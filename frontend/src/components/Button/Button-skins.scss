@@ -25,9 +25,9 @@ $c-button-link-color: $color-primary !default;
 	background-color: $color-primary;
 	color: #FFF;
 
-	svg * {
-		fill: #FFF;
-	}
+	//svg * {
+	//	fill: #FFF;
+	//}
 
 	&:hover,
 	&:active,
@@ -100,9 +100,9 @@ $c-button-link-color: $color-primary !default;
 	background-color: $color-error;
 	color: #FFF;
 
-	svg * {
-		fill: #FFF;
-	}
+	//svg * {
+	//	fill: #FFF;
+	//}
 
 	&:hover,
 	&:active,
@@ -123,9 +123,9 @@ $c-button-link-color: $color-primary !default;
 	background-color: $color-gray-50;
 	color: $color-gray-700;
 
-	svg * {
-		fill: $c-button-text-color;
-	}
+	//svg * {
+	//	fill: $c-button-text-color;
+	//}
 
 	&:active,
 	&:hover,
@@ -136,9 +136,9 @@ $c-button-link-color: $color-primary !default;
 		background-color: $color-error;
 		color: #FFF;
 
-		svg * {
-			fill: #FFF;
-		}
+		//svg * {
+		//	fill: #FFF;
+		//}
 	}
 }
 
@@ -253,9 +253,9 @@ $c-button-link-color: $color-primary !default;
 	background-color: $color-yellow;
 	color: #FFF;
 
-	svg * {
-		fill: #FFF;
-	}
+	//svg * {
+	//	fill: #FFF;
+	//}
 
 	&:hover,
 	&:active,

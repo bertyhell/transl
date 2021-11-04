@@ -1,28 +1,26 @@
-import classnames from 'classnames';
-import React, { FunctionComponent } from 'react';
-import ReactSelect, { ActionMeta, SingleValue } from 'react-select';
+import React from 'react';
+import ReactSelect, { ActionMeta } from 'react-select';
+import { OnChangeValue } from 'react-select/dist/declarations/src/types';
+
+import { $t } from '../../helpers/i18n';
 
 import './Select.scss';
 
-export interface SelectOption<T = string> {
-  disabled?: boolean;
-  label: string;
-  value: T;
-}
-
-export interface SelectProps {
+export interface SelectProps<Option, IsMulti extends boolean = false> {
   className?: string;
   clearable?: boolean;
   disabled?: boolean;
+  formatOptionLabel?: (option: Option) => string;
   id?: string;
+  isMulti?: IsMulti;
   loading?: boolean;
-  onChange?: (value: string) => void;
-  options: SelectOption[];
+  onChange?: (value: OnChangeValue<Option, IsMulti>, actionMeta: ActionMeta<Option>) => void;
+  options: Option[];
   placeholder?: string;
-  value?: string | null;
+  value?: Option;
 }
 
-export const Select: FunctionComponent<SelectProps> = ({
+export function Select<Option, IsMulti extends boolean = false>({
   className,
   options,
   id,
@@ -30,31 +28,33 @@ export const Select: FunctionComponent<SelectProps> = ({
   loading = false,
   clearable = false,
   placeholder,
-  value = null,
+  value,
   onChange = () => {},
-}) => {
-  function onValueChange(changedValue: SingleValue<SelectOption>, actionMeta: ActionMeta<SelectOption>) {
-    if (actionMeta.action !== 'create-option' && changedValue?.value) {
-      onChange(changedValue?.value);
-    }
-  }
+  isMulti,
+  formatOptionLabel = (option: Option) => {
+    const label: string | undefined = (option as { label?: string })?.label;
+    const name: string | undefined = (option as { name?: string })?.name;
+    const key: string | undefined = (option as { key?: string })?.key;
 
+    return label || name || key || JSON.stringify(option);
+  },
+}: SelectProps<Option, IsMulti>) {
   return (
-    <ReactSelect
-      className={classnames('c-select', className)}
+    <ReactSelect<Option, IsMulti>
+      className={'c-select' + (className ? ' ' + className : '')}
       classNamePrefix='c-select'
+      formatOptionLabel={formatOptionLabel}
       id={id}
       isClearable={clearable}
       isDisabled={disabled}
       isLoading={loading}
-      isMulti={false}
-      isOptionDisabled={option => !!option.disabled}
-      loadingMessage={() => 'Bezig met laden'}
-      noOptionsMessage={() => 'Geen opties'}
-      onChange={onValueChange}
+      isMulti={isMulti}
+      loadingMessage={() => $t('Loading')}
+      noOptionsMessage={() => $t('No options')}
+      onChange={onChange}
       options={options}
       placeholder={placeholder}
-      value={options.find(option => option.value === value) || null}
+      value={value}
     />
   );
-};
+}

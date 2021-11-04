@@ -1,3 +1,5 @@
+import { ReactComponent as Book } from './svg/book.svg';
+import { ReactComponent as Briefcase } from './svg/briefcase.svg';
 import { ReactComponent as Calendar } from './svg/calendar.svg';
 import { ReactComponent as CaretDown } from './svg/caret-down.svg';
 import { ReactComponent as CaretUp } from './svg/caret-up.svg';
@@ -10,35 +12,28 @@ import { ReactComponent as ChevronsRight } from './svg/chevrons-right.svg';
 import { ReactComponent as ChevronsUpAndDown } from './svg/chevrons-up-and-down.svg';
 import { ReactComponent as ErrorIcon } from './svg/error-icon.svg';
 import { ReactComponent as Filter } from './svg/filter.svg';
+import { ReactComponent as Folder } from './svg/folder.svg';
+import { ReactComponent as Mic } from './svg/mic.svg';
 import { ReactComponent as X } from './svg/x.svg';
 
-export type IconName =
-  | 'ChevronDown'
-  | 'ChevronUp'
-  | 'ChevronLeft'
-  | 'ChevronRight'
-  | 'ChevronsLeft'
-  | 'ChevronsRight'
-  | 'ChevronsUpAndDown'
-  | 'Filter'
-  | 'ErrorIcon'
-  | 'Calendar'
-  | 'CaretUp'
-  | 'CaretDown'
-  | 'X';
-
-export {
+export const ICONS = {
+  Book,
+  Briefcase,
+  Calendar,
+  CaretDown,
+  CaretUp,
   ChevronDown,
-  ChevronUp,
   ChevronLeft,
   ChevronRight,
+  ChevronUp,
   ChevronsLeft,
   ChevronsRight,
   ChevronsUpAndDown,
-  Filter,
   ErrorIcon,
-  CaretUp,
-  CaretDown,
-  Calendar,
+  Filter,
+  Folder,
+  Mic,
   X,
 };
+
+export type IconName = keyof typeof ICONS;

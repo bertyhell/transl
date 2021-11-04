@@ -1,0 +1,8 @@
+query getLanguages {
+    languages {
+        name
+        iso_code
+        id
+        uuid
+    }
+}

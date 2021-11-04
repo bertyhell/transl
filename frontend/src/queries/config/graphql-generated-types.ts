@@ -1,4 +1,4 @@
-import { useQuery, UseQueryOptions } from 'react-query';
+import { useMutation, UseMutationOptions, useQuery, UseQueryOptions } from 'react-query';
 export type Maybe<T> = T | null;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
 export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
@@ -4454,12 +4454,46 @@ export type Uuid_Comparison_Exp = {
   _nin?: Maybe<Array<Scalars['uuid']>>;
 };
 
+export type AddCompanyMutationVariables = Exact<{
+  companyName?: Maybe<Scalars['String']>;
+}>;
+
+
+export type AddCompanyMutation = { __typename?: 'mutation_root', insert_companies?: { __typename?: 'companies_mutation_response', returning: Array<{ __typename?: 'companies', uuid: any }> } | null | undefined };
+
+export type AddProjectMutationVariables = Exact<{
+  projectName?: Maybe<Scalars['String']>;
+  companyId?: Maybe<Scalars['Int']>;
+}>;
+
+
+export type AddProjectMutation = { __typename?: 'mutation_root', insert_projects?: { __typename?: 'projects_mutation_response', returning: Array<{ __typename?: 'projects', uuid: any }> } | null | undefined };
+
+export type AddProjectLanguageLinksMutationVariables = Exact<{
+  projectLanguageLinks: Array<Project_Language_Link_Insert_Input> | Project_Language_Link_Insert_Input;
+}>;
+
+
+export type AddProjectLanguageLinksMutation = { __typename?: 'mutation_root', insert_project_language_link?: { __typename?: 'project_language_link_mutation_response', returning: Array<{ __typename?: 'project_language_link', uuid: any }> } | null | undefined };
+
 export type GetCompaniesAndProjectsQueryVariables = Exact<{
   userUuid?: Maybe<Scalars['uuid']>;
 }>;
 
 
-export type GetCompaniesAndProjectsQuery = { __typename?: 'query_root', companies: Array<{ __typename?: 'companies', name: string, uuid: any, projects: Array<{ __typename?: 'projects', name: string, uuid: any, language_links: Array<{ __typename?: 'project_language_link', uuid: any, language: { __typename?: 'languages', iso_code: string, uuid: any } }>, company: { __typename?: 'companies', name: string, uuid: any } }> }> };
+export type GetCompaniesAndProjectsQuery = { __typename?: 'query_root', companies: Array<{ __typename?: 'companies', name: string, uuid: any, id: number, projects: Array<{ __typename?: 'projects', name: string, uuid: any, id: number, language_links: Array<{ __typename?: 'project_language_link', uuid: any, language: { __typename?: 'languages', iso_code: string, uuid: any, id: number } }>, company: { __typename?: 'companies', name: string, uuid: any, id: number } }> }> };
+
+export type GetCompanyQueryVariables = Exact<{
+  companyUuid?: Maybe<Scalars['uuid']>;
+}>;
+
+
+export type GetCompanyQuery = { __typename?: 'query_root', companies: Array<{ __typename?: 'companies', name: string, uuid: any, projects: Array<{ __typename?: 'projects', name: string, uuid: any }>, user_links: Array<{ __typename?: 'company_user_link', user: { __typename?: 'users', uuid: any, first_name: string, last_name: string, email: string } }> }> };
+
+export type GetLanguagesQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetLanguagesQuery = { __typename?: 'query_root', languages: Array<{ __typename?: 'languages', name: string, iso_code: string, id: number, uuid: any }> };
 
 export type GetProjectQueryVariables = Exact<{
   projectUuid?: Maybe<Scalars['uuid']>;
@@ -4478,26 +4512,90 @@ export type GetTranslationsQueryVariables = Exact<{
 export type GetTranslationsQuery = { __typename?: 'query_root', project_terms: Array<{ __typename?: 'project_terms', key: string, description?: string | null | undefined, uuid: any, translations: Array<{ __typename?: 'translations', translation_value?: string | null | undefined, uuid: any, translation_status?: { __typename?: 'translation_statuses', name: string, uuid: any } | null | undefined }> }>, project_terms_aggregate: { __typename?: 'project_terms_aggregate', aggregate?: { __typename?: 'project_terms_aggregate_fields', count: number } | null | undefined } };
 
 
+export const AddCompanyDocument = `
+    mutation addCompany($companyName: String) {
+  insert_companies(objects: {name: $companyName}) {
+    returning {
+      uuid
+    }
+  }
+}
+    `;
+export const useAddCompanyMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(
+      dataSource: { endpoint: string, fetchParams?: RequestInit },
+      options?: UseMutationOptions<AddCompanyMutation, TError, AddCompanyMutationVariables, TContext>
+    ) =>
+    useMutation<AddCompanyMutation, TError, AddCompanyMutationVariables, TContext>(
+      (variables?: AddCompanyMutationVariables) => fetcher<AddCompanyMutation, AddCompanyMutationVariables>(dataSource.endpoint, dataSource.fetchParams || {}, AddCompanyDocument, variables)(),
+      options
+    );
+export const AddProjectDocument = `
+    mutation addProject($projectName: String, $companyId: Int) {
+  insert_projects(objects: {name: $projectName, company_id: $companyId}) {
+    returning {
+      uuid
+    }
+  }
+}
+    `;
+export const useAddProjectMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(
+      dataSource: { endpoint: string, fetchParams?: RequestInit },
+      options?: UseMutationOptions<AddProjectMutation, TError, AddProjectMutationVariables, TContext>
+    ) =>
+    useMutation<AddProjectMutation, TError, AddProjectMutationVariables, TContext>(
+      (variables?: AddProjectMutationVariables) => fetcher<AddProjectMutation, AddProjectMutationVariables>(dataSource.endpoint, dataSource.fetchParams || {}, AddProjectDocument, variables)(),
+      options
+    );
+export const AddProjectLanguageLinksDocument = `
+    mutation addProjectLanguageLinks($projectLanguageLinks: [project_language_link_insert_input!]!) {
+  insert_project_language_link(objects: $projectLanguageLinks) {
+    returning {
+      uuid
+    }
+  }
+}
+    `;
+export const useAddProjectLanguageLinksMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(
+      dataSource: { endpoint: string, fetchParams?: RequestInit },
+      options?: UseMutationOptions<AddProjectLanguageLinksMutation, TError, AddProjectLanguageLinksMutationVariables, TContext>
+    ) =>
+    useMutation<AddProjectLanguageLinksMutation, TError, AddProjectLanguageLinksMutationVariables, TContext>(
+      (variables?: AddProjectLanguageLinksMutationVariables) => fetcher<AddProjectLanguageLinksMutation, AddProjectLanguageLinksMutationVariables>(dataSource.endpoint, dataSource.fetchParams || {}, AddProjectLanguageLinksDocument, variables)(),
+      options
+    );
 export const GetCompaniesAndProjectsDocument = `
     query getCompaniesAndProjects($userUuid: uuid) {
   companies(where: {projects: {user_links: {user: {uuid: {_eq: $userUuid}}}}}) {
     projects {
       name
       uuid
+      id
       language_links {
         uuid
         language {
           iso_code
           uuid
+          id
         }
       }
       company {
         name
         uuid
+        id
       }
     }
     name
     uuid
+    id
   }
 }
     `;
@@ -4512,6 +4610,62 @@ export const useGetCompaniesAndProjectsQuery = <
     useQuery<GetCompaniesAndProjectsQuery, TError, TData>(
       variables === undefined ? ['getCompaniesAndProjects'] : ['getCompaniesAndProjects', variables],
       fetcher<GetCompaniesAndProjectsQuery, GetCompaniesAndProjectsQueryVariables>(dataSource.endpoint, dataSource.fetchParams || {}, GetCompaniesAndProjectsDocument, variables),
+      options
+    );
+export const GetCompanyDocument = `
+    query getCompany($companyUuid: uuid) {
+  companies(where: {uuid: {_eq: $companyUuid}}) {
+    name
+    uuid
+    projects {
+      name
+      uuid
+    }
+    user_links {
+      user {
+        uuid
+        first_name
+        last_name
+        email
+      }
+    }
+  }
+}
+    `;
+export const useGetCompanyQuery = <
+      TData = GetCompanyQuery,
+      TError = unknown
+    >(
+      dataSource: { endpoint: string, fetchParams?: RequestInit },
+      variables?: GetCompanyQueryVariables,
+      options?: UseQueryOptions<GetCompanyQuery, TError, TData>
+    ) =>
+    useQuery<GetCompanyQuery, TError, TData>(
+      variables === undefined ? ['getCompany'] : ['getCompany', variables],
+      fetcher<GetCompanyQuery, GetCompanyQueryVariables>(dataSource.endpoint, dataSource.fetchParams || {}, GetCompanyDocument, variables),
+      options
+    );
+export const GetLanguagesDocument = `
+    query getLanguages {
+  languages {
+    name
+    iso_code
+    id
+    uuid
+  }
+}
+    `;
+export const useGetLanguagesQuery = <
+      TData = GetLanguagesQuery,
+      TError = unknown
+    >(
+      dataSource: { endpoint: string, fetchParams?: RequestInit },
+      variables?: GetLanguagesQueryVariables,
+      options?: UseQueryOptions<GetLanguagesQuery, TError, TData>
+    ) =>
+    useQuery<GetLanguagesQuery, TError, TData>(
+      variables === undefined ? ['getLanguages'] : ['getLanguages', variables],
+      fetcher<GetLanguagesQuery, GetLanguagesQueryVariables>(dataSource.endpoint, dataSource.fetchParams || {}, GetLanguagesDocument, variables),
       options
     );
 export const GetProjectDocument = `

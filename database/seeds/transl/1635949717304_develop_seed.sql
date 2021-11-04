@@ -36,13 +36,15 @@ INSERT INTO public.translations (id, uuid, term_id, translation_value, project_l
 INSERT INTO public.translations (id, uuid, term_id, translation_value, project_language_link_id, translation_status_id) VALUES (2, '53d357b7-2361-4e71-8653-094ce43e160f', 1, 'Aanmelden', 2, NULL);
 INSERT INTO public.translations (id, uuid, term_id, translation_value, project_language_link_id, translation_status_id) VALUES (3, '88df730f-25f1-4a74-95c6-9877a104b09f', 2, 'Annuleren', 2, NULL);
 INSERT INTO public.translations (id, uuid, term_id, translation_value, project_language_link_id, translation_status_id) VALUES (4, '00a54755-352a-403c-afda-7e6703651505', 2, 'Cancel', 1, NULL);
-INSERT INTO public.user_project_link (id, uuid, user_id, project_id) VALUES (7, '431db739-6b16-48f1-98df-8f60ec1882aa', 1, 1);
-SELECT pg_catalog.setval('public.companies_id_seq', 1, true);
-SELECT pg_catalog.setval('public.company_user_link_id_seq', 1, true);
-SELECT pg_catalog.setval('public.project_language_id_seq', 1, true);
-SELECT pg_catalog.setval('public.project_terms_id_seq', 1, true);
-SELECT pg_catalog.setval('public.projects_id_seq', 1, true);
-SELECT pg_catalog.setval('public.translation_statuses_id_seq', 1, true);
-SELECT pg_catalog.setval('public.translations_id_seq', 1, true);
-SELECT pg_catalog.setval('public.user_project_link_id_seq', 1, true);
-SELECT pg_catalog.setval('public.users_id_seq', 1, true);
+INSERT INTO public.user_project_link (id, uuid, user_id, project_id) VALUES (1, '431db739-6b16-48f1-98df-8f60ec1882aa', 1, 1);
+
+SELECT setval(pg_get_serial_sequence('companies', 'id'), coalesce(max(id)+1, 1), false) FROM public.companies;
+SELECT setval(pg_get_serial_sequence('users', 'id'), coalesce(max(id)+1, 1), false) FROM public.users;
+SELECT setval(pg_get_serial_sequence('company_user_link', 'id'), coalesce(max(id)+1, 1), false) FROM public.company_user_link;
+SELECT setval(pg_get_serial_sequence('projects', 'id'), coalesce(max(id)+1, 1), false) FROM public.projects;
+SELECT setval(pg_get_serial_sequence('project_language_link', 'id'), coalesce(max(id)+1, 1), false) FROM public.project_language_link;
+SELECT setval(pg_get_serial_sequence('project_terms', 'id'), coalesce(max(id)+1, 1), false) FROM public.project_terms;
+SELECT setval(pg_get_serial_sequence('translation_statuses', 'id'), coalesce(max(id)+1, 1), false) FROM public.translation_statuses;
+SELECT setval(pg_get_serial_sequence('translations', 'id'), coalesce(max(id)+1, 1), false) FROM public.translations;
+SELECT setval(pg_get_serial_sequence('user_project_link', 'id'), coalesce(max(id)+1, 1), false) FROM public.user_project_link;
+

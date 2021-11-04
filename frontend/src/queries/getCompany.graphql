@@ -1,0 +1,18 @@
+query getCompany($companyUuid: uuid) {
+    companies(where: {uuid: {_eq: $companyUuid}}) {
+        name
+        uuid
+        projects {
+            name
+            uuid
+        }
+        user_links {
+            user {
+                uuid
+                first_name
+                last_name
+                email
+            }
+        }
+    }
+}

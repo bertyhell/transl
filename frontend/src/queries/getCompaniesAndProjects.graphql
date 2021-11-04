@@ -3,19 +3,23 @@ query getCompaniesAndProjects($userUuid: uuid) {
         projects {
             name
             uuid
+            id
             language_links {
                 uuid
                 language {
                     iso_code
                     uuid
+                    id
                 }
             }
             company {
                 name
                 uuid
+                id
             }
         }
         name
         uuid
+        id
     }
 }

@@ -2,19 +2,19 @@ import React, { FunctionComponent } from 'react';
 import { useParams } from 'react-router-dom';
 
 import { DATABASE_CONFIG } from '../queries/config/database.constants';
-import { useGetProjectQuery } from '../queries/config/graphql-generated-types';
+import { useGetCompanyQuery } from '../queries/config/graphql-generated-types';
 
 export const CompanyDetail: FunctionComponent = () => {
-  const { projectUuid } = useParams<{ projectUuid: string }>();
-  const { data, isLoading } = useGetProjectQuery(
+  const { companyUuid } = useParams<{ companyUuid: string }>();
+  const { data, isLoading } = useGetCompanyQuery(
     DATABASE_CONFIG,
-    { projectUuid: projectUuid as string },
-    { enabled: !!projectUuid },
+    { companyUuid: companyUuid as string },
+    { enabled: !!companyUuid },
   );
 
   if (isLoading) {
     return <>loading...</>;
   }
 
-  return <>Company: {data?.projects?.[0]?.company?.name}</>;
+  return <>Company: {data?.companies?.[0]?.name}</>;
 };

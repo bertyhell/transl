@@ -24,10 +24,10 @@ function App() {
                 <Route path='/projects/:projectUuid/translations'>
                   <TranslationEditor />
                 </Route>
-                <Route path='/companies/:companyUuid/details'>
+                <Route path='/companies/:companyUuid'>
                   <CompanyDetail />
                 </Route>
-                <Route path='/projects/:projectUuid/details'>
+                <Route path='/projects/:projectUuid'>
                   <ProjectDetail />
                 </Route>
               </Switch>

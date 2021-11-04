@@ -1,0 +1,7 @@
+mutation addProjectLanguageLinks($projectLanguageLinks: [project_language_link_insert_input!]!) {
+    insert_project_language_link(objects: $projectLanguageLinks) {
+        returning {
+            uuid
+        }
+    }
+}

@@ -8,12 +8,28 @@ Group multiple buttons together
 	align-items: center;
 	display: flex;
 
-	> * + * {
-		margin-left: 0.8rem;
+	&.c-button-toolbar-horizontal {
+		flex-direction: row;
+
+		> * + * {
+			margin-left: 0.8rem;
+		}
+
+		> .c-button--link + .c-button--link {
+			margin-left: 1.6rem;
+		}
 	}
 
-	> .c-button--link + .c-button--link {
-		margin-left: 1.6rem;
+	&.c-button-toolbar-vertical {
+		flex-direction: column;
+
+		> * + * {
+			margin-top: 0.8rem;
+		}
+
+		> .c-button--link + .c-button--link {
+			margin-top: 1.6rem;
+		}
 	}
 }
 

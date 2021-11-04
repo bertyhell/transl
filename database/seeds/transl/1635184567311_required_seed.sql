@@ -241,3 +241,5 @@ INSERT INTO public.languages (id, uuid, iso_code, name) VALUES (236, '8e3690e9-0
 INSERT INTO public.languages (id, uuid, iso_code, name) VALUES (237, 'c8b7d34d-082e-4e09-989d-609dab51f44c', 'zh-TW', 'Chinese (T)');
 INSERT INTO public.languages (id, uuid, iso_code, name) VALUES (238, 'fa3d07a0-38ef-46fd-9346-bfad385a5c87', 'zu', 'Zulu');
 INSERT INTO public.languages (id, uuid, iso_code, name) VALUES (239, '0562c27e-4f3e-4d2b-b898-eb3176ead6f4', 'zu-ZA', 'Zulu (South Africa)');
+
+SELECT setval(pg_get_serial_sequence('languages', 'id'), coalesce(max(id)+1, 1), false) FROM public.languages;
