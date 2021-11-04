@@ -9,8 +9,4 @@ export type ButtonType =
   | 'primary'
   | 'secondary-i'
   | 'secondary'
-  | 'tertiary'
-  | 'pupil-primary'
-  | 'pupil-link'
-  | 'pupil-inline-link'
-  | 'pupil-underlined-link';
+  | 'tertiary';

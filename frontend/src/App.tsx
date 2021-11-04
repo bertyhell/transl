@@ -1,7 +1,6 @@
 import React from 'react';
 import { QueryClient, QueryClientProvider } from 'react-query';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import { QueryParamProvider } from 'use-query-params';
+import { Outlet, Route, Routes } from 'react-router-dom';
 
 import { CompanyDetail } from './views/CompanyDetail';
 import { ProjectDetail } from './views/ProjectDetail';
@@ -10,32 +9,31 @@ import { TranslationEditor } from './views/TranslationEditor/TranslationEditor';
 
 import './App.scss';
 
-function App() {
+function Layout() {
   const queryClient = new QueryClient();
 
   return (
     <div className='main-app'>
       <QueryClientProvider client={queryClient}>
-        <Router>
-          <QueryParamProvider ReactRouterRoute={Route}>
-            <Sidebar />
-            <div className='main-view'>
-              <Switch>
-                <Route path='/projects/:projectUuid/translations'>
-                  <TranslationEditor />
-                </Route>
-                <Route path='/companies/:companyUuid'>
-                  <CompanyDetail />
-                </Route>
-                <Route path='/projects/:projectUuid'>
-                  <ProjectDetail />
-                </Route>
-              </Switch>
-            </div>
-          </QueryParamProvider>
-        </Router>
+        <Sidebar />
+        <div className='main-view'>
+          <Outlet />
+        </div>
       </QueryClientProvider>
     </div>
+  );
+}
+
+function App() {
+  return (
+    <Routes>
+      <Route element={<Layout />} path='/'>
+        <Route element={<CompanyDetail />} path='companies/:companyUuid' />
+        <Route element={<ProjectDetail />} path='companies/:companyUuid/projects/:projectUuid' />
+        <Route element={<TranslationEditor />} path='companies/:companyUuid/projects/:projectUuid/translations' />
+        <Route element={<p>No found route</p>} path='*' />
+      </Route>
+    </Routes>
   );
 }
 

@@ -26,7 +26,7 @@ interface AddLanguageModalProps {
 }
 
 export const AddLanguageModal: FunctionComponent<AddLanguageModalProps> = ({ isOpen, onClose }) => {
-  const { projectUuid } = useParams<{ projectUuid: string }>();
+  const { projectUuid } = useParams();
   const { data: companiesAndProjects } = useGetCompaniesAndProjectsQuery(DATABASE_CONFIG, { userUuid: USER_UUID });
   const { data: languagesResponse } = useGetLanguagesQuery(DATABASE_CONFIG);
   const { mutateAsync: addProjectLanguageLinks } = useAddProjectLanguageLinksMutation(DATABASE_CONFIG);

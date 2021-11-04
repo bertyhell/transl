@@ -1,12 +1,3 @@
-/* ==========================================================================
-   Component: Button Skins
-   ---
-   Rules of this file: you CAN'T touch the box model here, just colors.
-   ========================================================================== */
-
-/* Variables
-   ========================================================================== */
-
 $c-button-text-color: $g-text-color !default;
 $c-button-hover-border-color: $color-gray-100 !default;
 $c-button-outline-color: $color-primary !default;
@@ -24,10 +15,6 @@ $c-button-link-color: $color-primary !default;
 	border: 1px solid $color-primary;
 	background-color: $color-primary;
 	color: #FFF;
-
-	//svg * {
-	//	fill: #FFF;
-	//}
 
 	&:hover,
 	&:active,
@@ -100,10 +87,6 @@ $c-button-link-color: $color-primary !default;
 	background-color: $color-error;
 	color: #FFF;
 
-	//svg * {
-	//	fill: #FFF;
-	//}
-
 	&:hover,
 	&:active,
 	&:focus,
@@ -135,10 +118,6 @@ $c-button-link-color: $color-primary !default;
 		border-color: $color-error;
 		background-color: $color-error;
 		color: #FFF;
-
-		//svg * {
-		//	fill: #FFF;
-		//}
 	}
 }
 
@@ -242,82 +221,6 @@ $c-button-link-color: $color-primary !default;
 	&.c-button--active:focus {
 		background-color: transparent;
 		color: $color-teal;
-	}
-}
-
-/* Pupil Primary
-   ========================================================================== */
-
-.c-button.c-button--pupil-primary {
-	border: 1px solid $color-yellow;
-	background-color: $color-yellow;
-	color: #FFF;
-
-	//svg * {
-	//	fill: #FFF;
-	//}
-
-	&:hover,
-	&:active,
-	&.c-button--active,
-	&:active:focus,
-	&.c-button--active:focus {
-		background: darken($color-yellow, 15%);
-		border-color: darken($color-yellow, 15%);
-	}
-}
-
-/* Pupil Button link
-   ========================================================================== */
-
-.c-button.c-button--pupil-link {
-	background: none;
-	border: none;
-	color: $color-yellow;
-
-	&:hover,
-	&:active,
-	&:focus,
-	&.c-button--active,
-	&.c-button--active:focus {
-		background: $color-gray-50;
-	}
-}
-
-/* Pupil Button inline-link
-   ========================================================================== */
-
-.c-button.c-button--pupil-inline-link {
-	background: none;
-	border: none;
-	color: $color-yellow;
-	padding: 0;
-	margin-top: -2px;
-
-	&:hover,
-	&:active,
-	&:focus,
-	&.c-button--active,
-	&.c-button--active:focus {
-		background: $color-gray-50;
-	}
-}
-
-/* Pupil Button underlined-link
-   ========================================================================== */
-
-.c-button.c-button--pupil-underlined-link {
-	@extend .c-button, .c-button--link;
-	text-decoration: underline;
-	color: $color-yellow;
-
-	&:hover,
-	&:active,
-	&:focus,
-	&.c-button--active,
-	&.c-button--active:focus {
-		background: transparent;
-		color: darken($color-yellow, 15%);
 	}
 }
 

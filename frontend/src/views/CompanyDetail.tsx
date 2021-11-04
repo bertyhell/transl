@@ -5,7 +5,7 @@ import { DATABASE_CONFIG } from '../queries/config/database.constants';
 import { useGetCompanyQuery } from '../queries/config/graphql-generated-types';
 
 export const CompanyDetail: FunctionComponent = () => {
-  const { companyUuid } = useParams<{ companyUuid: string }>();
+  const { companyUuid } = useParams();
   const { data, isLoading } = useGetCompanyQuery(
     DATABASE_CONFIG,
     { companyUuid: companyUuid as string },

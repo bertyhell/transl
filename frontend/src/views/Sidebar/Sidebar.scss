@@ -3,6 +3,36 @@
 	width: 300px;
 	height: 100vh;
 	padding-top: 20px;
+	display: flex;
+	flex-direction: column;
+
+	.c-input {
+		min-height: 50px;
+		padding-left: 20px;
+	}
+
+	.c-sidebar-nav-top {
+		flex-grow: 1;
+	}
+
+	.c-sidebar-nav-bottom {
+		flex-shrink: 1;
+		margin-bottom: 50px;
+
+		.c-button--block {
+			position: relative;
+			min-height: 50px;
+
+			.c-button__content {
+				justify-content: flex-start;
+			}
+
+			svg {
+				position: absolute;
+				right: 10px;
+			}
+		}
+	}
 
 	a {
 		text-decoration: none;
@@ -15,10 +45,10 @@
 	}
 
 	> div > .nav-item {
-		padding-left: 40px;
+		padding-left: 20px;
 	}
 
 	> div > div > .nav-item {
-		padding-left: 60px;
+		padding-left: 20px;
 	}
 }

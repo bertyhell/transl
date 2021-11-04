@@ -5,7 +5,7 @@ import { DATABASE_CONFIG } from '../queries/config/database.constants';
 import { useGetProjectQuery } from '../queries/config/graphql-generated-types';
 
 export const ProjectDetail: FunctionComponent = () => {
-  const { projectUuid } = useParams<{ projectUuid: string }>();
+  const { projectUuid } = useParams();
   const { data, isLoading } = useGetProjectQuery(
     DATABASE_CONFIG,
     { projectUuid: projectUuid as string },

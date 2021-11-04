@@ -1,13 +1,11 @@
 import React, { FunctionComponent, ReactNode, useState } from 'react';
-import { useParams } from 'react-router-dom';
-import { useQueryParam } from 'use-query-params';
+import { useParams, useSearchParams } from 'react-router-dom';
 
 import { Pagination } from '../../components/Pagination/Pagination';
 import { Table } from '../../components/Table/Table';
 import { TextArea } from '../../components/TextArea/TextArea';
 import { TextInput } from '../../components/TextInput/TextInput';
 import { $t } from '../../helpers/i18n';
-import { PipeArrayParam } from '../../helpers/PipeArrayParam';
 import { useTableSort } from '../../hooks/useTableSort';
 import { DATABASE_CONFIG } from '../../queries/config/database.constants';
 import { useGetTranslationsQuery } from '../../queries/config/graphql-generated-types';
@@ -30,13 +28,16 @@ const ENTRIES_PER_PAGE = 20;
  * Shows a tabular view of the data and allows the user to edit the data
  */
 export const TranslationEditor: FunctionComponent = () => {
-  const { projectUuid } = useParams<{ projectUuid: string }>();
-  const [languageCodes] = useQueryParam('languageCodes', PipeArrayParam);
+  const { projectUuid } = useParams();
+  const [searchParams] = useSearchParams();
   const [page, setPage] = useState<number>(0);
+
+  const languageCodes = (searchParams.get('languageCodes') || '').split('|').map(code => code.trim());
+
   const { data } = useGetTranslationsQuery(
     DATABASE_CONFIG,
     {
-      languageCodes: languageCodes as string[],
+      languageCodes: languageCodes,
       offset: page * ITEMS_PER_PAGE,
       projectUuid,
     },

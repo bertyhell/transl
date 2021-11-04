@@ -1,8 +1,8 @@
 import classnames from 'classnames';
 import React, { FunctionComponent, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
-import { Icon } from '../icons/Icon';
+import { Button } from '../Button/Button';
 
 import './NavItem.scss';
 
@@ -17,18 +17,26 @@ export const NavItem: FunctionComponent<NavItemProps> = ({ title, to, children }
   if (children) {
     return (
       <>
-        <Link className={classnames('nav-item', { collapsed: isCollapsed })} onClick={() => setIsCollapsed(!isCollapsed)} to={to}>
+        <NavLink
+          className={({ isActive }) => {
+            return classnames('nav-item', { collapsed: isCollapsed, 'nav-item-active': isActive });
+          }}
+          to={to}>
           <span>{title}</span>
-          <Icon name='ChevronDown' />
-        </Link>
+          {!!children && <Button icon={'ChevronDown'} onClick={() => setIsCollapsed(!isCollapsed)} type='borderless' />}
+        </NavLink>
         {!isCollapsed && <div>{children}</div>}
       </>
     );
   } else {
     return (
-      <Link className='nav-item' to={to}>
+      <NavLink
+        className={({ isActive }) => {
+          return classnames('nav-item', { 'nav-item-active': isActive });
+        }}
+        to={to}>
         {title}
-      </Link>
+      </NavLink>
     );
   }
 };

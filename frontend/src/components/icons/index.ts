@@ -14,6 +14,7 @@ import { ReactComponent as ErrorIcon } from './svg/error-icon.svg';
 import { ReactComponent as Filter } from './svg/filter.svg';
 import { ReactComponent as Folder } from './svg/folder.svg';
 import { ReactComponent as Mic } from './svg/mic.svg';
+import { ReactComponent as Search } from './svg/search.svg';
 import { ReactComponent as X } from './svg/x.svg';
 
 export const ICONS = {
@@ -33,6 +34,7 @@ export const ICONS = {
   Filter,
   Folder,
   Mic,
+  Search,
   X,
 };
 
