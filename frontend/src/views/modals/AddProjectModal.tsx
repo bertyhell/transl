@@ -1,6 +1,7 @@
 import React, { FunctionComponent, useState } from 'react';
 
 import { Button } from '../../components/Button/Button';
+import { Form } from '../../components/Form/Form';
 import { FormGroup } from '../../components/Form/FormGroup/FormGroup';
 import { Modal } from '../../components/Modal/Modal';
 import { ModalBody, ModalFooterRight } from '../../components/Modal/Modal.slots';
@@ -33,18 +34,20 @@ export const AddProjectModal: FunctionComponent<AddCompanyModalProps> = ({ isOpe
   };
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose} size='medium'>
+    <Modal isOpen={isOpen} onClose={onClose} size='medium' title={$t('Add project to company')}>
       <ModalBody>
-        <FormGroup label={$t('Company')} labelFor='select-company'>
-          <Select<Company, false>
-            id='select-company'
-            onChange={setSelectedCompany}
-            options={companiesAndProjects?.companies || []}
-          />
-        </FormGroup>
-        <FormGroup label={$t('Project name')} labelFor='project-name'>
-          <TextInput id='project-name' onChange={setProjectName} type='text' value={projectName} />
-        </FormGroup>
+        <Form>
+          <FormGroup label={$t('Company')} labelFor='select-company'>
+            <Select<Company, false>
+              id='select-company'
+              onChange={setSelectedCompany}
+              options={companiesAndProjects?.companies || []}
+            />
+          </FormGroup>
+          <FormGroup label={$t('Project name')} labelFor='project-name'>
+            <TextInput id='project-name' onChange={setProjectName} type='text' value={projectName} />
+          </FormGroup>
+        </Form>
       </ModalBody>
       <ModalFooterRight>
         <Button onClick={handleAddCompanyButtonClick} type='primary'>

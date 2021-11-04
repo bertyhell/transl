@@ -6,7 +6,7 @@
 		z-index: 22;
 	}
 
-	&.c-select--is-disabled {
+	&.c-select__is-disabled {
 		.c-select__control {
 			background-color: $color-gray-100;
 		}
@@ -31,14 +31,14 @@
 			border: 1px solid $c-input-border-color;
 		}
 
-		&.c-select__control--is-focused {
+		&.c-select__control__is-focused {
 			outline: 0;
 			border-color: $color-border-color;
 			box-shadow: inset 0 0 0 0.1rem $color-border-color, 0 0 0.5rem $color-input-box-shadow;
 		}
 	}
 
-	.c-select__option--is-selected {
+	.c-select__option__is-selected {
 		background-color: $color-gray-200;
 	}
 }

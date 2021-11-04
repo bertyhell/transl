@@ -1,19 +1,7 @@
 @import '../../styles/colors';
 @import '../../styles/variables';
 
-/* ==========================================================================
-   Component: Menu
-   ---
-   Dropdown menu
-   ========================================================================== */
-
-/* Variables
-   ========================================================================== */
-
 $g-c-menu-z: 60 !default;
-
-/* Component
-   ========================================================================== */
 
 .c-menu {
 	background-color: #FFF;
@@ -30,13 +18,13 @@ $g-c-menu-z: 60 !default;
 	display: inline-block;
 }
 
-.c-menu--visible {
+.c-menu__visible {
 	opacity: 1;
 	visibility: visible;
 	pointer-events: auto;
 }
 
-.c-menu--search-result {
+.c-menu__search-result {
 	.c-menu__item {
 		justify-content: space-between;
 		padding: 1.2rem 1.6rem;

@@ -16,21 +16,21 @@
 		background-color: $color-gray-50;
 	}
 
-	&.c-menu__item--large {
+	&.c-menu__item__large {
 		flex-direction: column;
 		white-space: normal;
 	}
 
-	&.c-menu__item--center {
+	&.c-menu__item__center {
 		align-items: center;
 	}
 }
 
-.c-menu__item--nowrap {
+.c-menu__item__nowrap {
 	white-space: nowrap;
 }
 
-.c-menu__item--selected {
+.c-menu__item__selected {
 	font-weight: 600;
 }
 

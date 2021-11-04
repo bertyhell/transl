@@ -3,24 +3,19 @@ import { useParams, useSearchParams } from 'react-router-dom';
 
 import { Pagination } from '../../components/Pagination/Pagination';
 import { Table } from '../../components/Table/Table';
-import { TextArea } from '../../components/TextArea/TextArea';
 import { TextInput } from '../../components/TextInput/TextInput';
+import { TranslationInputField } from '../../components/TranslationInputField/TranslationInputField';
 import { $t } from '../../helpers/i18n';
 import { useTableSort } from '../../hooks/useTableSort';
 import { DATABASE_CONFIG } from '../../queries/config/database.constants';
 import { useGetTranslationsQuery } from '../../queries/config/graphql-generated-types';
+import { ProjectTerm } from '../../queries/type-aliasses';
 
 import './TranslationEditor.scss';
 
 export const ITEMS_PER_PAGE = 100;
 
-export type TranslationInfo = {
-  id: string;
-  key: string;
-  status: string | null;
-  value: string;
-};
-export type KeyValueEditorTableColsSchema = 'key' | 'value';
+type ColumnId = 'key' | string; // language codes
 
 const ENTRIES_PER_PAGE = 20;
 
@@ -46,23 +41,29 @@ export const TranslationEditor: FunctionComponent = () => {
     },
   );
   const [filterString, setFilterString] = useState<string>('');
-  const [sortColumn, sortOrder, handleSortClick] = useTableSort<KeyValueEditorTableColsSchema>('key');
+  const [sortColumn, sortOrder, handleSortClick] = useTableSort<ColumnId>('key');
 
   const onValueChanged = (value: string, key: string) => {
     // TODO save to database
     console.log('changed: ' + key + ' => ' + 'value');
   };
 
-  const renderCell = (rowData: TranslationInfo, columnId: KeyValueEditorTableColsSchema): ReactNode | null => {
+  const renderCell = (projectTerm: ProjectTerm, columnId: ColumnId): ReactNode | null => {
     switch (columnId) {
       case 'key':
-        return <div>{rowData.key}</div>;
-
-      case 'value':
-        return <TextArea height='auto' onChange={(value: string) => onValueChanged(value, rowData.key)} value={rowData.value} />;
+        return <div>{projectTerm.key}</div>;
 
       default:
-        return null;
+        // language codes
+        return (
+          <TranslationInputField
+            onBlur={(newValue: string) => onValueChanged(projectTerm.key, newValue)}
+            value={
+              projectTerm.translations.find(translation => translation?.project_language_link?.language?.iso_code === columnId)
+                ?.translation_value || ''
+            }
+          />
+        );
     }
   };
 
@@ -82,14 +83,12 @@ export const TranslationEditor: FunctionComponent = () => {
         <TextInput icon='Filter' onChange={setFilterString} value={filterString} />
       </div>
       {data?.project_terms?.length ? (
-        <Table
+        <Table<ProjectTerm>
           columns={getColumns()}
           data={data.project_terms}
           emptyStateMessage={filterString ? $t('no data') : $t('no data for the selected filters')}
-          onColumnClick={(columnId: string) => handleSortClick(columnId as KeyValueEditorTableColsSchema)}
-          renderCell={(rowData: Record<string, unknown>, columnId: string) =>
-            renderCell(rowData as TranslationInfo, columnId as KeyValueEditorTableColsSchema)
-          }
+          onColumnClick={(columnId: string) => handleSortClick(columnId)}
+          renderCell={renderCell}
           rowKey={'uuid'}
           sortColumn={sortColumn}
           sortOrder={sortOrder}

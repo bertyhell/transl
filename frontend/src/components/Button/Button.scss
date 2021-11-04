@@ -2,12 +2,6 @@
 @import '../../styles/colors';
 @import '../../styles/variables';
 
-/* ==========================================================================
-   Component: Buttons
-   ---
-   This code is about button layout.
-   ========================================================================== */
-
 /* Variables
    ========================================================================== */
 
@@ -95,7 +89,7 @@ a.c-button {
 /* Small size
    ========================================================================== */
 
-.c-button--small {
+.c-button__small {
 	font-size: $c-button-font-size-small;
 	padding: math.div(($c-button-height-small - $c-button-line-height-small), 2) $c-button-padding-horizontal-small;
 
@@ -113,7 +107,7 @@ a.c-button {
 		margin-left: $c-button-icon-spacing-small;
 	}
 
-	&.c-button--icon {
+	&.c-button__icon {
 		padding: math.div(($c-button-height-small - $c-button-line-height-small), 2);
 	}
 }
@@ -121,7 +115,7 @@ a.c-button {
 /* Large size
    ========================================================================== */
 
-.c-button--large {
+.c-button__large {
 	padding: 0.9rem 1.8rem;
 	max-height: 4.3rem;
 }
@@ -129,26 +123,33 @@ a.c-button {
 /* Icon-only Button (Square)
    ========================================================================== */
 
-.c-button.c-button--icon {
+.c-button.c-button__icon {
 	padding: math.div(($c-button-height - $c-button-line-height), 2);
 }
 
-.c-button--small.c-button--icon {
+.c-button__small.c-button__icon {
 	padding: math.div(($c-button-height-small - $c-button-line-height-small), 2);
 }
 
 /* Block button
    ========================================================================== */
 
-.c-button--block {
+.c-button__block {
 	width: 100%;
-	text-align: center;
+
+	.c-button__content {
+		align-items: center;
+		display: flex;
+		justify-content: space-between;
+		flex-direction: row-reverse;
+		flex-wrap: nowrap;
+	}
 }
 
 /* Auto height button
    ========================================================================== */
 
-.c-button--auto {
+.c-button__auto {
 	max-height: none;
 	min-height: $c-button-height;
 	.c-button__label {
@@ -160,17 +161,17 @@ a.c-button {
    ========================================================================== */
 
 .c-button-action {
-	.o-svg-icon--action-active {
+	.o-svg-icon__action-active {
 		display: none;
 	}
 
-	&.c-button--active {
-		.o-svg-icon--action-active {
+	&.c-button__active {
+		.o-svg-icon__action-active {
 			display: block;
 			color: $color-teal-bright;
 		}
 
-		.o-svg-icon--action-inactive {
+		.o-svg-icon__action-inactive {
 			display: none;
 		}
 	}

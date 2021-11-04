@@ -13,8 +13,8 @@ export const Spinner: FunctionComponent<SpinnerProps> = ({ className, size, ligh
   return (
     <div
       className={classnames(className, 'c-spinner', {
-        'c-spinner--large': size === 'large',
-        'c-spinner--light': light,
+        'c-spinner__large': size === 'large',
+        'c-spinner__light': light,
       })}>
       <div className='c-spinner__bar' />
       <div className='c-spinner__bar' />

@@ -1,15 +1,6 @@
 @import '../../styles/colors';
 @import '../../styles/variables';
 
-/* ==========================================================================
-   Component: Modal
-   ---
-   Modal windows
-   ========================================================================== */
-
-/* Variables
-   ========================================================================== */
-
 $c-modal-padding-horizontal: 2.4rem !default;
 $c-modal-padding-vertical: 2.4rem !default;
 $c-modal-border-radius: 0.3rem !default;
@@ -24,10 +15,6 @@ $g-c-modal-backdrop-z: 30 !default;
 $g-c-modal-context-z: 40 !default;
 $g-c-modal-z: 50 !default;
 
-
-/* Component
-   ========================================================================== */
-
 .c-modal-context {
 	display: flex;
 	height: 100%;
@@ -41,7 +28,7 @@ $g-c-modal-z: 50 !default;
 	width: 100%;
 	z-index: $g-c-modal-context-z;
 
-	&.c-modal-context--visible {
+	&.c-modal-context__visible {
 		opacity: 1;
 		transition-delay: 0s;
 		visibility: visible;
@@ -57,46 +44,43 @@ $g-c-modal-z: 50 !default;
 	width: calc(100% - 8rem);
 	z-index: $g-c-modal-z;
 
-	/* Sizes
-   ========================================================================== */
-
-	&.c-modal--extra-large {
+	&.c-modal__extra-large {
 		width: 140rem;
 	}
 
-	&.c-modal--large {
+	&.c-modal__large {
 		width: 88rem;
 	}
 
-	&.c-modal--medium {
+	&.c-modal__medium {
 		width: 66rem;
 	}
 
-	&.c-modal--small {
+	&.c-modal__small {
 		width: 44rem;
 	}
 
-	&.c-modal--fullscreen {
+	&.c-modal__fullscreen {
 		height: calc(100% - #{$c-modal-padding-vertical * 2});
 		max-height: none;
 		max-width: none;
 		width: calc(100% - #{$c-modal-padding-horizontal * 2});
 	}
 
-	&.c-modal--fullwidth {
+	&.c-modal__fullwidth {
 		max-width: 66rem;
 		width: calc(100% - #{$c-modal-padding-horizontal * 2});
 	}
 
-	&.c-modal--height-auto {
+	&.c-modal__height-auto {
 		height: auto;
 	}
 
-	&.c-modal--scrollable {
+	&.c-modal__scrollable {
 		max-height: calc(100% - #{$c-modal-padding-vertical * 2});
 	}
 
-	&:not(.c-modal--scrollable) {
+	&:not(.c-modal__scrollable) {
 		overflow: visible;
 
 		.c-modal__body {
@@ -119,8 +103,8 @@ $g-c-modal-z: 50 !default;
 
 		@media (max-width: $g-bp2) {
 			&,
-			&.c-modal--fullscreen,
-			&.c-modal--scrollable {
+			&.c-modal__fullscreen,
+			&.c-modal__scrollable {
 				width: 100vw;
 				max-width: 100vw;
 				height: calc(100% - 40px);
@@ -136,12 +120,12 @@ $g-c-modal-z: 50 !default;
 	padding: $c-modal-padding-vertical $c-modal-padding-horizontal;
 }
 
-.c-modal__body--no-vert-padding {
+.c-modal__body__no-vert-padding {
 	padding-top: 0;
 	padding-bottom: 0;
 }
 
-.c-modal__body--no-padding {
+.c-modal__body__no-padding {
 	padding: 0;
 }
 
@@ -160,11 +144,11 @@ $g-c-modal-z: 50 !default;
 	}
 }
 
-.c-modal__header--bg-alt {
+.c-modal__header__bg-alt {
 	background-color: $color-gray-50;
 }
 
-.c-modal__header--bordered {
+.c-modal__header__bordered {
 	border-bottom: 1px solid $c-modal-header-border-color;
 }
 
@@ -173,7 +157,7 @@ $g-c-modal-z: 50 !default;
 	font-weight: $g-headings-font-weight;
 }
 
-.c-modal__header--no-padding {
+.c-modal__header__no-padding {
 	padding-top: 0;
 	padding-bottom: 0;
 }
@@ -183,11 +167,11 @@ $g-c-modal-z: 50 !default;
 	border-radius: 0 0 $c-modal-border-radius $c-modal-border-radius;
 }
 
-.c-modal__footer--bordered {
+.c-modal__footer__bordered {
 	border-top: 1px solid $c-modal-footer-border-color;
 }
 
-.c-modal__footer--bg-alt {
+.c-modal__footer__bg-alt {
 	background-color: $color-gray-50;
 }
 
@@ -196,9 +180,6 @@ $g-c-modal-z: 50 !default;
 	overflow: auto;
 	padding: $c-modal-padding-vertical $c-modal-padding-horizontal;
 }
-
-/* Backdrop
-   ========================================================================== */
 
 .c-modal-backdrop {
 	background-color: rgba($c-modal-shadow-color, 0.4);
@@ -214,7 +195,7 @@ $g-c-modal-z: 50 !default;
 	pointer-events: none;
 	z-index: $g-c-modal-backdrop-z;
 
-	&.c-modal-backdrop--visible {
+	&.c-modal-backdrop__visible {
 		opacity: 1;
 		transition-delay: 0s;
 		visibility: visible;

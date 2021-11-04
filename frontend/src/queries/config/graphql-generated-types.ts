@@ -4509,7 +4509,7 @@ export type GetTranslationsQueryVariables = Exact<{
 }>;
 
 
-export type GetTranslationsQuery = { __typename?: 'query_root', project_terms: Array<{ __typename?: 'project_terms', key: string, description?: string | null | undefined, uuid: any, translations: Array<{ __typename?: 'translations', translation_value?: string | null | undefined, uuid: any, translation_status?: { __typename?: 'translation_statuses', name: string, uuid: any } | null | undefined }> }>, project_terms_aggregate: { __typename?: 'project_terms_aggregate', aggregate?: { __typename?: 'project_terms_aggregate_fields', count: number } | null | undefined } };
+export type GetTranslationsQuery = { __typename?: 'query_root', project_terms: Array<{ __typename?: 'project_terms', key: string, description?: string | null | undefined, uuid: any, id: number, translations: Array<{ __typename?: 'translations', translation_value?: string | null | undefined, uuid: any, id: number, translation_status?: { __typename?: 'translation_statuses', name: string, uuid: any, id: number } | null | undefined, project_language_link: { __typename?: 'project_language_link', language: { __typename?: 'languages', iso_code: string, id: number, uuid: any } } }> }>, project_terms_aggregate: { __typename?: 'project_terms_aggregate', aggregate?: { __typename?: 'project_terms_aggregate_fields', count: number } | null | undefined } };
 
 
 export const AddCompanyDocument = `
@@ -4729,10 +4729,20 @@ export const GetTranslationsDocument = `
       translation_status {
         name
         uuid
+        id
       }
       uuid
+      id
+      project_language_link {
+        language {
+          iso_code
+          id
+          uuid
+        }
+      }
     }
     uuid
+    id
   }
   project_terms_aggregate(
     where: {project: {uuid: {_eq: $projectUuid}}}

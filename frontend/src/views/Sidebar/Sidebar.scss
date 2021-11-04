@@ -19,18 +19,8 @@
 		flex-shrink: 1;
 		margin-bottom: 50px;
 
-		.c-button--block {
-			position: relative;
+		.c-button__block {
 			min-height: 50px;
-
-			.c-button__content {
-				justify-content: flex-start;
-			}
-
-			svg {
-				position: absolute;
-				right: 10px;
-			}
 		}
 	}
 

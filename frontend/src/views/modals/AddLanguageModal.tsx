@@ -83,7 +83,7 @@ export const AddLanguageModal: FunctionComponent<AddLanguageModalProps> = ({ isO
   };
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose} size='medium'>
+    <Modal isOpen={isOpen} onClose={onClose} size='medium' title={$t('Add languages to project')}>
       <ModalBody>
         <Form>
           <FormGroup label={$t('Company')} labelFor='select-company'>

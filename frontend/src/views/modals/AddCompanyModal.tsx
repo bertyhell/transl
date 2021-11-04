@@ -1,6 +1,7 @@
 import React, { FunctionComponent, useState } from 'react';
 
 import { Button } from '../../components/Button/Button';
+import { Form } from '../../components/Form/Form';
 import { FormGroup } from '../../components/Form/FormGroup/FormGroup';
 import { Modal } from '../../components/Modal/Modal';
 import { ModalBody, ModalFooterRight } from '../../components/Modal/Modal.slots';
@@ -24,11 +25,13 @@ export const AddCompanyModal: FunctionComponent<AddCompanyModalProps> = ({ isOpe
   };
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose} size='medium'>
+    <Modal isOpen={isOpen} onClose={onClose} size='medium' title={$t('Add company')}>
       <ModalBody>
-        <FormGroup label={$t('Company name')} labelFor='company-name'>
-          <TextInput id='company-name' onChange={setCompanyName} type='text' value={companyName} />
-        </FormGroup>
+        <Form>
+          <FormGroup label={$t('Company name')} labelFor='company-name'>
+            <TextInput id='company-name' onChange={setCompanyName} type='text' value={companyName} />
+          </FormGroup>
+        </Form>
       </ModalBody>
       <ModalFooterRight>
         <Button onClick={handleAddCompanyButtonClick} type='primary'>

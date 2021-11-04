@@ -29,11 +29,11 @@
 	}
 }
 
-.c-pagination__btn--active {
+.c-pagination__btn__active {
 	background-color: #D6DEE3
 }
 
-.c-pagination__btn--disabled {
+.c-pagination__btn__disabled {
 	opacity: 0.3;
 	cursor: default;
 	pointer-events: none;

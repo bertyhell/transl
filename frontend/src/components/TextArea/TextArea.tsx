@@ -1,6 +1,6 @@
 import autosize from 'autosize';
 import classnames from 'classnames';
-import React, { ChangeEvent, FunctionComponent, useEffect } from 'react';
+import React, { ChangeEvent, CSSProperties, FunctionComponent, useEffect } from 'react';
 
 import { useCallbackRef } from '../../hooks/useCallbackRef';
 
@@ -16,11 +16,13 @@ export interface TextAreaProps {
   onChange?: (value: string) => void;
   placeholder?: string;
   rows?: number;
+  style?: CSSProperties;
   value?: string;
   width?: 'xsmall' | 'small' | 'medium' | 'large';
 }
 
 export const TextArea: FunctionComponent<TextAreaProps> = ({
+  style,
   className,
   id,
   name,
@@ -48,8 +50,8 @@ export const TextArea: FunctionComponent<TextAreaProps> = ({
   return (
     <textarea
       className={classnames(className, 'text-area', 'c-input', {
-        [`c-input--h-${height}`]: height && height !== 'auto',
-        [`c-input--w-${width}`]: width,
+        [`c-input__h-${height}`]: height && height !== 'auto',
+        [`c-input__w-${width}`]: width,
       })}
       disabled={disabled}
       id={id}
@@ -59,6 +61,7 @@ export const TextArea: FunctionComponent<TextAreaProps> = ({
       placeholder={placeholder}
       ref={textAreaRef}
       rows={rows}
+      style={style}
       value={value}
     />
   );

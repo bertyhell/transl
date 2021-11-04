@@ -31,8 +31,8 @@ export const Menu: FunctionComponent<MenuProps> = ({
   return (
     <div
       className={classnames(className, 'c-menu', {
-        'c-menu--search-result': search,
-        'c-menu--visible': isOpen,
+        'c-menu__search-result': search,
+        'c-menu__visible': isOpen,
       })}
       style={style}>
       {children ? (

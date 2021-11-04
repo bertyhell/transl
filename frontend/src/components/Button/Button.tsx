@@ -1,5 +1,5 @@
 import classnames from 'classnames';
-import React, { FunctionComponent, MouseEvent, ReactNode } from 'react';
+import React, { CSSProperties, FunctionComponent, MouseEvent, ReactNode } from 'react';
 
 import { IconName } from '../icons';
 import { Icon } from '../icons/Icon';
@@ -22,6 +22,7 @@ export interface ButtonProps {
   label?: string;
   onClick?(event: MouseEvent<HTMLElement>): void;
   size?: 'small' | 'large';
+  style?: CSSProperties;
   title?: string;
   tooltip?: string;
 
@@ -29,6 +30,7 @@ export interface ButtonProps {
 }
 
 const Button: FunctionComponent<ButtonProps> = ({
+  style,
   active,
   ariaLabel,
   arrow,
@@ -51,36 +53,34 @@ const Button: FunctionComponent<ButtonProps> = ({
     }
   };
 
-  const renderButton = () => {
-    return (
-      <button
-        aria-label={ariaLabel}
-        className={classnames(className, 'c-button', {
-          'c-button--active': active,
-          'c-button--auto': autoHeight,
-          'c-button--block': block,
-          'c-button--icon': icon && !label,
-          'c-button--large': size === 'large',
-          'c-button--small': size === 'small',
-          [`c-button--${type}`]: type,
-        })}
-        disabled={disabled}
-        id={id}
-        onClick={handleButtonClick}
-        title={title}>
-        {children ? (
-          children
-        ) : (
-          <div className='c-button__content'>
-            {icon && <Icon name={icon} />}
-            {label && <div className='c-button__label'>{label}</div>}
-            {arrow && <Icon name='CaretDown' />}
-          </div>
-        )}
-      </button>
-    );
-  };
-  return renderButton();
+  return (
+    <button
+      aria-label={ariaLabel}
+      className={classnames(className, 'c-button', {
+        'c-button__active': active,
+        'c-button__auto': autoHeight,
+        'c-button__block': block,
+        'c-button__icon': icon && !label,
+        'c-button__large': size === 'large',
+        'c-button__small': size === 'small',
+        [`c-button__${type}`]: type,
+      })}
+      disabled={disabled}
+      id={id}
+      onClick={handleButtonClick}
+      style={style}
+      title={title}>
+      {children ? (
+        children
+      ) : (
+        <div className='c-button__content'>
+          {icon && <Icon name={icon} />}
+          {label && <div className='c-button__label'>{label}</div>}
+          {arrow && <Icon name='CaretDown' />}
+        </div>
+      )}
+    </button>
+  );
 };
 
 export { Button };

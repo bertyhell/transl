@@ -27,8 +27,8 @@ export const FormGroup: FunctionComponent<FormGroupProps> = ({
   return (
     <div
       className={classnames(className, 'o-form-group', {
-        'o-form-group--error': error,
-        [`o-form-group--inline-${inlineMode}`]: inlineMode,
+        'o-form-group__error': error,
+        [`o-form-group__inline-${inlineMode}`]: inlineMode,
       })}>
       {label && (
         <label className='o-form-group__label' htmlFor={labelFor}>
@@ -45,7 +45,7 @@ export const FormGroup: FunctionComponent<FormGroupProps> = ({
         {!!errorArray &&
           !!errorArray.length &&
           errorArray.map((err: string, index: number) => (
-            <div className='c-form-help-text c-form-help-text--error' key={`${err}-${index}`}>
+            <div className='c-form-help-text c-form-help-text__error' key={`${err}-${index}`}>
               {err}
             </div>
           ))}

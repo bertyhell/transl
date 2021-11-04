@@ -10,5 +10,5 @@ export interface FormPropsSchema {
 }
 
 export const Form: FunctionComponent<FormPropsSchema> = ({ className, type = 'standard', children }) => (
-  <div className={classnames(className, 'o-form-group-layout', `o-form-group-layout--${type}`)}>{children}</div>
+  <div className={classnames(className, 'o-form-group-layout', `o-form-group-layout__${type}`)}>{children}</div>
 );

@@ -1,9 +1,3 @@
-/* ==========================================================================
-Component: Button Toolbar
----
-Group multiple buttons together
-========================================================================== */
-
 .c-button-toolbar {
 	align-items: center;
 	display: flex;
@@ -15,7 +9,7 @@ Group multiple buttons together
 			margin-left: 0.8rem;
 		}
 
-		> .c-button--link + .c-button--link {
+		> .c-button__link + .c-button__link {
 			margin-left: 1.6rem;
 		}
 	}
@@ -27,7 +21,7 @@ Group multiple buttons together
 			margin-top: 0.8rem;
 		}
 
-		> .c-button--link + .c-button--link {
+		> .c-button__link + .c-button__link {
 			margin-top: 1.6rem;
 		}
 	}

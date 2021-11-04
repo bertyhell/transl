@@ -1,15 +1,6 @@
 @import '../../styles/colors';
 @import '../../styles/variables';
 
-/* ==========================================================================
-   Component: Text Field
-   ---
-   Styles for text inputs
-   ========================================================================== */
-
-/* Component
-   ========================================================================== */
-
 .c-input {
 	border-radius: $c-input-border-radius;
 	background-color: $c-input-bg-color;
@@ -32,7 +23,7 @@
 	}
 }
 
-.o-form-group--error {
+.o-form-group__error {
 	border-color: $c-input-error-accent-color;
 
 	&:focus {
@@ -48,47 +39,38 @@ textarea.c-input {
 }
 
 // Heights (for textareas)
-textarea.c-input--h-small {
+textarea.c-input__h-small {
 	height: 12rem;
 }
 
-textarea.c-input--h-medium {
+textarea.c-input__h-medium {
 	height: 16rem;
 }
 
-textarea.c-input--h-large {
+textarea.c-input__h-large {
 	height: 20rem;
 }
 
 // Widths
-.c-input--w-xsmall {
+.c-input__w-xsmall {
 	width: 4rem;
 }
 
-.c-input--w-small {
+.c-input__w-small {
 	width: 9.6rem;
 }
 
-.c-input--w-medium {
+.c-input__w-medium {
 	width: 16rem;
 }
 
-.c-input--w-large {
+.c-input__w-large {
 	width: 44rem;
 }
 
 .c-input[readonly] {
 	background-color: $c-input-readonly-border-color;
 }
-
-.c-input--code {
-	font-family: $g-code-font-family;
-	line-height: 2.4rem;
-	font-size: 85%;
-}
-
-/* Input With Icon
-   ========================================================================== */
 
 .c-input-with-icon {
 	display: block;
@@ -117,16 +99,10 @@ textarea.c-input--h-large {
 	flex: 1;
 }
 
-/* Input group append
-   ========================================================================== */
-
 .c-input-group__append {
 	height: 3.6rem;
 	margin-left: 1rem;
 }
-
-/* Input group prepend
-   ========================================================================== */
 
 .c-input-group__prepend {
 	height: 3.6rem;

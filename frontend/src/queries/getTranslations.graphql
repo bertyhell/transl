@@ -7,10 +7,20 @@ query getTranslations($projectUuid: uuid, $languageCodes: [String!], $offset: In
             translation_status {
                 name
                 uuid
+                id
             }
             uuid
+            id
+            project_language_link {
+                language {
+                    iso_code
+                    id
+                    uuid
+                }
+            }
         }
         uuid
+        id
     }
     project_terms_aggregate(where: {project: {uuid: {_eq: $projectUuid}}}, limit: 100, offset: $offset) {
         aggregate {

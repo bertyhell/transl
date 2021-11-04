@@ -34,12 +34,12 @@ export const Toolbar: FunctionComponent<ToolbarProps> = ({
   return (
     <div
       className={classnames(className, 'c-toolbar', {
-        [`c-toolbar--${size}`]: size,
-        'c-toolbar--align-top': alignTop,
-        'c-toolbar--auto': autoHeight,
-        'c-toolbar--justified': justify,
-        'c-toolbar--spaced': spaced,
-        'c-toolbar--wrap': wrap,
+        [`c-toolbar__${size}`]: size,
+        'c-toolbar__align-top': alignTop,
+        'c-toolbar__auto': autoHeight,
+        'c-toolbar__justified': justify,
+        'c-toolbar__spaced': spaced,
+        'c-toolbar__wrap': wrap,
       })}>
       {left && <div className='c-toolbar__left'>{left}</div>}
       {center && (

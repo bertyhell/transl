@@ -1,12 +1,4 @@
 @use 'sass:math';
-/* ==========================================================================
-   Component: Spinner
-   ---
-   A loading indicator.
-   ========================================================================== */
-
-/* Variables
-   ========================================================================== */
 
 $c-spinner-container-width: 2rem;
 $c-spinner-bar-width: 0.1rem;
@@ -15,9 +7,6 @@ $c-spinner-bar-height: 0.5rem;
 $c-spinner-large-container-width: 4rem;
 $c-spinner-large-bar-width: 0.2rem;
 $c-spinner-large-bar-height: 1rem;
-
-/* Animations
-   ========================================================================== */
 
 @keyframes cSpinnerFade {
 	0% {
@@ -28,9 +17,6 @@ $c-spinner-large-bar-height: 1rem;
 	}
 }
 
-/* Component
-   ========================================================================== */
-
 .c-spinner {
 	position: relative;
 	display: inline-block;
@@ -39,18 +25,18 @@ $c-spinner-large-bar-height: 1rem;
 	height: $c-spinner-container-width;
 	text-indent: 999em;
 
-	&.c-spinner--large {
+	&.c-spinner__large {
 		width: $c-spinner-large-container-width;
 		height: $c-spinner-large-container-width;
 	}
 
-	&.c-spinner--white {
+	&.c-spinner__white {
 		.c-spinner__bar {
 			background-color: white;
 		}
 	}
 
-	&.c-spinner--light {
+	&.c-spinner__light {
 		.c-spinner__bar {
 			background-color: rgba(255, 255, 255, 0.8);
 		}
@@ -68,7 +54,7 @@ $c-spinner-large-bar-height: 1rem;
 	background-color: rgba(#000,0.6);
 	transform-origin: 50% math.div($c-spinner-container-width, 2); /* container height / 2 */
 
-	.c-spinner--large & {
+	.c-spinner__large & {
 		left: (math.div($c-spinner-large-container-width, 2) - $c-spinner-large-bar-width);
 		width: $c-spinner-large-bar-width;
 		height: $c-spinner-large-bar-height;
@@ -94,8 +80,8 @@ $spinTotal: 12;
 
 // When spinner meets buttons
 
-.c-button--primary .c-spinner__bar,
-.c-alert--floating .c-spinner__bar {
+.c-button__primary .c-spinner__bar,
+.c-alert__floating .c-spinner__bar {
 	background-color: #FFF;
 }
 

@@ -2,20 +2,8 @@
 @import '../../styles/colors';
 @import '../../styles/variables';
 
-/* ==========================================================================
-   Component: Toolbar
-   ---
-   Component for aligning multiple sub components on a horizontal axis
-   ========================================================================== */
-
-/* Variables
-   ========================================================================== */
-
 $c-toolbar-item-spacing: 1.6rem !default;
 $c-toolbar-main-border-color: $color-gray-200 !default;
-
-/* Component
-   ========================================================================== */
 
 .c-toolbar {
 	width: 100%;
@@ -25,7 +13,7 @@ $c-toolbar-main-border-color: $color-gray-200 !default;
 	justify-content: space-between;
 	min-height: $g-bar-size-regular;
 
-	&.c-toolbar--wrap {
+	&.c-toolbar__wrap {
 		.c-toolbar__left,
 		.c-toolbar__right,
 		.c-toolbar__center {
@@ -34,27 +22,27 @@ $c-toolbar-main-border-color: $color-gray-200 !default;
 	}
 }
 
-.c-toolbar--medium {
+.c-toolbar__medium {
 	height: $g-bar-size-medium;
 }
 
-.c-toolbar--large {
+.c-toolbar__large {
 	height: $g-bar-size-large;
 }
 
-.c-toolbar--huge {
+.c-toolbar__huge {
 	height: $g-bar-size-huge;
 }
 
-.c-toolbar--spaced {
+.c-toolbar__spaced {
 	padding: 0 2.4rem;
 }
 
-.c-toolbar--auto {
+.c-toolbar__auto {
 	height: auto;
 }
 
-.c-toolbar--align-top {
+.c-toolbar__align-top {
 	align-items: flex-start;
 }
 
@@ -111,20 +99,16 @@ $c-toolbar-main-border-color: $color-gray-200 !default;
 	}
 }
 
-.c-toolbar__center--interactive {
+.c-toolbar__center__interactive {
 	z-index: $g-c-local-toolbar-middle-z; // If our middle element is interactive (rare) we can specifiy this
 }
 
 // For some cases you need to set -100% to actually center the item
-.c-toolbar__center-inner--alt {
+.c-toolbar__center-inner__alt {
 	margin-left: -100%;
 }
 
-
-/* Justified toolbar
-   ========================================================================== */
-
-.c-toolbar--justified {
+.c-toolbar__justified {
 	flex: 1 0 auto;
 	display: flex;
 	align-items: center;
@@ -134,18 +118,14 @@ $c-toolbar-main-border-color: $color-gray-200 !default;
 	}
 }
 
-.c-toolbar--justified {
+.c-toolbar__justified {
 	.c-toolbar__item:last-child {
 		margin: 0;
 	}
 }
 
-
-/* Drop columns on request
-   ========================================================================== */
-
 @media (max-width: $g-bp2 - 1) {
-	.c-toolbar.c-toolbar--drop-columns-low-mq {
+	.c-toolbar.c-toolbar__drop-columns-low-mq {
 		height: auto;
 		display: block;
 

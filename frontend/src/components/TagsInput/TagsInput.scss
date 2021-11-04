@@ -5,7 +5,7 @@
 		z-index: 12;
 	}
 
-	&.c-tags-input--is-disabled {
+	&.c-tags-input__is-disabled {
 		.c-tags-input__control {
 			background-color: $color-gray-100;
 		}
@@ -30,7 +30,7 @@
 			border: 1px solid $color-gray-150;
 		}
 
-		&.c-tags-input__control--is-focused {
+		&.c-tags-input__control__is-focused {
 			outline: 0;
 			border-color: $color-border-color;
 			box-shadow: inset 0 0 0 0.1rem $color-border-color, 0 0 0.5rem $color-input-box-shadow;

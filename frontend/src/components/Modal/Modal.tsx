@@ -84,7 +84,7 @@ export const Modal: FunctionComponent<ModalProps> = ({
     return (
       <>
         {(!!title || !!headerRight || !!onClose) && (
-          <div className='c-modal__header c-modal__header--bordered'>
+          <div className='c-modal__header c-modal__header__bordered'>
             <Toolbar autoHeight spaced>
               {title && (
                 <ToolbarLeft>
@@ -116,7 +116,7 @@ export const Modal: FunctionComponent<ModalProps> = ({
         )}
         {!scrollable && <div className='c-modal__body'>{body}</div>}
         {(footerLeft || footerRight) && (
-          <div className='c-modal__footer c-modal__footer--bordered'>
+          <div className='c-modal__footer c-modal__footer__bordered'>
             <Toolbar spaced>
               {footerLeft && (
                 <ToolbarLeft>
@@ -140,20 +140,20 @@ export const Modal: FunctionComponent<ModalProps> = ({
   };
 
   const classNames = classnames('c-modal', {
-    'c-modal--extra-large': size === 'extra-large',
-    'c-modal--fullscreen': size === 'fullscreen',
-    'c-modal--fullwidth': size === 'fullwidth',
-    'c-modal--height-auto': size === 'auto',
-    'c-modal--large': size === 'large',
-    'c-modal--medium': size === 'medium',
-    'c-modal--scrollable': scrollable,
-    'c-modal--small': size === 'small',
+    'c-modal__extra-large': size === 'extra-large',
+    'c-modal__fullscreen': size === 'fullscreen',
+    'c-modal__fullwidth': size === 'fullwidth',
+    'c-modal__height-auto': size === 'auto',
+    'c-modal__large': size === 'large',
+    'c-modal__medium': size === 'medium',
+    'c-modal__scrollable': scrollable,
+    'c-modal__small': size === 'small',
   });
   return ReactDOM.createPortal(
     <Fragment>
       <div
         className={classnames(className, 'c-modal-context', {
-          'c-modal-context--visible': isOpen,
+          'c-modal-context__visible': isOpen,
         })}
         onMouseDown={onContextMouseDown}
         onMouseUp={onContextMouseUp}>

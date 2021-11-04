@@ -63,7 +63,7 @@ export const Pagination: FunctionComponent<PaginationProps> = ({
         {pagesToDisplay.map((pageIndex: number) => (
           <div
             className={classnames('c-pagination__btn', {
-              'c-pagination__btn--active': pageIndex === currentPage,
+              'c-pagination__btn__active': pageIndex === currentPage,
             })}
             key={pageIndex}
             onClick={pageIndex !== currentPage ? () => changePage(pageIndex) : () => {}}>

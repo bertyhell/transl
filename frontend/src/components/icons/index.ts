@@ -10,6 +10,7 @@ import { ReactComponent as ChevronUp } from './svg/chevron-up.svg';
 import { ReactComponent as ChevronsLeft } from './svg/chevrons-left.svg';
 import { ReactComponent as ChevronsRight } from './svg/chevrons-right.svg';
 import { ReactComponent as ChevronsUpAndDown } from './svg/chevrons-up-and-down.svg';
+import { ReactComponent as Edit2 } from './svg/edit-2.svg';
 import { ReactComponent as ErrorIcon } from './svg/error-icon.svg';
 import { ReactComponent as Filter } from './svg/filter.svg';
 import { ReactComponent as Folder } from './svg/folder.svg';
@@ -30,6 +31,7 @@ export const ICONS = {
   ChevronsLeft,
   ChevronsRight,
   ChevronsUpAndDown,
+  Edit2,
   ErrorIcon,
   Filter,
   Folder,
