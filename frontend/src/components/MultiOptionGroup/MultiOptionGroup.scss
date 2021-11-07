@@ -1,0 +1,41 @@
+@import '../../styles/colors';
+
+.c-multi-option-group {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-evenly;
+
+	.c-multi-option {
+		display: flex;
+		flex-direction: column;
+		width: 100%;
+		align-items: center;
+		border: 1px solid #ddd;
+		border-right: 0;
+		padding: 15px;
+		cursor: pointer;
+		text-align: center;
+
+		&:hover {
+			background-color: lighten($color-primary, 40%);
+		}
+
+		&.c-multi-option-selected {
+			background-color: $color-primary;
+			color: white;
+		}
+
+		&:first-child {
+			border-radius: 8px 0 0 8px;
+		}
+
+		&:last-child {
+			border-radius: 0 8px 8px 0;
+			border-right: 1px solid #ddd;
+		}
+
+		input {
+			display: none;
+		}
+	}
+}

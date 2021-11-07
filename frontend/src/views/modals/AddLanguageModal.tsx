@@ -6,6 +6,7 @@ import { OnChangeValue } from 'react-select/dist/declarations/src/types';
 import { Button } from '../../components/Button/Button';
 import { Form } from '../../components/Form/Form';
 import { FormGroup } from '../../components/Form/FormGroup/FormGroup';
+import { LanguageMultiSelect } from '../../components/LanguageSelect/LanguageMultiSelect';
 import { Modal } from '../../components/Modal/Modal';
 import { ModalBody, ModalFooterRight } from '../../components/Modal/Modal.slots';
 import { Select } from '../../components/Select/Select';
@@ -16,7 +17,6 @@ import {
   Project_Language_Link_Insert_Input,
   useAddProjectLanguageLinksMutation,
   useGetCompaniesAndProjectsQuery,
-  useGetLanguagesQuery,
 } from '../../queries/config/graphql-generated-types';
 import { Company, Language, Project } from '../../queries/type-aliasses';
 
@@ -28,11 +28,10 @@ interface AddLanguageModalProps {
 export const AddLanguageModal: FunctionComponent<AddLanguageModalProps> = ({ isOpen, onClose }) => {
   const { projectUuid } = useParams();
   const { data: companiesAndProjects } = useGetCompaniesAndProjectsQuery(DATABASE_CONFIG, { userUuid: USER_UUID });
-  const { data: languagesResponse } = useGetLanguagesQuery(DATABASE_CONFIG);
   const { mutateAsync: addProjectLanguageLinks } = useAddProjectLanguageLinksMutation(DATABASE_CONFIG);
   const [selectedCompany, setSelectedCompany] = useState<Company | null>(null);
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
-  const [selectedLanguages, setSelectedLanguages] = useState<OnChangeValue<Language, true>>([]);
+  const [selectedLanguages, setSelectedLanguages] = useState<Language[]>([]);
 
   // Set initially selected project
   useEffect(() => {
@@ -66,7 +65,7 @@ export const AddLanguageModal: FunctionComponent<AddLanguageModalProps> = ({ isO
       return;
     }
     await addProjectLanguageLinks({
-      projectLanguageLinks: selectedLanguages.map(
+      projectLanguageLinks: (selectedLanguages || []).map(
         (selectedLanguage): Project_Language_Link_Insert_Input => {
           return {
             language_id: selectedLanguage.id,
@@ -79,7 +78,7 @@ export const AddLanguageModal: FunctionComponent<AddLanguageModalProps> = ({ isO
   };
 
   const handleLanguageChanged = (newValue: OnChangeValue<Language, true>, _actionMeta: ActionMeta<Language>) => {
-    setSelectedLanguages(newValue);
+    setSelectedLanguages(newValue as Language[]);
   };
 
   return (
@@ -97,12 +96,7 @@ export const AddLanguageModal: FunctionComponent<AddLanguageModalProps> = ({ isO
             <Select<Project, false> id='select-project' onChange={setSelectedProject} options={selectedCompany?.projects || []} />
           </FormGroup>
           <FormGroup label={$t('Languages')} labelFor='select-languages'>
-            <Select<Language, true>
-              id='select-languages'
-              isMulti
-              onChange={handleLanguageChanged}
-              options={languagesResponse?.languages || []}
-            />
+            <LanguageMultiSelect onChange={handleLanguageChanged} value={selectedLanguages} />
           </FormGroup>
         </Form>
       </ModalBody>

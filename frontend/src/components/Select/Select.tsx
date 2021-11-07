@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactSelect, { ActionMeta } from 'react-select';
-import { OnChangeValue } from 'react-select/dist/declarations/src/types';
+import { OnChangeValue, PropsValue } from 'react-select/dist/declarations/src/types';
 
 import { $t } from '../../helpers/i18n';
 
@@ -10,14 +10,14 @@ export interface SelectProps<Option, IsMulti extends boolean = false> {
   className?: string;
   clearable?: boolean;
   disabled?: boolean;
-  formatOptionLabel?: (option: Option) => string;
+  getOptionLabel?: (option: Option) => string;
   id?: string;
   isMulti?: IsMulti;
   loading?: boolean;
   onChange?: (value: OnChangeValue<Option, IsMulti>, actionMeta: ActionMeta<Option>) => void;
   options: Option[];
   placeholder?: string;
-  value?: Option;
+  value?: PropsValue<Option>;
 }
 
 export function Select<Option, IsMulti extends boolean = false>({
@@ -31,7 +31,7 @@ export function Select<Option, IsMulti extends boolean = false>({
   value,
   onChange = () => {},
   isMulti,
-  formatOptionLabel = (option: Option) => {
+  getOptionLabel = (option: Option) => {
     const label: string | undefined = (option as { label?: string })?.label;
     const name: string | undefined = (option as { name?: string })?.name;
     const key: string | undefined = (option as { key?: string })?.key;
@@ -43,7 +43,7 @@ export function Select<Option, IsMulti extends boolean = false>({
     <ReactSelect<Option, IsMulti>
       className={'c-select' + (className ? ' ' + className : '')}
       classNamePrefix='c-select'
-      formatOptionLabel={formatOptionLabel}
+      getOptionLabel={getOptionLabel}
       id={id}
       isClearable={clearable}
       isDisabled={disabled}
