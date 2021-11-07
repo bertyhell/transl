@@ -49,6 +49,7 @@ $color-french-rose: #f33f67;
    ========================================================================== */
 
 $color-primary: $color-teal-bright;
+$color-primary-light: lighten($color-primary, 40%);
 $color-success: $color-ocean-green;
 $color-error: #da3f34;
 

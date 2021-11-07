@@ -1,3 +1,6 @@
+@import '../../styles/variables';
+@import '../../styles/colors';
+
 $c-button-text-color: $g-text-color !default;
 $c-button-hover-border-color: $color-gray-100 !default;
 $c-button-outline-color: $color-primary !default;
@@ -142,7 +145,7 @@ $c-button-link-color: $color-primary !default;
 	&:focus,
 	&.c-button__active,
 	&.c-button__active:focus {
-		background-color: $color-gray-100;
+		background-color: $color-primary-light;
 		box-shadow: inset 0 0 0 0.1rem $c-button-hover-border-color;
 	}
 

@@ -19,6 +19,7 @@
 
 	&.nav-item-active {
 		background-color: $color-primary;
+		color: white;
 	}
 
 	&.collapsed .icon {
@@ -34,6 +35,7 @@
 	}
 
 	&:hover {
-		background-color: #eee;
+		background-color: $color-primary-light;
+		color: inherit;
 	}
 }
