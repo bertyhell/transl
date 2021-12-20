@@ -39,12 +39,10 @@ export const TextInput: FunctionComponent<TextInputProps> = ({
     onChange(event.target.value);
   }
 
-  const classes = classnames(className, icon ? 'c-input-with-icon' : 'c-input');
-
   return icon ? (
-    <div className={classes}>
+    <div className={classnames(className, 'relative flex items-center')}>
       <input
-        className='c-input'
+        className={classnames('w-full p-2 rounded border-2 border-gray-200 focus:border-2 focus:border-cyan-500 outline-0')}
         disabled={disabled}
         id={id}
         placeholder={placeholder}
@@ -55,11 +53,11 @@ export const TextInput: FunctionComponent<TextInputProps> = ({
         onChange={onValueChange}
         onKeyUp={onKeyUp}
       />
-      <Icon name={icon} />
+      <Icon className='absolute right-2 stroke-gray-400' name={icon} />
     </div>
   ) : (
     <input
-      className={classes}
+      className={classnames(className, 'p-2 rounded border-2 border-gray-200 focus:border-2 focus:border-cyan-500 outline-0')}
       disabled={disabled}
       id={id}
       placeholder={placeholder}

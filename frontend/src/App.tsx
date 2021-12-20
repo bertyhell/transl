@@ -13,14 +13,14 @@ function Layout() {
   const queryClient = new QueryClient();
 
   return (
-    <div className='main-app'>
-      <QueryClientProvider client={queryClient}>
-        <Sidebar />
-        <div className='main-view'>
+    <QueryClientProvider client={queryClient}>
+      <div className='flex flex-row'>
+        <Sidebar className='w-1/4' />
+        <div className='w-3/4 p-2'>
           <Outlet />
         </div>
-      </QueryClientProvider>
-    </div>
+      </div>
+    </QueryClientProvider>
   );
 }
 

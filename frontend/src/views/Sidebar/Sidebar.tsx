@@ -1,3 +1,4 @@
+import classnames from 'classnames';
 import React, { ReactNode, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
@@ -16,7 +17,11 @@ import { AddProjectModal } from '../modals/AddProjectModal';
 
 import './Sidebar.scss';
 
-export function Sidebar() {
+interface Props {
+  className?: string;
+}
+
+export function Sidebar({ className }: Props) {
   const { companyUuid, projectUuid } = useParams();
   const [searchTerm, setSearchTerm] = useState<string>('');
   const { data } = useGetCompaniesAndProjectsQuery(DATABASE_CONFIG, { userUuid: USER_UUID });
@@ -54,8 +59,8 @@ export function Sidebar() {
   };
 
   return (
-    <nav className='sidebar-nav'>
-      <div className='c-sidebar-nav-top'>
+    <nav className={classnames(className, 'bg-gray-400 h-screen p-2 flex flex-col')}>
+      <div className='flex-grow'>
         <TextInput icon='Search' onChange={setSearchTerm} placeholder='Search' value={searchTerm} />
         {data?.companies.length ? data.companies.map(renderCompany) : <span>{$t('No projects found')}</span>}
       </div>

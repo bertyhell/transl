@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ReactElement } from 'react';
 import ReactSelect, { ActionMeta } from 'react-select';
 import { OnChangeValue, PropsValue } from 'react-select/dist/declarations/src/types';
 
@@ -10,6 +10,7 @@ export interface SelectProps<Option, IsMulti extends boolean = false> {
   className?: string;
   clearable?: boolean;
   disabled?: boolean;
+  formatOptionLabel?: (option: Option) => ReactElement<any, any>;
   getOptionLabel?: (option: Option) => string;
   id?: string;
   isMulti?: IsMulti;
@@ -31,6 +32,7 @@ export function Select<Option, IsMulti extends boolean = false>({
   value,
   onChange = () => {},
   isMulti,
+  formatOptionLabel,
   getOptionLabel = (option: Option) => {
     const label: string | undefined = (option as { label?: string })?.label;
     const name: string | undefined = (option as { name?: string })?.name;
@@ -43,6 +45,7 @@ export function Select<Option, IsMulti extends boolean = false>({
     <ReactSelect<Option, IsMulti>
       className={'c-select' + (className ? ' ' + className : '')}
       classNamePrefix='c-select'
+      formatOptionLabel={formatOptionLabel}
       getOptionLabel={getOptionLabel}
       id={id}
       isClearable={clearable}

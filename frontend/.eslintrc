@@ -12,9 +12,6 @@
     "plugin:import/typescript",
     "plugin:import/warnings"
   ],
-  "eslint.workingDirectories": [
-    "frontend"
-  ],
   "plugins": ["prettier", "simple-import-sort"],
   "parserOptions": {
     "ecmaVersion": 2020,
@@ -65,8 +62,7 @@
       "plugins": ["@typescript-eslint/eslint-plugin", "react-hooks", "typescript-sort-keys", "sort-keys-fix"],
       "extends": [
         "plugin:@typescript-eslint/eslint-recommended",
-        "plugin:@typescript-eslint/recommended",
-        "eslint-config-prettier/@typescript-eslint"
+        "plugin:@typescript-eslint/recommended"
       ],
       "rules": {
         "@typescript-eslint/explicit-function-return-type": 0,

@@ -1,124 +1,124 @@
-@import '../../styles/colors';
-@import '../../styles/variables';
-
-.c-input {
-	border-radius: $c-input-border-radius;
-	background-color: $c-input-bg-color;
-	border: 1px solid $c-input-border-color;
-	font-size: inherit;
-	height: 3.6rem;
-	padding: $c-input-padding;
-	width: 100%;
-	appearance: none;
-	transition: all 0.15s ease-in-out;
-
-	&:focus {
-		outline: 0;
-		border-color: $c-input-accent-color;
-		box-shadow: inset 0 0 0 0.1rem $c-input-accent-color;
-	}
-
-	&[disabled] {
-		background-color: $color-gray-100;
-	}
-}
-
-.o-form-group__error {
-	border-color: $c-input-error-accent-color;
-
-	&:focus {
-		outline: 0;
-		border-color: $c-input-error-accent-color;
-		box-shadow: 0 0 0 2px rgba($c-input-error-accent-color, 0.2);
-	}
-}
-
-textarea.c-input {
-	height: auto;
-	line-height: 1.5;
-}
-
-// Heights (for textareas)
-textarea.c-input__h-small {
-	height: 12rem;
-}
-
-textarea.c-input__h-medium {
-	height: 16rem;
-}
-
-textarea.c-input__h-large {
-	height: 20rem;
-}
-
-// Widths
-.c-input__w-xsmall {
-	width: 4rem;
-}
-
-.c-input__w-small {
-	width: 9.6rem;
-}
-
-.c-input__w-medium {
-	width: 16rem;
-}
-
-.c-input__w-large {
-	width: 44rem;
-}
-
-.c-input[readonly] {
-	background-color: $c-input-readonly-border-color;
-}
-
-.c-input-with-icon {
-	display: block;
-	position: relative;
-
-	.c-input {
-		padding-right: 3rem;
-	}
-
-	svg {
-		right: 10px;
-		opacity: 0.3;
-		position: absolute;
-		top: calc(50% - 8px);
-		width: 1.8rem;
-		height: 1.8rem;
-	}
-}
-
-.c-input-group {
-	display: flex;
-	align-items: flex-start;
-}
-
-.c-input-group__item {
-	flex: 1;
-}
-
-.c-input-group__append {
-	height: 3.6rem;
-	margin-left: 1rem;
-}
-
-.c-input-group__prepend {
-	height: 3.6rem;
-	width: 3.6rem;
-	color: $color-gray-400;
-	background-color: $color-gray-50;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	margin-right: -0.1rem;
-	padding: 0 0.8rem;
-	border-radius: 0.3rem 0 0 0.3rem;
-	border: 1px solid $color-gray-150;
-}
-
-.c-input-group > .c-input:not(:first-child) {
-	border-radius: 0 0.3rem 0.3rem 0;
-}
-
+//@import '../../styles/colors';
+//@import '../../styles/variables';
+//
+//.c-input {
+//	border-radius: $c-input-border-radius;
+//	background-color: $c-input-bg-color;
+//	border: 1px solid $c-input-border-color;
+//	font-size: inherit;
+//	height: 3.6rem;
+//	padding: $c-input-padding;
+//	width: 100%;
+//	appearance: none;
+//	transition: all 0.15s ease-in-out;
+//
+//	&:focus {
+//		outline: 0;
+//		border-color: $c-input-accent-color;
+//		box-shadow: inset 0 0 0 0.1rem $c-input-accent-color;
+//	}
+//
+//	&[disabled] {
+//		background-color: $color-gray-100;
+//	}
+//}
+//
+//.o-form-group__error {
+//	border-color: $c-input-error-accent-color;
+//
+//	&:focus {
+//		outline: 0;
+//		border-color: $c-input-error-accent-color;
+//		box-shadow: 0 0 0 2px rgba($c-input-error-accent-color, 0.2);
+//	}
+//}
+//
+//textarea.c-input {
+//	height: auto;
+//	line-height: 1.5;
+//}
+//
+//// Heights (for textareas)
+//textarea.c-input__h-small {
+//	height: 12rem;
+//}
+//
+//textarea.c-input__h-medium {
+//	height: 16rem;
+//}
+//
+//textarea.c-input__h-large {
+//	height: 20rem;
+//}
+//
+//// Widths
+//.c-input__w-xsmall {
+//	width: 4rem;
+//}
+//
+//.c-input__w-small {
+//	width: 9.6rem;
+//}
+//
+//.c-input__w-medium {
+//	width: 16rem;
+//}
+//
+//.c-input__w-large {
+//	width: 44rem;
+//}
+//
+//.c-input[readonly] {
+//	background-color: $c-input-readonly-border-color;
+//}
+//
+//.c-input-with-icon {
+//	display: block;
+//	position: relative;
+//
+//	.c-input {
+//		padding-right: 3rem;
+//	}
+//
+//	svg {
+//		right: 10px;
+//		opacity: 0.3;
+//		position: absolute;
+//		top: calc(50% - 8px);
+//		width: 1.8rem;
+//		height: 1.8rem;
+//	}
+//}
+//
+//.c-input-group {
+//	display: flex;
+//	align-items: flex-start;
+//}
+//
+//.c-input-group__item {
+//	flex: 1;
+//}
+//
+//.c-input-group__append {
+//	height: 3.6rem;
+//	margin-left: 1rem;
+//}
+//
+//.c-input-group__prepend {
+//	height: 3.6rem;
+//	width: 3.6rem;
+//	color: $color-gray-400;
+//	background-color: $color-gray-50;
+//	display: flex;
+//	justify-content: center;
+//	align-items: center;
+//	margin-right: -0.1rem;
+//	padding: 0 0.8rem;
+//	border-radius: 0.3rem 0 0 0.3rem;
+//	border: 1px solid $color-gray-150;
+//}
+//
+//.c-input-group > .c-input:not(:first-child) {
+//	border-radius: 0 0.3rem 0.3rem 0;
+//}
+//

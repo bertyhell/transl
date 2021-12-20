@@ -93,7 +93,7 @@ export const TranslationEditor: FunctionComponent = () => {
   return (
     <div className='c-key-value-editor'>
       <div className='align-right'>
-        <TextInput className='filter-input' icon='Filter' onChange={setFilterString} value={filterString} />
+        <TextInput className='w-60' icon='Filter' onChange={setFilterString} value={filterString} />
       </div>
       {data?.project_terms?.length ? (
         <Table<ProjectTerm>
