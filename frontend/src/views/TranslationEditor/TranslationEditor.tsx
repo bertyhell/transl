@@ -8,7 +8,7 @@ import { TranslationInputField } from '../../components/TranslationInputField/Tr
 import { $t } from '../../helpers/i18n';
 import { useTableSort } from '../../hooks/useTableSort';
 import { DATABASE_CONFIG } from '../../queries/config/database.constants';
-import { useGetTranslationsQuery } from '../../queries/config/graphql-generated-types';
+import { useGetTranslationsQuery, useUpdateTranslationValueMutation } from '../../queries/config/graphql-generated-types';
 import { ProjectTerm } from '../../queries/type-aliasses';
 
 import './TranslationEditor.scss';
@@ -29,7 +29,7 @@ export const TranslationEditor: FunctionComponent = () => {
 
   const languageCodes = (searchParams.get('languageCodes') || '').split('|').map(code => code.trim());
 
-  const { data } = useGetTranslationsQuery(
+  const { data, refetch: refetchTranslations } = useGetTranslationsQuery(
     DATABASE_CONFIG,
     {
       languageCodes: languageCodes,
@@ -40,12 +40,24 @@ export const TranslationEditor: FunctionComponent = () => {
       enabled: !!languageCodes?.length,
     },
   );
+  const { mutateAsync: updateTranslation } = useUpdateTranslationValueMutation(DATABASE_CONFIG);
   const [filterString, setFilterString] = useState<string>('');
   const [sortColumn, sortOrder, handleSortClick] = useTableSort<ColumnId>('key');
 
-  const onValueChanged = (value: string, key: string) => {
-    // TODO save to database
-    console.log('changed: ' + key + ' => ' + 'value');
+  const onValueChanged = async (languageCode: string, key: string, value: string) => {
+    try {
+      await updateTranslation({
+        languageCode,
+        projectUuid,
+        translationKey: key,
+        translationValue: value,
+      });
+      await refetchTranslations();
+      console.log('changed: ' + key + ' => ' + value);
+    } catch (err) {
+      console.error(err);
+      // TODO toast error
+    }
   };
 
   const renderCell = (projectTerm: ProjectTerm, columnId: ColumnId): ReactNode | null => {
@@ -57,7 +69,7 @@ export const TranslationEditor: FunctionComponent = () => {
         // language codes
         return (
           <TranslationInputField
-            onBlur={(newValue: string) => onValueChanged(projectTerm.key, newValue)}
+            onBlur={(newValue: string) => onValueChanged(columnId, projectTerm.key, newValue)}
             value={
               projectTerm.translations.find(translation => translation?.project_language_link?.language?.iso_code === columnId)
                 ?.translation_value || ''
@@ -68,7 +80,7 @@ export const TranslationEditor: FunctionComponent = () => {
   };
 
   const getColumns = () => {
-    const columns = [{ id: 'key', label: $t('Key'), sortable: true }];
+    const columns = [{ id: 'key', label: $t('key'), sortable: true }];
     languageCodes?.forEach(languageCode => {
       if (languageCode) {
         columns.push({ id: languageCode, label: $t(languageCode), sortable: true });
@@ -77,10 +89,11 @@ export const TranslationEditor: FunctionComponent = () => {
     return columns;
   };
 
+  console.log('rerendering', data);
   return (
     <div className='c-key-value-editor'>
       <div className='align-right'>
-        <TextInput icon='Filter' onChange={setFilterString} value={filterString} />
+        <TextInput className='filter-input' icon='Filter' onChange={setFilterString} value={filterString} />
       </div>
       {data?.project_terms?.length ? (
         <Table<ProjectTerm>

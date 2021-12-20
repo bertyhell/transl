@@ -11,7 +11,7 @@
     "hasura-create-develop-seed": "hasura seed create develop_seed --database-name transl --from-table companies --from-table company_user_link --from-table project_language_link --from-table project_terms --from-table projects --from-table translation_statuses --from-table translations --from-table user_project_link --from-table users\n",
     "seed-database-production": "hasura seed apply --file seeds/transl/1635184567311_required_seed.sql --database-name transl",
     "seed-database-development": "hasura seed apply --database-name transl",
-    "generate-database-types": "dotenv -e ../.env graphql-codegen --config codegen.yml"
+    "generate-database-types": "dotenv -e ../.env graphql-codegen --watch --config codegen.yml"
   },
   "dependencies": {
     "hasura-cli": "^2.0.9",

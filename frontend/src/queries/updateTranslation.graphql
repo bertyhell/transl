@@ -1,0 +1,5 @@
+mutation updateTranslationValue($projectUuid: uuid, $languageCode: String, $translationKey: String, $translationValue: String) {
+    update_translations(where: {project_language_link: {language: {iso_code: {_eq: $languageCode}}, project: {uuid: {_eq: $projectUuid}}}, term: {key: {_eq: $translationKey}}}, _set: {translation_value: $translationValue}) {
+        affected_rows
+    }
+}

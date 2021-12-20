@@ -77,14 +77,14 @@ textarea.c-input__h-large {
 	position: relative;
 
 	.c-input {
-		padding-left: 3rem;
+		padding-right: 3rem;
 	}
 
 	svg {
 		right: 10px;
 		opacity: 0.3;
 		position: absolute;
-		top: 15px;
+		top: calc(50% - 8px);
 		width: 1.8rem;
 		height: 1.8rem;
 	}

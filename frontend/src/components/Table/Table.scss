@@ -12,12 +12,13 @@ $c-table-row-selected-bg: #eee !default;
 	th,
 	td {
 		text-align: left;
-		padding: 0.8rem 0;
+		padding: 0.8rem;
 		position: relative;
 	}
 
 	th {
 		font-weight: 500;
+		background-color: #ddd;
 
 		> div {
 			display: flex;
@@ -59,12 +60,8 @@ th.c-table__header__sortable {
 		padding: 1.6rem;
 	}
 
-	.o-svg-icon {
-		color: #7894A7;
-	}
-
-	.c-table__header__sortable-icon {
-		opacity: 0.5;
+	.icon {
+		width: 15px;
 	}
 }
 
