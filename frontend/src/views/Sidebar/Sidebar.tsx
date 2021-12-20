@@ -1,4 +1,3 @@
-import { stringify } from 'query-string';
 import React, { ReactNode, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
@@ -30,9 +29,9 @@ export function Sidebar() {
       <NavItem
         key={projectLanguageLink.language.uuid}
         title={$t(projectLanguageLink.language.iso_code)}
-        to={`/companies/${company.uuid}/projects/${project.uuid}/translations?${stringify({
-          languageCodes: [projectLanguageLink.language.iso_code],
-        })}`}
+        to={`/companies/${company.uuid}/projects/${project.uuid}/translations?${new URLSearchParams({
+          languageCodes: projectLanguageLink.language.iso_code,
+        }).toString()}`}
       />
     );
   };

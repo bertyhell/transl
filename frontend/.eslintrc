@@ -12,6 +12,9 @@
     "plugin:import/typescript",
     "plugin:import/warnings"
   ],
+  "eslint.workingDirectories": [
+    "frontend"
+  ],
   "plugins": ["prettier", "simple-import-sort"],
   "parserOptions": {
     "ecmaVersion": 2020,
