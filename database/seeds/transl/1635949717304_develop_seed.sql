@@ -1,11 +1,12 @@
 SET check_function_bodies = false;
 
 DELETE FROM public.company_user_link WHERE TRUE;
-DELETE FROM public.project_language_link WHERE TRUE;
+DELETE FROM public.project_language WHERE TRUE;
 DELETE FROM public.user_project_link WHERE TRUE;
 DELETE FROM public.companies WHERE TRUE;
 DELETE FROM public.users WHERE TRUE;
 DELETE FROM public.projects WHERE TRUE;
+DELETE FROM public.branches WHERE TRUE;
 DELETE FROM public.translation_statuses WHERE TRUE;
 
 INSERT INTO public.companies (id, uuid, name) VALUES (1, '566e497d-08a9-49dd-84ee-30d9a2002718', 'First company');
@@ -22,8 +23,17 @@ INSERT INTO public.projects (id, uuid, name, company_id) VALUES (5, '0ff31a9c-dc
 INSERT INTO public.projects (id, uuid, name, company_id) VALUES (6, '1f8a804a-f78a-43ab-8f16-e3aca086237a', 'Sixth project', 2);
 INSERT INTO public.projects (id, uuid, name, company_id) VALUES (7, '152e4a1b-e576-40cb-a2bb-99b811f1191f', 'Seventh project', 3);
 INSERT INTO public.projects (id, uuid, name, company_id) VALUES (8, '5a6a33c6-b72a-499b-9b12-d3831cd41ce7', 'Eight project', 3);
-INSERT INTO public.project_language_link (id, uuid, project_id, language_id) VALUES (1, 'b3ccee60-0554-4d15-9180-ff96751fa363', 1, 46);
-INSERT INTO public.project_language_link (id, uuid, project_id, language_id) VALUES (2, '4b039265-ba2e-4196-bae0-966cd2942d19', 1, 154);
+INSERT INTO public.branches (id, uuid, project_id, name) VALUES (1, 'e2c66684-515c-4b30-8215-f968a4d07d0c', 1, 'master');
+INSERT INTO public.branches (id, uuid, project_id, name) VALUES (2, 'f9b2671a-a1ce-4a6d-9799-896971a0158c', 1, 'develop');
+INSERT INTO public.branches (id, uuid, project_id, name) VALUES (3, 'bab3f7d7-bd6e-4449-a4fe-9ff52f1d9738', 2, 'master');
+INSERT INTO public.branches (id, uuid, project_id, name) VALUES (4, '50daf340-1382-4a87-909d-d44575e70873', 3, 'master');
+INSERT INTO public.branches (id, uuid, project_id, name) VALUES (5, '347bb0f2-7007-4f1f-81a4-9a3350bfc09a', 4, 'master');
+INSERT INTO public.branches (id, uuid, project_id, name) VALUES (6, 'a55ef5f8-3beb-4856-985d-4e1a2f9f9e63', 5, 'master');
+INSERT INTO public.branches (id, uuid, project_id, name) VALUES (7, 'ff86298c-e0ed-4be9-a151-449b57a766a9', 6, 'master');
+INSERT INTO public.branches (id, uuid, project_id, name) VALUES (8, '500455c0-29ae-416f-acdf-d5a634311184', 7, 'master');
+INSERT INTO public.branches (id, uuid, project_id, name) VALUES (9, '8eb9137c-187c-405a-9739-d9129bcb7fc2', 8, 'master');
+INSERT INTO public.project_language (id, uuid, project_id, language_id) VALUES (1, 'b3ccee60-0554-4d15-9180-ff96751fa363', 1, 46);
+INSERT INTO public.project_language (id, uuid, project_id, language_id) VALUES (2, '4b039265-ba2e-4196-bae0-966cd2942d19', 1, 154);
 INSERT INTO public.project_terms (id, uuid, key, project_id, description) VALUES (1, 'f59db10e-bd3d-44bc-af38-5b43c2df5f0e', 'button_login_label', 1, 'The text to appear on the login button');
 INSERT INTO public.project_terms (id, uuid, key, project_id, description) VALUES (2, 'fc8ed1b0-46b6-46f2-b5a4-dd063c017c8c', 'button_cancel_label', 1, 'Label to show on cancel buttons');
 INSERT INTO public.translation_statuses (id, uuid, name, project_id) VALUES (1, 'd8f4050b-3e69-4322-a89e-2bbb37fa13bc', 'CREATED', 1);
@@ -32,17 +42,18 @@ INSERT INTO public.translation_statuses (id, uuid, name, project_id) VALUES (3, 
 INSERT INTO public.translation_statuses (id, uuid, name, project_id) VALUES (4, '3cdeea39-74ea-482c-ae38-4cdd47c90dcf', 'TO_REVIEW', 2);
 INSERT INTO public.translation_statuses (id, uuid, name, project_id) VALUES (5, 'fca44c7c-27af-4f27-9043-e058f9e9d5f4', 'CREATED', 2);
 INSERT INTO public.translation_statuses (id, uuid, name, project_id) VALUES (6, '8fcaca8e-b08f-414f-827f-acdd5f3629d2', 'APPROVED', 2);
-INSERT INTO public.translations (id, uuid, term_id, translation_value, project_language_link_id, translation_status_id) VALUES (1, 'f4037c60-0df7-47e4-afcc-8e6f4454ed74', 1, 'Login', 1, NULL);
-INSERT INTO public.translations (id, uuid, term_id, translation_value, project_language_link_id, translation_status_id) VALUES (2, '53d357b7-2361-4e71-8653-094ce43e160f', 1, 'Aanmelden', 2, NULL);
-INSERT INTO public.translations (id, uuid, term_id, translation_value, project_language_link_id, translation_status_id) VALUES (3, '88df730f-25f1-4a74-95c6-9877a104b09f', 2, 'Annuleren', 2, NULL);
-INSERT INTO public.translations (id, uuid, term_id, translation_value, project_language_link_id, translation_status_id) VALUES (4, '00a54755-352a-403c-afda-7e6703651505', 2, 'Cancel', 1, NULL);
+INSERT INTO public.translations (id, uuid, key_id, translation_value,language_id, status_id) VALUES (1, 'f4037c60-0df7-47e4-afcc-8e6f4454ed74', 1, 'Login', 1, NULL);
+INSERT INTO public.translations (id, uuid, key_id, translation_value,language_id, status_id) VALUES (2, '53d357b7-2361-4e71-8653-094ce43e160f', 1, 'Aanmelden', 2, NULL);
+INSERT INTO public.translations (id, uuid, key_id, translation_value,language_id, status_id) VALUES (3, '88df730f-25f1-4a74-95c6-9877a104b09f', 2, 'Annuleren', 2, NULL);
+INSERT INTO public.translations (id, uuid, key_id, translation_value,language_id, status_id) VALUES (4, '00a54755-352a-403c-afda-7e6703651505', 2, 'Cancel', 1, NULL);
 INSERT INTO public.user_project_link (id, uuid, user_id, project_id) VALUES (1, '431db739-6b16-48f1-98df-8f60ec1882aa', 1, 1);
 
 SELECT setval(pg_get_serial_sequence('companies', 'id'), coalesce(max(id)+1, 1), false) FROM public.companies;
 SELECT setval(pg_get_serial_sequence('users', 'id'), coalesce(max(id)+1, 1), false) FROM public.users;
 SELECT setval(pg_get_serial_sequence('company_user_link', 'id'), coalesce(max(id)+1, 1), false) FROM public.company_user_link;
 SELECT setval(pg_get_serial_sequence('projects', 'id'), coalesce(max(id)+1, 1), false) FROM public.projects;
-SELECT setval(pg_get_serial_sequence('project_language_link', 'id'), coalesce(max(id)+1, 1), false) FROM public.project_language_link;
+SELECT setval(pg_get_serial_sequence('branches', 'id'), coalesce(max(id)+1, 1), false) FROM public.branches;
+SELECT setval(pg_get_serial_sequence('project_language', 'id'), coalesce(max(id)+1, 1), false) FROM public.project_language;
 SELECT setval(pg_get_serial_sequence('project_terms', 'id'), coalesce(max(id)+1, 1), false) FROM public.project_terms;
 SELECT setval(pg_get_serial_sequence('translation_statuses', 'id'), coalesce(max(id)+1, 1), false) FROM public.translation_statuses;
 SELECT setval(pg_get_serial_sequence('translations', 'id'), coalesce(max(id)+1, 1), false) FROM public.translations;

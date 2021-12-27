@@ -4,6 +4,7 @@
     "hasura-open-console": "hasura console",
     "hasura-metadata-apply": "hasura metadata apply && hasura metadata reload",
     "hasura-migrate-apply": "hasura migrate apply --database-name transl",
+    "hasura-create-migrations-from-database": "hasura migrate create \"init\" --from-server --database-name transl",
     "hasura-migrate-status": "hasura migrate status --database-name transl",
     "hasura-squash": "hasura migrate squash --name <feature-name> --from <start-migration-version> --database-name transl",
     "hasura-skip-migrations": "hasura migrate apply --skip-execution --database-name transl",
