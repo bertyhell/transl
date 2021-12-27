@@ -1,3 +1,4 @@
+
 SET check_function_bodies = false;
 CREATE TABLE public.branches (
     id integer NOT NULL,
@@ -234,3 +235,27 @@ ALTER TABLE ONLY public.user_project_link
     ADD CONSTRAINT user_project_link_project_id_fkey FOREIGN KEY (project_id) REFERENCES public.projects(id) ON UPDATE CASCADE ON DELETE CASCADE;
 ALTER TABLE ONLY public.user_project_link
     ADD CONSTRAINT user_project_link_user_id_fkey FOREIGN KEY (user_id) REFERENCES public.users(id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+alter table "public"."projects"
+  add constraint "projects_company_id_fkey"
+  foreign key ("company_id")
+  references "public"."companies"
+  ("id") on update cascade on delete cascade;
+
+CREATE TABLE "public"."branches" ("id" integer NOT NULL, "uuid" uuid NOT NULL, "project_id" integer NOT NULL, "name" text NOT NULL, PRIMARY KEY ("id") , FOREIGN KEY ("project_id") REFERENCES "public"."projects"("id") ON UPDATE cascade ON DELETE cascade, UNIQUE ("uuid"), UNIQUE ("id"));
+
+alter table "public"."project_terms" rename column "project_id" to "branch_id";
+
+alter table "public"."project_terms" drop constraint "project_terms_project_id_fkey",
+  add constraint "project_terms_branch_id_fkey"
+  foreign key ("branch_id")
+  references "public"."branches"
+  ("id") on update cascade on delete cascade;
+
+alter table "public"."translations" rename column "key_id" to "term_id";
+
+alter table "public"."translations" drop constraint "translations_key_id_fkey",
+  add constraint "translations_term_id_fkey"
+  foreign key ("term_id")
+  references "public"."project_terms"
+  ("id") on update cascade on delete cascade;

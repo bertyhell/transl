@@ -1,7 +1,7 @@
+- "!include public_branches.yaml"
 - "!include public_companies.yaml"
 - "!include public_company_user_link.yaml"
 - "!include public_languages.yaml"
-- "!include public_project_language_link.yaml"
 - "!include public_project_terms.yaml"
 - "!include public_projects.yaml"
 - "!include public_translation_statuses.yaml"

@@ -1,11 +1,3 @@
 table:
   name: languages
   schema: public
-array_relationships:
-- name: project_links
-  using:
-    foreign_key_constraint_on:
-      column: language_id
-      table:
-        name: project_language_link
-        schema: public
