@@ -2,6 +2,7 @@ import React from 'react';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { Outlet, Route, Routes } from 'react-router-dom';
 
+import { BranchDetail } from './views/BranchDetail';
 import { CompanyDetail } from './views/CompanyDetail';
 import { ProjectDetail } from './views/ProjectDetail';
 import { Sidebar } from './views/Sidebar/Sidebar';
@@ -29,8 +30,9 @@ function App() {
     <Routes>
       <Route element={<Layout />} path='/'>
         <Route element={<CompanyDetail />} path='companies/:companyUuid' />
-        <Route element={<ProjectDetail />} path='companies/:companyUuid/projects/:projectUuid' />
-        <Route element={<TranslationEditor />} path='companies/:companyUuid/projects/:projectUuid/translations' />
+        <Route element={<ProjectDetail />} path='projects/:projectUuid' />
+        <Route element={<BranchDetail />} path='branches/:branchUuid' />
+        <Route element={<TranslationEditor />} path='branches/:branchUuid/translations' />
         <Route element={<p>No found route</p>} path='*' />
       </Route>
     </Routes>

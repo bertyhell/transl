@@ -1,15 +1,18 @@
 table:
-  name: project_terms
+  name: project_languages
   schema: public
 object_relationships:
-- name: branch
+- name: language
   using:
-    foreign_key_constraint_on: branch_id
+    foreign_key_constraint_on: language_id
+- name: project
+  using:
+    foreign_key_constraint_on: project_id
 array_relationships:
 - name: translations
   using:
     foreign_key_constraint_on:
-      column: term_id
+      column: project_language_id
       table:
         name: translations
         schema: public

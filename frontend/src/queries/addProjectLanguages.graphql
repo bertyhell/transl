@@ -1,5 +1,5 @@
-mutation addProjectLanguageLinks($projectLanguageLinks: [project_language_link_insert_input!]!) {
-    insert_project_language_link(objects: $projectLanguageLinks) {
+mutation addProjectLanguageLinks($branchLanguages: [branch_languages_insert_input!]!) {
+    insert_branch_languages(objects: $branchLanguages) {
         returning {
             uuid
         }

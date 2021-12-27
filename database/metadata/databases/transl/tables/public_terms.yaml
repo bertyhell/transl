@@ -1,5 +1,5 @@
 table:
-  name: project_terms
+  name: terms
   schema: public
 object_relationships:
 - name: branch

@@ -5,13 +5,18 @@ query getProject($projectUuid: uuid) {
             uuid
             name
         }
-        language_links {
-            language {
-                iso_code
-                name
+        branches {
+            id
+            uuid
+            name
+            branch_languages {
+                language {
+                    iso_code
+                    name
+                    uuid
+                }
                 uuid
             }
-            uuid
         }
         user_links {
             user {

@@ -6,6 +6,308 @@ schema {
     subscription: subscription_root
 }
 
+"whether this query should be cached (Hasura Cloud only)"
+directive @cached(
+    "refresh the cache entry"
+    refresh: Boolean! = false,
+    "measured in seconds"
+    ttl: Int! = 60
+) on QUERY
+
+"columns and relationships of \"branch_languages\""
+type branch_languages {
+    "An object relationship"
+    branch: branches!
+    branch_id: Int!
+    id: Int!
+    "An object relationship"
+    language: languages!
+    language_id: Int!
+    "An array relationship"
+    translations(
+        "distinct select on columns"
+        distinct_on: [translations_select_column!],
+        "limit the number of rows returned"
+        limit: Int,
+        "skip the first n rows. Use only with order_by"
+        offset: Int,
+        "sort the rows by one or more columns"
+        order_by: [translations_order_by!],
+        "filter the rows returned"
+        where: translations_bool_exp
+    ): [translations!]!
+    "An aggregate relationship"
+    translations_aggregate(
+        "distinct select on columns"
+        distinct_on: [translations_select_column!],
+        "limit the number of rows returned"
+        limit: Int,
+        "skip the first n rows. Use only with order_by"
+        offset: Int,
+        "sort the rows by one or more columns"
+        order_by: [translations_order_by!],
+        "filter the rows returned"
+        where: translations_bool_exp
+    ): translations_aggregate!
+    uuid: uuid!
+}
+
+"aggregated selection of \"branch_languages\""
+type branch_languages_aggregate {
+    aggregate: branch_languages_aggregate_fields
+    nodes: [branch_languages!]!
+}
+
+"aggregate fields of \"branch_languages\""
+type branch_languages_aggregate_fields {
+    avg: branch_languages_avg_fields
+    count(columns: [branch_languages_select_column!], distinct: Boolean): Int!
+    max: branch_languages_max_fields
+    min: branch_languages_min_fields
+    stddev: branch_languages_stddev_fields
+    stddev_pop: branch_languages_stddev_pop_fields
+    stddev_samp: branch_languages_stddev_samp_fields
+    sum: branch_languages_sum_fields
+    var_pop: branch_languages_var_pop_fields
+    var_samp: branch_languages_var_samp_fields
+    variance: branch_languages_variance_fields
+}
+
+"aggregate avg on columns"
+type branch_languages_avg_fields {
+    branch_id: Float
+    id: Float
+    language_id: Float
+}
+
+"aggregate max on columns"
+type branch_languages_max_fields {
+    branch_id: Int
+    id: Int
+    language_id: Int
+    uuid: uuid
+}
+
+"aggregate min on columns"
+type branch_languages_min_fields {
+    branch_id: Int
+    id: Int
+    language_id: Int
+    uuid: uuid
+}
+
+"response of any mutation on the table \"branch_languages\""
+type branch_languages_mutation_response {
+    "number of rows affected by the mutation"
+    affected_rows: Int!
+    "data from the rows affected by the mutation"
+    returning: [branch_languages!]!
+}
+
+"aggregate stddev on columns"
+type branch_languages_stddev_fields {
+    branch_id: Float
+    id: Float
+    language_id: Float
+}
+
+"aggregate stddev_pop on columns"
+type branch_languages_stddev_pop_fields {
+    branch_id: Float
+    id: Float
+    language_id: Float
+}
+
+"aggregate stddev_samp on columns"
+type branch_languages_stddev_samp_fields {
+    branch_id: Float
+    id: Float
+    language_id: Float
+}
+
+"aggregate sum on columns"
+type branch_languages_sum_fields {
+    branch_id: Int
+    id: Int
+    language_id: Int
+}
+
+"aggregate var_pop on columns"
+type branch_languages_var_pop_fields {
+    branch_id: Float
+    id: Float
+    language_id: Float
+}
+
+"aggregate var_samp on columns"
+type branch_languages_var_samp_fields {
+    branch_id: Float
+    id: Float
+    language_id: Float
+}
+
+"aggregate variance on columns"
+type branch_languages_variance_fields {
+    branch_id: Float
+    id: Float
+    language_id: Float
+}
+
+"columns and relationships of \"branches\""
+type branches {
+    "An array relationship"
+    branch_languages(
+        "distinct select on columns"
+        distinct_on: [branch_languages_select_column!],
+        "limit the number of rows returned"
+        limit: Int,
+        "skip the first n rows. Use only with order_by"
+        offset: Int,
+        "sort the rows by one or more columns"
+        order_by: [branch_languages_order_by!],
+        "filter the rows returned"
+        where: branch_languages_bool_exp
+    ): [branch_languages!]!
+    "An aggregate relationship"
+    branch_languages_aggregate(
+        "distinct select on columns"
+        distinct_on: [branch_languages_select_column!],
+        "limit the number of rows returned"
+        limit: Int,
+        "skip the first n rows. Use only with order_by"
+        offset: Int,
+        "sort the rows by one or more columns"
+        order_by: [branch_languages_order_by!],
+        "filter the rows returned"
+        where: branch_languages_bool_exp
+    ): branch_languages_aggregate!
+    id: Int!
+    name: String!
+    "An object relationship"
+    project: projects!
+    project_id: Int!
+    "fetch data from the table: \"terms\""
+    terms(
+        "distinct select on columns"
+        distinct_on: [terms_select_column!],
+        "limit the number of rows returned"
+        limit: Int,
+        "skip the first n rows. Use only with order_by"
+        offset: Int,
+        "sort the rows by one or more columns"
+        order_by: [terms_order_by!],
+        "filter the rows returned"
+        where: terms_bool_exp
+    ): [terms!]!
+    "An aggregate relationship"
+    terms_aggregate(
+        "distinct select on columns"
+        distinct_on: [terms_select_column!],
+        "limit the number of rows returned"
+        limit: Int,
+        "skip the first n rows. Use only with order_by"
+        offset: Int,
+        "sort the rows by one or more columns"
+        order_by: [terms_order_by!],
+        "filter the rows returned"
+        where: terms_bool_exp
+    ): terms_aggregate!
+    uuid: uuid!
+}
+
+"aggregated selection of \"branches\""
+type branches_aggregate {
+    aggregate: branches_aggregate_fields
+    nodes: [branches!]!
+}
+
+"aggregate fields of \"branches\""
+type branches_aggregate_fields {
+    avg: branches_avg_fields
+    count(columns: [branches_select_column!], distinct: Boolean): Int!
+    max: branches_max_fields
+    min: branches_min_fields
+    stddev: branches_stddev_fields
+    stddev_pop: branches_stddev_pop_fields
+    stddev_samp: branches_stddev_samp_fields
+    sum: branches_sum_fields
+    var_pop: branches_var_pop_fields
+    var_samp: branches_var_samp_fields
+    variance: branches_variance_fields
+}
+
+"aggregate avg on columns"
+type branches_avg_fields {
+    id: Float
+    project_id: Float
+}
+
+"aggregate max on columns"
+type branches_max_fields {
+    id: Int
+    name: String
+    project_id: Int
+    uuid: uuid
+}
+
+"aggregate min on columns"
+type branches_min_fields {
+    id: Int
+    name: String
+    project_id: Int
+    uuid: uuid
+}
+
+"response of any mutation on the table \"branches\""
+type branches_mutation_response {
+    "number of rows affected by the mutation"
+    affected_rows: Int!
+    "data from the rows affected by the mutation"
+    returning: [branches!]!
+}
+
+"aggregate stddev on columns"
+type branches_stddev_fields {
+    id: Float
+    project_id: Float
+}
+
+"aggregate stddev_pop on columns"
+type branches_stddev_pop_fields {
+    id: Float
+    project_id: Float
+}
+
+"aggregate stddev_samp on columns"
+type branches_stddev_samp_fields {
+    id: Float
+    project_id: Float
+}
+
+"aggregate sum on columns"
+type branches_sum_fields {
+    id: Int
+    project_id: Int
+}
+
+"aggregate var_pop on columns"
+type branches_var_pop_fields {
+    id: Float
+    project_id: Float
+}
+
+"aggregate var_samp on columns"
+type branches_var_samp_fields {
+    id: Float
+    project_id: Float
+}
+
+"aggregate variance on columns"
+type branches_variance_fields {
+    id: Float
+    project_id: Float
+}
+
 "columns and relationships of \"companies\""
 type companies {
     id: Int!
@@ -267,31 +569,31 @@ type languages {
     iso_code: String!
     name: String!
     "An array relationship"
-    project_links(
+    project_languages(
         "distinct select on columns"
-        distinct_on: [project_language_link_select_column!],
+        distinct_on: [branch_languages_select_column!],
         "limit the number of rows returned"
         limit: Int,
         "skip the first n rows. Use only with order_by"
         offset: Int,
         "sort the rows by one or more columns"
-        order_by: [project_language_link_order_by!],
+        order_by: [branch_languages_order_by!],
         "filter the rows returned"
-        where: project_language_link_bool_exp
-    ): [project_language_link!]!
+        where: branch_languages_bool_exp
+    ): [branch_languages!]!
     "An aggregate relationship"
-    project_links_aggregate(
+    project_languages_aggregate(
         "distinct select on columns"
-        distinct_on: [project_language_link_select_column!],
+        distinct_on: [branch_languages_select_column!],
         "limit the number of rows returned"
         limit: Int,
         "skip the first n rows. Use only with order_by"
         offset: Int,
         "sort the rows by one or more columns"
-        order_by: [project_language_link_order_by!],
+        order_by: [branch_languages_order_by!],
         "filter the rows returned"
-        where: project_language_link_bool_exp
-    ): project_language_link_aggregate!
+        where: branch_languages_bool_exp
+    ): branch_languages_aggregate!
     uuid: uuid!
 }
 
@@ -382,6 +684,20 @@ type languages_variance_fields {
 
 "mutation root"
 type mutation_root {
+    "delete data from the table: \"branch_languages\""
+    delete_branch_languages(
+        "filter the rows which have to be deleted"
+        where: branch_languages_bool_exp!
+    ): branch_languages_mutation_response
+    "delete single row from the table: \"branch_languages\""
+    delete_branch_languages_by_pk(id: Int!): branch_languages
+    "delete data from the table: \"branches\""
+    delete_branches(
+        "filter the rows which have to be deleted"
+        where: branches_bool_exp!
+    ): branches_mutation_response
+    "delete single row from the table: \"branches\""
+    delete_branches_by_pk(id: Int!): branches
     "delete data from the table: \"companies\""
     delete_companies(
         "filter the rows which have to be deleted"
@@ -403,20 +719,6 @@ type mutation_root {
     ): languages_mutation_response
     "delete single row from the table: \"languages\""
     delete_languages_by_pk(id: Int!): languages
-    "delete data from the table: \"project_language_link\""
-    delete_project_language_link(
-        "filter the rows which have to be deleted"
-        where: project_language_link_bool_exp!
-    ): project_language_link_mutation_response
-    "delete single row from the table: \"project_language_link\""
-    delete_project_language_link_by_pk(id: Int!): project_language_link
-    "delete data from the table: \"project_terms\""
-    delete_project_terms(
-        "filter the rows which have to be deleted"
-        where: project_terms_bool_exp!
-    ): project_terms_mutation_response
-    "delete single row from the table: \"project_terms\""
-    delete_project_terms_by_pk(id: Int!): project_terms
     "delete data from the table: \"projects\""
     delete_projects(
         "filter the rows which have to be deleted"
@@ -424,6 +726,13 @@ type mutation_root {
     ): projects_mutation_response
     "delete single row from the table: \"projects\""
     delete_projects_by_pk(id: Int!): projects
+    "delete data from the table: \"terms\""
+    delete_terms(
+        "filter the rows which have to be deleted"
+        where: terms_bool_exp!
+    ): terms_mutation_response
+    "delete single row from the table: \"terms\""
+    delete_terms_by_pk(id: Int!): terms
     "delete data from the table: \"translation_statuses\""
     delete_translation_statuses(
         "filter the rows which have to be deleted"
@@ -452,6 +761,34 @@ type mutation_root {
     ): users_mutation_response
     "delete single row from the table: \"users\""
     delete_users_by_pk(id: Int!): users
+    "insert data into the table: \"branch_languages\""
+    insert_branch_languages(
+        "the rows to be inserted"
+        objects: [branch_languages_insert_input!]!,
+        "on conflict condition"
+        on_conflict: branch_languages_on_conflict
+    ): branch_languages_mutation_response
+    "insert a single row into the table: \"branch_languages\""
+    insert_branch_languages_one(
+        "the row to be inserted"
+        object: branch_languages_insert_input!,
+        "on conflict condition"
+        on_conflict: branch_languages_on_conflict
+    ): branch_languages
+    "insert data into the table: \"branches\""
+    insert_branches(
+        "the rows to be inserted"
+        objects: [branches_insert_input!]!,
+        "on conflict condition"
+        on_conflict: branches_on_conflict
+    ): branches_mutation_response
+    "insert a single row into the table: \"branches\""
+    insert_branches_one(
+        "the row to be inserted"
+        object: branches_insert_input!,
+        "on conflict condition"
+        on_conflict: branches_on_conflict
+    ): branches
     "insert data into the table: \"companies\""
     insert_companies(
         "the rows to be inserted"
@@ -494,34 +831,6 @@ type mutation_root {
         "on conflict condition"
         on_conflict: languages_on_conflict
     ): languages
-    "insert data into the table: \"project_language_link\""
-    insert_project_language_link(
-        "the rows to be inserted"
-        objects: [project_language_link_insert_input!]!,
-        "on conflict condition"
-        on_conflict: project_language_link_on_conflict
-    ): project_language_link_mutation_response
-    "insert a single row into the table: \"project_language_link\""
-    insert_project_language_link_one(
-        "the row to be inserted"
-        object: project_language_link_insert_input!,
-        "on conflict condition"
-        on_conflict: project_language_link_on_conflict
-    ): project_language_link
-    "insert data into the table: \"project_terms\""
-    insert_project_terms(
-        "the rows to be inserted"
-        objects: [project_terms_insert_input!]!,
-        "on conflict condition"
-        on_conflict: project_terms_on_conflict
-    ): project_terms_mutation_response
-    "insert a single row into the table: \"project_terms\""
-    insert_project_terms_one(
-        "the row to be inserted"
-        object: project_terms_insert_input!,
-        "on conflict condition"
-        on_conflict: project_terms_on_conflict
-    ): project_terms
     "insert data into the table: \"projects\""
     insert_projects(
         "the rows to be inserted"
@@ -536,6 +845,20 @@ type mutation_root {
         "on conflict condition"
         on_conflict: projects_on_conflict
     ): projects
+    "insert data into the table: \"terms\""
+    insert_terms(
+        "the rows to be inserted"
+        objects: [terms_insert_input!]!,
+        "on conflict condition"
+        on_conflict: terms_on_conflict
+    ): terms_mutation_response
+    "insert a single row into the table: \"terms\""
+    insert_terms_one(
+        "the row to be inserted"
+        object: terms_insert_input!,
+        "on conflict condition"
+        on_conflict: terms_on_conflict
+    ): terms
     "insert data into the table: \"translation_statuses\""
     insert_translation_statuses(
         "the rows to be inserted"
@@ -592,6 +915,40 @@ type mutation_root {
         "on conflict condition"
         on_conflict: users_on_conflict
     ): users
+    "update data of the table: \"branch_languages\""
+    update_branch_languages(
+        "increments the numeric columns with given value of the filtered values"
+        _inc: branch_languages_inc_input,
+        "sets the columns of the filtered rows to the given values"
+        _set: branch_languages_set_input,
+        "filter the rows which have to be updated"
+        where: branch_languages_bool_exp!
+    ): branch_languages_mutation_response
+    "update single row of the table: \"branch_languages\""
+    update_branch_languages_by_pk(
+        "increments the numeric columns with given value of the filtered values"
+        _inc: branch_languages_inc_input,
+        "sets the columns of the filtered rows to the given values"
+        _set: branch_languages_set_input,
+        pk_columns: branch_languages_pk_columns_input!
+    ): branch_languages
+    "update data of the table: \"branches\""
+    update_branches(
+        "increments the numeric columns with given value of the filtered values"
+        _inc: branches_inc_input,
+        "sets the columns of the filtered rows to the given values"
+        _set: branches_set_input,
+        "filter the rows which have to be updated"
+        where: branches_bool_exp!
+    ): branches_mutation_response
+    "update single row of the table: \"branches\""
+    update_branches_by_pk(
+        "increments the numeric columns with given value of the filtered values"
+        _inc: branches_inc_input,
+        "sets the columns of the filtered rows to the given values"
+        _set: branches_set_input,
+        pk_columns: branches_pk_columns_input!
+    ): branches
     "update data of the table: \"companies\""
     update_companies(
         "increments the numeric columns with given value of the filtered values"
@@ -643,40 +1000,6 @@ type mutation_root {
         _set: languages_set_input,
         pk_columns: languages_pk_columns_input!
     ): languages
-    "update data of the table: \"project_language_link\""
-    update_project_language_link(
-        "increments the numeric columns with given value of the filtered values"
-        _inc: project_language_link_inc_input,
-        "sets the columns of the filtered rows to the given values"
-        _set: project_language_link_set_input,
-        "filter the rows which have to be updated"
-        where: project_language_link_bool_exp!
-    ): project_language_link_mutation_response
-    "update single row of the table: \"project_language_link\""
-    update_project_language_link_by_pk(
-        "increments the numeric columns with given value of the filtered values"
-        _inc: project_language_link_inc_input,
-        "sets the columns of the filtered rows to the given values"
-        _set: project_language_link_set_input,
-        pk_columns: project_language_link_pk_columns_input!
-    ): project_language_link
-    "update data of the table: \"project_terms\""
-    update_project_terms(
-        "increments the numeric columns with given value of the filtered values"
-        _inc: project_terms_inc_input,
-        "sets the columns of the filtered rows to the given values"
-        _set: project_terms_set_input,
-        "filter the rows which have to be updated"
-        where: project_terms_bool_exp!
-    ): project_terms_mutation_response
-    "update single row of the table: \"project_terms\""
-    update_project_terms_by_pk(
-        "increments the numeric columns with given value of the filtered values"
-        _inc: project_terms_inc_input,
-        "sets the columns of the filtered rows to the given values"
-        _set: project_terms_set_input,
-        pk_columns: project_terms_pk_columns_input!
-    ): project_terms
     "update data of the table: \"projects\""
     update_projects(
         "increments the numeric columns with given value of the filtered values"
@@ -694,6 +1017,23 @@ type mutation_root {
         _set: projects_set_input,
         pk_columns: projects_pk_columns_input!
     ): projects
+    "update data of the table: \"terms\""
+    update_terms(
+        "increments the numeric columns with given value of the filtered values"
+        _inc: terms_inc_input,
+        "sets the columns of the filtered rows to the given values"
+        _set: terms_set_input,
+        "filter the rows which have to be updated"
+        where: terms_bool_exp!
+    ): terms_mutation_response
+    "update single row of the table: \"terms\""
+    update_terms_by_pk(
+        "increments the numeric columns with given value of the filtered values"
+        _inc: terms_inc_input,
+        "sets the columns of the filtered rows to the given values"
+        _set: terms_set_input,
+        pk_columns: terms_pk_columns_input!
+    ): terms
     "update data of the table: \"translation_statuses\""
     update_translation_statuses(
         "increments the numeric columns with given value of the filtered values"
@@ -764,309 +1104,38 @@ type mutation_root {
     ): users
 }
 
-"columns and relationships of \"project_language_link\""
-type project_language_link {
-    id: Int!
-    "An object relationship"
-    language: languages!
-    language_id: Int!
-    "An object relationship"
-    project: projects!
-    project_id: Int!
-    "An array relationship"
-    translation(
-        "distinct select on columns"
-        distinct_on: [translations_select_column!],
-        "limit the number of rows returned"
-        limit: Int,
-        "skip the first n rows. Use only with order_by"
-        offset: Int,
-        "sort the rows by one or more columns"
-        order_by: [translations_order_by!],
-        "filter the rows returned"
-        where: translations_bool_exp
-    ): [translations!]!
-    "An aggregate relationship"
-    translation_aggregate(
-        "distinct select on columns"
-        distinct_on: [translations_select_column!],
-        "limit the number of rows returned"
-        limit: Int,
-        "skip the first n rows. Use only with order_by"
-        offset: Int,
-        "sort the rows by one or more columns"
-        order_by: [translations_order_by!],
-        "filter the rows returned"
-        where: translations_bool_exp
-    ): translations_aggregate!
-    uuid: uuid!
-}
-
-"aggregated selection of \"project_language_link\""
-type project_language_link_aggregate {
-    aggregate: project_language_link_aggregate_fields
-    nodes: [project_language_link!]!
-}
-
-"aggregate fields of \"project_language_link\""
-type project_language_link_aggregate_fields {
-    avg: project_language_link_avg_fields
-    count(columns: [project_language_link_select_column!], distinct: Boolean): Int!
-    max: project_language_link_max_fields
-    min: project_language_link_min_fields
-    stddev: project_language_link_stddev_fields
-    stddev_pop: project_language_link_stddev_pop_fields
-    stddev_samp: project_language_link_stddev_samp_fields
-    sum: project_language_link_sum_fields
-    var_pop: project_language_link_var_pop_fields
-    var_samp: project_language_link_var_samp_fields
-    variance: project_language_link_variance_fields
-}
-
-"aggregate avg on columns"
-type project_language_link_avg_fields {
-    id: Float
-    language_id: Float
-    project_id: Float
-}
-
-"aggregate max on columns"
-type project_language_link_max_fields {
-    id: Int
-    language_id: Int
-    project_id: Int
-    uuid: uuid
-}
-
-"aggregate min on columns"
-type project_language_link_min_fields {
-    id: Int
-    language_id: Int
-    project_id: Int
-    uuid: uuid
-}
-
-"response of any mutation on the table \"project_language_link\""
-type project_language_link_mutation_response {
-    "number of rows affected by the mutation"
-    affected_rows: Int!
-    "data from the rows affected by the mutation"
-    returning: [project_language_link!]!
-}
-
-"aggregate stddev on columns"
-type project_language_link_stddev_fields {
-    id: Float
-    language_id: Float
-    project_id: Float
-}
-
-"aggregate stddev_pop on columns"
-type project_language_link_stddev_pop_fields {
-    id: Float
-    language_id: Float
-    project_id: Float
-}
-
-"aggregate stddev_samp on columns"
-type project_language_link_stddev_samp_fields {
-    id: Float
-    language_id: Float
-    project_id: Float
-}
-
-"aggregate sum on columns"
-type project_language_link_sum_fields {
-    id: Int
-    language_id: Int
-    project_id: Int
-}
-
-"aggregate var_pop on columns"
-type project_language_link_var_pop_fields {
-    id: Float
-    language_id: Float
-    project_id: Float
-}
-
-"aggregate var_samp on columns"
-type project_language_link_var_samp_fields {
-    id: Float
-    language_id: Float
-    project_id: Float
-}
-
-"aggregate variance on columns"
-type project_language_link_variance_fields {
-    id: Float
-    language_id: Float
-    project_id: Float
-}
-
-"columns and relationships of \"project_terms\""
-type project_terms {
-    description: String
-    id: Int!
-    key: String!
-    "An object relationship"
-    project: projects!
-    project_id: Int!
-    "An array relationship"
-    translations(
-        "distinct select on columns"
-        distinct_on: [translations_select_column!],
-        "limit the number of rows returned"
-        limit: Int,
-        "skip the first n rows. Use only with order_by"
-        offset: Int,
-        "sort the rows by one or more columns"
-        order_by: [translations_order_by!],
-        "filter the rows returned"
-        where: translations_bool_exp
-    ): [translations!]!
-    "An aggregate relationship"
-    translations_aggregate(
-        "distinct select on columns"
-        distinct_on: [translations_select_column!],
-        "limit the number of rows returned"
-        limit: Int,
-        "skip the first n rows. Use only with order_by"
-        offset: Int,
-        "sort the rows by one or more columns"
-        order_by: [translations_order_by!],
-        "filter the rows returned"
-        where: translations_bool_exp
-    ): translations_aggregate!
-    uuid: uuid!
-}
-
-"aggregated selection of \"project_terms\""
-type project_terms_aggregate {
-    aggregate: project_terms_aggregate_fields
-    nodes: [project_terms!]!
-}
-
-"aggregate fields of \"project_terms\""
-type project_terms_aggregate_fields {
-    avg: project_terms_avg_fields
-    count(columns: [project_terms_select_column!], distinct: Boolean): Int!
-    max: project_terms_max_fields
-    min: project_terms_min_fields
-    stddev: project_terms_stddev_fields
-    stddev_pop: project_terms_stddev_pop_fields
-    stddev_samp: project_terms_stddev_samp_fields
-    sum: project_terms_sum_fields
-    var_pop: project_terms_var_pop_fields
-    var_samp: project_terms_var_samp_fields
-    variance: project_terms_variance_fields
-}
-
-"aggregate avg on columns"
-type project_terms_avg_fields {
-    id: Float
-    project_id: Float
-}
-
-"aggregate max on columns"
-type project_terms_max_fields {
-    description: String
-    id: Int
-    key: String
-    project_id: Int
-    uuid: uuid
-}
-
-"aggregate min on columns"
-type project_terms_min_fields {
-    description: String
-    id: Int
-    key: String
-    project_id: Int
-    uuid: uuid
-}
-
-"response of any mutation on the table \"project_terms\""
-type project_terms_mutation_response {
-    "number of rows affected by the mutation"
-    affected_rows: Int!
-    "data from the rows affected by the mutation"
-    returning: [project_terms!]!
-}
-
-"aggregate stddev on columns"
-type project_terms_stddev_fields {
-    id: Float
-    project_id: Float
-}
-
-"aggregate stddev_pop on columns"
-type project_terms_stddev_pop_fields {
-    id: Float
-    project_id: Float
-}
-
-"aggregate stddev_samp on columns"
-type project_terms_stddev_samp_fields {
-    id: Float
-    project_id: Float
-}
-
-"aggregate sum on columns"
-type project_terms_sum_fields {
-    id: Int
-    project_id: Int
-}
-
-"aggregate var_pop on columns"
-type project_terms_var_pop_fields {
-    id: Float
-    project_id: Float
-}
-
-"aggregate var_samp on columns"
-type project_terms_var_samp_fields {
-    id: Float
-    project_id: Float
-}
-
-"aggregate variance on columns"
-type project_terms_variance_fields {
-    id: Float
-    project_id: Float
-}
-
 "columns and relationships of \"projects\""
 type projects {
+    "An array relationship"
+    branches(
+        "distinct select on columns"
+        distinct_on: [branches_select_column!],
+        "limit the number of rows returned"
+        limit: Int,
+        "skip the first n rows. Use only with order_by"
+        offset: Int,
+        "sort the rows by one or more columns"
+        order_by: [branches_order_by!],
+        "filter the rows returned"
+        where: branches_bool_exp
+    ): [branches!]!
+    "An aggregate relationship"
+    branches_aggregate(
+        "distinct select on columns"
+        distinct_on: [branches_select_column!],
+        "limit the number of rows returned"
+        limit: Int,
+        "skip the first n rows. Use only with order_by"
+        offset: Int,
+        "sort the rows by one or more columns"
+        order_by: [branches_order_by!],
+        "filter the rows returned"
+        where: branches_bool_exp
+    ): branches_aggregate!
     "An object relationship"
     company: companies!
     company_id: Int!
     id: Int!
-    "An array relationship"
-    language_links(
-        "distinct select on columns"
-        distinct_on: [project_language_link_select_column!],
-        "limit the number of rows returned"
-        limit: Int,
-        "skip the first n rows. Use only with order_by"
-        offset: Int,
-        "sort the rows by one or more columns"
-        order_by: [project_language_link_order_by!],
-        "filter the rows returned"
-        where: project_language_link_bool_exp
-    ): [project_language_link!]!
-    "An aggregate relationship"
-    language_links_aggregate(
-        "distinct select on columns"
-        distinct_on: [project_language_link_select_column!],
-        "limit the number of rows returned"
-        limit: Int,
-        "skip the first n rows. Use only with order_by"
-        offset: Int,
-        "sort the rows by one or more columns"
-        order_by: [project_language_link_order_by!],
-        "filter the rows returned"
-        where: project_language_link_bool_exp
-    ): project_language_link_aggregate!
     name: String!
     "An array relationship"
     statuses(
@@ -1094,32 +1163,6 @@ type projects {
         "filter the rows returned"
         where: translation_statuses_bool_exp
     ): translation_statuses_aggregate!
-    "An array relationship"
-    terms(
-        "distinct select on columns"
-        distinct_on: [project_terms_select_column!],
-        "limit the number of rows returned"
-        limit: Int,
-        "skip the first n rows. Use only with order_by"
-        offset: Int,
-        "sort the rows by one or more columns"
-        order_by: [project_terms_order_by!],
-        "filter the rows returned"
-        where: project_terms_bool_exp
-    ): [project_terms!]!
-    "An aggregate relationship"
-    terms_aggregate(
-        "distinct select on columns"
-        distinct_on: [project_terms_select_column!],
-        "limit the number of rows returned"
-        limit: Int,
-        "skip the first n rows. Use only with order_by"
-        offset: Int,
-        "sort the rows by one or more columns"
-        order_by: [project_terms_order_by!],
-        "filter the rows returned"
-        where: project_terms_bool_exp
-    ): project_terms_aggregate!
     "An array relationship"
     user_links(
         "distinct select on columns"
@@ -1243,6 +1286,62 @@ type projects_variance_fields {
 }
 
 type query_root {
+    "An array relationship"
+    branch_languages(
+        "distinct select on columns"
+        distinct_on: [branch_languages_select_column!],
+        "limit the number of rows returned"
+        limit: Int,
+        "skip the first n rows. Use only with order_by"
+        offset: Int,
+        "sort the rows by one or more columns"
+        order_by: [branch_languages_order_by!],
+        "filter the rows returned"
+        where: branch_languages_bool_exp
+    ): [branch_languages!]!
+    "An aggregate relationship"
+    branch_languages_aggregate(
+        "distinct select on columns"
+        distinct_on: [branch_languages_select_column!],
+        "limit the number of rows returned"
+        limit: Int,
+        "skip the first n rows. Use only with order_by"
+        offset: Int,
+        "sort the rows by one or more columns"
+        order_by: [branch_languages_order_by!],
+        "filter the rows returned"
+        where: branch_languages_bool_exp
+    ): branch_languages_aggregate!
+    "fetch data from the table: \"branch_languages\" using primary key columns"
+    branch_languages_by_pk(id: Int!): branch_languages
+    "An array relationship"
+    branches(
+        "distinct select on columns"
+        distinct_on: [branches_select_column!],
+        "limit the number of rows returned"
+        limit: Int,
+        "skip the first n rows. Use only with order_by"
+        offset: Int,
+        "sort the rows by one or more columns"
+        order_by: [branches_order_by!],
+        "filter the rows returned"
+        where: branches_bool_exp
+    ): [branches!]!
+    "An aggregate relationship"
+    branches_aggregate(
+        "distinct select on columns"
+        distinct_on: [branches_select_column!],
+        "limit the number of rows returned"
+        limit: Int,
+        "skip the first n rows. Use only with order_by"
+        offset: Int,
+        "sort the rows by one or more columns"
+        order_by: [branches_order_by!],
+        "filter the rows returned"
+        where: branches_bool_exp
+    ): branches_aggregate!
+    "fetch data from the table: \"branches\" using primary key columns"
+    branches_by_pk(id: Int!): branches
     "fetch data from the table: \"companies\""
     companies(
         "distinct select on columns"
@@ -1327,62 +1426,6 @@ type query_root {
     ): languages_aggregate!
     "fetch data from the table: \"languages\" using primary key columns"
     languages_by_pk(id: Int!): languages
-    "fetch data from the table: \"project_language_link\""
-    project_language_link(
-        "distinct select on columns"
-        distinct_on: [project_language_link_select_column!],
-        "limit the number of rows returned"
-        limit: Int,
-        "skip the first n rows. Use only with order_by"
-        offset: Int,
-        "sort the rows by one or more columns"
-        order_by: [project_language_link_order_by!],
-        "filter the rows returned"
-        where: project_language_link_bool_exp
-    ): [project_language_link!]!
-    "fetch aggregated fields from the table: \"project_language_link\""
-    project_language_link_aggregate(
-        "distinct select on columns"
-        distinct_on: [project_language_link_select_column!],
-        "limit the number of rows returned"
-        limit: Int,
-        "skip the first n rows. Use only with order_by"
-        offset: Int,
-        "sort the rows by one or more columns"
-        order_by: [project_language_link_order_by!],
-        "filter the rows returned"
-        where: project_language_link_bool_exp
-    ): project_language_link_aggregate!
-    "fetch data from the table: \"project_language_link\" using primary key columns"
-    project_language_link_by_pk(id: Int!): project_language_link
-    "fetch data from the table: \"project_terms\""
-    project_terms(
-        "distinct select on columns"
-        distinct_on: [project_terms_select_column!],
-        "limit the number of rows returned"
-        limit: Int,
-        "skip the first n rows. Use only with order_by"
-        offset: Int,
-        "sort the rows by one or more columns"
-        order_by: [project_terms_order_by!],
-        "filter the rows returned"
-        where: project_terms_bool_exp
-    ): [project_terms!]!
-    "fetch aggregated fields from the table: \"project_terms\""
-    project_terms_aggregate(
-        "distinct select on columns"
-        distinct_on: [project_terms_select_column!],
-        "limit the number of rows returned"
-        limit: Int,
-        "skip the first n rows. Use only with order_by"
-        offset: Int,
-        "sort the rows by one or more columns"
-        order_by: [project_terms_order_by!],
-        "filter the rows returned"
-        where: project_terms_bool_exp
-    ): project_terms_aggregate!
-    "fetch data from the table: \"project_terms\" using primary key columns"
-    project_terms_by_pk(id: Int!): project_terms
     "An array relationship"
     projects(
         "distinct select on columns"
@@ -1411,6 +1454,34 @@ type query_root {
     ): projects_aggregate!
     "fetch data from the table: \"projects\" using primary key columns"
     projects_by_pk(id: Int!): projects
+    "fetch data from the table: \"terms\""
+    terms(
+        "distinct select on columns"
+        distinct_on: [terms_select_column!],
+        "limit the number of rows returned"
+        limit: Int,
+        "skip the first n rows. Use only with order_by"
+        offset: Int,
+        "sort the rows by one or more columns"
+        order_by: [terms_order_by!],
+        "filter the rows returned"
+        where: terms_bool_exp
+    ): [terms!]!
+    "An aggregate relationship"
+    terms_aggregate(
+        "distinct select on columns"
+        distinct_on: [terms_select_column!],
+        "limit the number of rows returned"
+        limit: Int,
+        "skip the first n rows. Use only with order_by"
+        offset: Int,
+        "sort the rows by one or more columns"
+        order_by: [terms_order_by!],
+        "filter the rows returned"
+        where: terms_bool_exp
+    ): terms_aggregate!
+    "fetch data from the table: \"terms\" using primary key columns"
+    terms_by_pk(id: Int!): terms
     "fetch data from the table: \"translation_statuses\""
     translation_statuses(
         "distinct select on columns"
@@ -1526,6 +1597,62 @@ type query_root {
 }
 
 type subscription_root {
+    "An array relationship"
+    branch_languages(
+        "distinct select on columns"
+        distinct_on: [branch_languages_select_column!],
+        "limit the number of rows returned"
+        limit: Int,
+        "skip the first n rows. Use only with order_by"
+        offset: Int,
+        "sort the rows by one or more columns"
+        order_by: [branch_languages_order_by!],
+        "filter the rows returned"
+        where: branch_languages_bool_exp
+    ): [branch_languages!]!
+    "An aggregate relationship"
+    branch_languages_aggregate(
+        "distinct select on columns"
+        distinct_on: [branch_languages_select_column!],
+        "limit the number of rows returned"
+        limit: Int,
+        "skip the first n rows. Use only with order_by"
+        offset: Int,
+        "sort the rows by one or more columns"
+        order_by: [branch_languages_order_by!],
+        "filter the rows returned"
+        where: branch_languages_bool_exp
+    ): branch_languages_aggregate!
+    "fetch data from the table: \"branch_languages\" using primary key columns"
+    branch_languages_by_pk(id: Int!): branch_languages
+    "An array relationship"
+    branches(
+        "distinct select on columns"
+        distinct_on: [branches_select_column!],
+        "limit the number of rows returned"
+        limit: Int,
+        "skip the first n rows. Use only with order_by"
+        offset: Int,
+        "sort the rows by one or more columns"
+        order_by: [branches_order_by!],
+        "filter the rows returned"
+        where: branches_bool_exp
+    ): [branches!]!
+    "An aggregate relationship"
+    branches_aggregate(
+        "distinct select on columns"
+        distinct_on: [branches_select_column!],
+        "limit the number of rows returned"
+        limit: Int,
+        "skip the first n rows. Use only with order_by"
+        offset: Int,
+        "sort the rows by one or more columns"
+        order_by: [branches_order_by!],
+        "filter the rows returned"
+        where: branches_bool_exp
+    ): branches_aggregate!
+    "fetch data from the table: \"branches\" using primary key columns"
+    branches_by_pk(id: Int!): branches
     "fetch data from the table: \"companies\""
     companies(
         "distinct select on columns"
@@ -1610,62 +1737,6 @@ type subscription_root {
     ): languages_aggregate!
     "fetch data from the table: \"languages\" using primary key columns"
     languages_by_pk(id: Int!): languages
-    "fetch data from the table: \"project_language_link\""
-    project_language_link(
-        "distinct select on columns"
-        distinct_on: [project_language_link_select_column!],
-        "limit the number of rows returned"
-        limit: Int,
-        "skip the first n rows. Use only with order_by"
-        offset: Int,
-        "sort the rows by one or more columns"
-        order_by: [project_language_link_order_by!],
-        "filter the rows returned"
-        where: project_language_link_bool_exp
-    ): [project_language_link!]!
-    "fetch aggregated fields from the table: \"project_language_link\""
-    project_language_link_aggregate(
-        "distinct select on columns"
-        distinct_on: [project_language_link_select_column!],
-        "limit the number of rows returned"
-        limit: Int,
-        "skip the first n rows. Use only with order_by"
-        offset: Int,
-        "sort the rows by one or more columns"
-        order_by: [project_language_link_order_by!],
-        "filter the rows returned"
-        where: project_language_link_bool_exp
-    ): project_language_link_aggregate!
-    "fetch data from the table: \"project_language_link\" using primary key columns"
-    project_language_link_by_pk(id: Int!): project_language_link
-    "fetch data from the table: \"project_terms\""
-    project_terms(
-        "distinct select on columns"
-        distinct_on: [project_terms_select_column!],
-        "limit the number of rows returned"
-        limit: Int,
-        "skip the first n rows. Use only with order_by"
-        offset: Int,
-        "sort the rows by one or more columns"
-        order_by: [project_terms_order_by!],
-        "filter the rows returned"
-        where: project_terms_bool_exp
-    ): [project_terms!]!
-    "fetch aggregated fields from the table: \"project_terms\""
-    project_terms_aggregate(
-        "distinct select on columns"
-        distinct_on: [project_terms_select_column!],
-        "limit the number of rows returned"
-        limit: Int,
-        "skip the first n rows. Use only with order_by"
-        offset: Int,
-        "sort the rows by one or more columns"
-        order_by: [project_terms_order_by!],
-        "filter the rows returned"
-        where: project_terms_bool_exp
-    ): project_terms_aggregate!
-    "fetch data from the table: \"project_terms\" using primary key columns"
-    project_terms_by_pk(id: Int!): project_terms
     "An array relationship"
     projects(
         "distinct select on columns"
@@ -1694,6 +1765,34 @@ type subscription_root {
     ): projects_aggregate!
     "fetch data from the table: \"projects\" using primary key columns"
     projects_by_pk(id: Int!): projects
+    "fetch data from the table: \"terms\""
+    terms(
+        "distinct select on columns"
+        distinct_on: [terms_select_column!],
+        "limit the number of rows returned"
+        limit: Int,
+        "skip the first n rows. Use only with order_by"
+        offset: Int,
+        "sort the rows by one or more columns"
+        order_by: [terms_order_by!],
+        "filter the rows returned"
+        where: terms_bool_exp
+    ): [terms!]!
+    "An aggregate relationship"
+    terms_aggregate(
+        "distinct select on columns"
+        distinct_on: [terms_select_column!],
+        "limit the number of rows returned"
+        limit: Int,
+        "skip the first n rows. Use only with order_by"
+        offset: Int,
+        "sort the rows by one or more columns"
+        order_by: [terms_order_by!],
+        "filter the rows returned"
+        where: terms_bool_exp
+    ): terms_aggregate!
+    "fetch data from the table: \"terms\" using primary key columns"
+    terms_by_pk(id: Int!): terms
     "fetch data from the table: \"translation_statuses\""
     translation_statuses(
         "distinct select on columns"
@@ -1806,6 +1905,138 @@ type subscription_root {
     ): users_aggregate!
     "fetch data from the table: \"users\" using primary key columns"
     users_by_pk(id: Int!): users
+}
+
+"columns and relationships of \"terms\""
+type terms {
+    "An object relationship"
+    branch: branches!
+    branch_id: Int!
+    description: String
+    id: Int!
+    key: String!
+    "An array relationship"
+    translations(
+        "distinct select on columns"
+        distinct_on: [translations_select_column!],
+        "limit the number of rows returned"
+        limit: Int,
+        "skip the first n rows. Use only with order_by"
+        offset: Int,
+        "sort the rows by one or more columns"
+        order_by: [translations_order_by!],
+        "filter the rows returned"
+        where: translations_bool_exp
+    ): [translations!]!
+    "An aggregate relationship"
+    translations_aggregate(
+        "distinct select on columns"
+        distinct_on: [translations_select_column!],
+        "limit the number of rows returned"
+        limit: Int,
+        "skip the first n rows. Use only with order_by"
+        offset: Int,
+        "sort the rows by one or more columns"
+        order_by: [translations_order_by!],
+        "filter the rows returned"
+        where: translations_bool_exp
+    ): translations_aggregate!
+    uuid: uuid!
+}
+
+"aggregated selection of \"terms\""
+type terms_aggregate {
+    aggregate: terms_aggregate_fields
+    nodes: [terms!]!
+}
+
+"aggregate fields of \"terms\""
+type terms_aggregate_fields {
+    avg: terms_avg_fields
+    count(columns: [terms_select_column!], distinct: Boolean): Int!
+    max: terms_max_fields
+    min: terms_min_fields
+    stddev: terms_stddev_fields
+    stddev_pop: terms_stddev_pop_fields
+    stddev_samp: terms_stddev_samp_fields
+    sum: terms_sum_fields
+    var_pop: terms_var_pop_fields
+    var_samp: terms_var_samp_fields
+    variance: terms_variance_fields
+}
+
+"aggregate avg on columns"
+type terms_avg_fields {
+    branch_id: Float
+    id: Float
+}
+
+"aggregate max on columns"
+type terms_max_fields {
+    branch_id: Int
+    description: String
+    id: Int
+    key: String
+    uuid: uuid
+}
+
+"aggregate min on columns"
+type terms_min_fields {
+    branch_id: Int
+    description: String
+    id: Int
+    key: String
+    uuid: uuid
+}
+
+"response of any mutation on the table \"terms\""
+type terms_mutation_response {
+    "number of rows affected by the mutation"
+    affected_rows: Int!
+    "data from the rows affected by the mutation"
+    returning: [terms!]!
+}
+
+"aggregate stddev on columns"
+type terms_stddev_fields {
+    branch_id: Float
+    id: Float
+}
+
+"aggregate stddev_pop on columns"
+type terms_stddev_pop_fields {
+    branch_id: Float
+    id: Float
+}
+
+"aggregate stddev_samp on columns"
+type terms_stddev_samp_fields {
+    branch_id: Float
+    id: Float
+}
+
+"aggregate sum on columns"
+type terms_sum_fields {
+    branch_id: Int
+    id: Int
+}
+
+"aggregate var_pop on columns"
+type terms_var_pop_fields {
+    branch_id: Float
+    id: Float
+}
+
+"aggregate var_samp on columns"
+type terms_var_samp_fields {
+    branch_id: Float
+    id: Float
+}
+
+"aggregate variance on columns"
+type terms_variance_fields {
+    branch_id: Float
+    id: Float
 }
 
 "columns and relationships of \"translation_statuses\""
@@ -1939,16 +2170,16 @@ type translation_statuses_variance_fields {
 
 "columns and relationships of \"translations\""
 type translations {
+    branch_language_id: Int!
     id: Int!
     "An object relationship"
-    project_language_link: project_language_link!
-    project_language_link_id: Int!
+    project_language: branch_languages!
     "An object relationship"
-    term: project_terms!
+    status: translation_statuses
+    status_id: Int
+    "An object relationship"
+    term: terms!
     term_id: Int!
-    "An object relationship"
-    translation_status: translation_statuses
-    translation_status_id: Int
     translation_value: String
     uuid: uuid!
 }
@@ -1976,28 +2207,28 @@ type translations_aggregate_fields {
 
 "aggregate avg on columns"
 type translations_avg_fields {
+    branch_language_id: Float
     id: Float
-    project_language_link_id: Float
+    status_id: Float
     term_id: Float
-    translation_status_id: Float
 }
 
 "aggregate max on columns"
 type translations_max_fields {
+    branch_language_id: Int
     id: Int
-    project_language_link_id: Int
+    status_id: Int
     term_id: Int
-    translation_status_id: Int
     translation_value: String
     uuid: uuid
 }
 
 "aggregate min on columns"
 type translations_min_fields {
+    branch_language_id: Int
     id: Int
-    project_language_link_id: Int
+    status_id: Int
     term_id: Int
-    translation_status_id: Int
     translation_value: String
     uuid: uuid
 }
@@ -2012,58 +2243,58 @@ type translations_mutation_response {
 
 "aggregate stddev on columns"
 type translations_stddev_fields {
+    branch_language_id: Float
     id: Float
-    project_language_link_id: Float
+    status_id: Float
     term_id: Float
-    translation_status_id: Float
 }
 
 "aggregate stddev_pop on columns"
 type translations_stddev_pop_fields {
+    branch_language_id: Float
     id: Float
-    project_language_link_id: Float
+    status_id: Float
     term_id: Float
-    translation_status_id: Float
 }
 
 "aggregate stddev_samp on columns"
 type translations_stddev_samp_fields {
+    branch_language_id: Float
     id: Float
-    project_language_link_id: Float
+    status_id: Float
     term_id: Float
-    translation_status_id: Float
 }
 
 "aggregate sum on columns"
 type translations_sum_fields {
+    branch_language_id: Int
     id: Int
-    project_language_link_id: Int
+    status_id: Int
     term_id: Int
-    translation_status_id: Int
 }
 
 "aggregate var_pop on columns"
 type translations_var_pop_fields {
+    branch_language_id: Float
     id: Float
-    project_language_link_id: Float
+    status_id: Float
     term_id: Float
-    translation_status_id: Float
 }
 
 "aggregate var_samp on columns"
 type translations_var_samp_fields {
+    branch_language_id: Float
     id: Float
-    project_language_link_id: Float
+    status_id: Float
     term_id: Float
-    translation_status_id: Float
 }
 
 "aggregate variance on columns"
 type translations_variance_fields {
+    branch_language_id: Float
     id: Float
-    project_language_link_id: Float
+    status_id: Float
     term_id: Float
-    translation_status_id: Float
 }
 
 "columns and relationships of \"user_project_link\""
@@ -2330,12 +2561,76 @@ type users_variance_fields {
     id: Float
 }
 
+"unique or primary key constraints on table \"branch_languages\""
+enum branch_languages_constraint {
+    "unique or primary key constraint"
+    project_languages_pkey
+    "unique or primary key constraint"
+    project_languages_uuid_key
+}
+
+"select columns of table \"branch_languages\""
+enum branch_languages_select_column {
+    "column name"
+    branch_id
+    "column name"
+    id
+    "column name"
+    language_id
+    "column name"
+    uuid
+}
+
+"update columns of table \"branch_languages\""
+enum branch_languages_update_column {
+    "column name"
+    branch_id
+    "column name"
+    id
+    "column name"
+    language_id
+    "column name"
+    uuid
+}
+
+"unique or primary key constraints on table \"branches\""
+enum branches_constraint {
+    "unique or primary key constraint"
+    branches_pkey
+    "unique or primary key constraint"
+    branches_uuid_key
+}
+
+"select columns of table \"branches\""
+enum branches_select_column {
+    "column name"
+    id
+    "column name"
+    name
+    "column name"
+    project_id
+    "column name"
+    uuid
+}
+
+"update columns of table \"branches\""
+enum branches_update_column {
+    "column name"
+    id
+    "column name"
+    name
+    "column name"
+    project_id
+    "column name"
+    uuid
+}
+
 "unique or primary key constraints on table \"companies\""
 enum companies_constraint {
     "unique or primary key constraint"
-    companies_id_key
-    "unique or primary key constraint"
     companies_pkey
+    "unique or primary key constraint"
+    company_user_link_id_key
 }
 
 "select columns of table \"companies\""
@@ -2361,7 +2656,7 @@ enum companies_update_column {
 "unique or primary key constraints on table \"company_user_link\""
 enum company_user_link_constraint {
     "unique or primary key constraint"
-    company_user_link_id_key
+    companies_uuid_key
     "unique or primary key constraint"
     company_user_link_pkey
 }
@@ -2438,80 +2733,12 @@ enum order_by {
     desc_nulls_last
 }
 
-"unique or primary key constraints on table \"project_language_link\""
-enum project_language_link_constraint {
-    "unique or primary key constraint"
-    project_language_id_key
-    "unique or primary key constraint"
-    project_language_pkey
-}
-
-"select columns of table \"project_language_link\""
-enum project_language_link_select_column {
-    "column name"
-    id
-    "column name"
-    language_id
-    "column name"
-    project_id
-    "column name"
-    uuid
-}
-
-"update columns of table \"project_language_link\""
-enum project_language_link_update_column {
-    "column name"
-    id
-    "column name"
-    language_id
-    "column name"
-    project_id
-    "column name"
-    uuid
-}
-
-"unique or primary key constraints on table \"project_terms\""
-enum project_terms_constraint {
-    "unique or primary key constraint"
-    project_terms_id_key
-    "unique or primary key constraint"
-    project_terms_pkey
-}
-
-"select columns of table \"project_terms\""
-enum project_terms_select_column {
-    "column name"
-    description
-    "column name"
-    id
-    "column name"
-    key
-    "column name"
-    project_id
-    "column name"
-    uuid
-}
-
-"update columns of table \"project_terms\""
-enum project_terms_update_column {
-    "column name"
-    description
-    "column name"
-    id
-    "column name"
-    key
-    "column name"
-    project_id
-    "column name"
-    uuid
-}
-
 "unique or primary key constraints on table \"projects\""
 enum projects_constraint {
     "unique or primary key constraint"
-    projects_id_key
-    "unique or primary key constraint"
     projects_pkey
+    "unique or primary key constraint"
+    projects_uuid_key
 }
 
 "select columns of table \"projects\""
@@ -2538,12 +2765,48 @@ enum projects_update_column {
     uuid
 }
 
+"unique or primary key constraints on table \"terms\""
+enum terms_constraint {
+    "unique or primary key constraint"
+    project_terms_pkey
+    "unique or primary key constraint"
+    project_terms_uuid_key
+}
+
+"select columns of table \"terms\""
+enum terms_select_column {
+    "column name"
+    branch_id
+    "column name"
+    description
+    "column name"
+    id
+    "column name"
+    key
+    "column name"
+    uuid
+}
+
+"update columns of table \"terms\""
+enum terms_update_column {
+    "column name"
+    branch_id
+    "column name"
+    description
+    "column name"
+    id
+    "column name"
+    key
+    "column name"
+    uuid
+}
+
 "unique or primary key constraints on table \"translation_statuses\""
 enum translation_statuses_constraint {
     "unique or primary key constraint"
-    translation_statuses_id_key
-    "unique or primary key constraint"
     translation_statuses_pkey
+    "unique or primary key constraint"
+    translation_statuses_uuid_key
 }
 
 "select columns of table \"translation_statuses\""
@@ -2573,21 +2836,21 @@ enum translation_statuses_update_column {
 "unique or primary key constraints on table \"translations\""
 enum translations_constraint {
     "unique or primary key constraint"
-    translations_id_key
-    "unique or primary key constraint"
     translations_pkey
+    "unique or primary key constraint"
+    translations_uuid_key
 }
 
 "select columns of table \"translations\""
 enum translations_select_column {
     "column name"
+    branch_language_id
+    "column name"
     id
     "column name"
-    project_language_link_id
+    status_id
     "column name"
     term_id
-    "column name"
-    translation_status_id
     "column name"
     translation_value
     "column name"
@@ -2597,13 +2860,13 @@ enum translations_select_column {
 "update columns of table \"translations\""
 enum translations_update_column {
     "column name"
+    branch_language_id
+    "column name"
     id
     "column name"
-    project_language_link_id
+    status_id
     "column name"
     term_id
-    "column name"
-    translation_status_id
     "column name"
     translation_value
     "column name"
@@ -2613,9 +2876,9 @@ enum translations_update_column {
 "unique or primary key constraints on table \"user_project_link\""
 enum user_project_link_constraint {
     "unique or primary key constraint"
-    user_project_link_id_key
-    "unique or primary key constraint"
     user_project_link_pkey
+    "unique or primary key constraint"
+    user_project_link_uuid_key
 }
 
 "select columns of table \"user_project_link\""
@@ -2645,9 +2908,9 @@ enum user_project_link_update_column {
 "unique or primary key constraints on table \"users\""
 enum users_constraint {
     "unique or primary key constraint"
-    users_id_key
-    "unique or primary key constraint"
     users_pkey
+    "unique or primary key constraint"
+    users_uuid_key
 }
 
 "select columns of table \"users\""
@@ -2681,6 +2944,8 @@ enum users_update_column {
     "column name"
     uuid
 }
+
+scalar uuid
 
 "Boolean expression to compare columns of type \"Int\". All fields are combined with logical 'AND'."
 input Int_comparison_exp {
@@ -2726,6 +2991,325 @@ input String_comparison_exp {
     _regex: String
     "does the column match the given SQL regular expression"
     _similar: String
+}
+
+"order by aggregate values of table \"branch_languages\""
+input branch_languages_aggregate_order_by {
+    avg: branch_languages_avg_order_by
+    count: order_by
+    max: branch_languages_max_order_by
+    min: branch_languages_min_order_by
+    stddev: branch_languages_stddev_order_by
+    stddev_pop: branch_languages_stddev_pop_order_by
+    stddev_samp: branch_languages_stddev_samp_order_by
+    sum: branch_languages_sum_order_by
+    var_pop: branch_languages_var_pop_order_by
+    var_samp: branch_languages_var_samp_order_by
+    variance: branch_languages_variance_order_by
+}
+
+"input type for inserting array relation for remote table \"branch_languages\""
+input branch_languages_arr_rel_insert_input {
+    data: [branch_languages_insert_input!]!
+    "on conflict condition"
+    on_conflict: branch_languages_on_conflict
+}
+
+"order by avg() on columns of table \"branch_languages\""
+input branch_languages_avg_order_by {
+    branch_id: order_by
+    id: order_by
+    language_id: order_by
+}
+
+"Boolean expression to filter rows from the table \"branch_languages\". All fields are combined with a logical 'AND'."
+input branch_languages_bool_exp {
+    _and: [branch_languages_bool_exp!]
+    _not: branch_languages_bool_exp
+    _or: [branch_languages_bool_exp!]
+    branch: branches_bool_exp
+    branch_id: Int_comparison_exp
+    id: Int_comparison_exp
+    language: languages_bool_exp
+    language_id: Int_comparison_exp
+    translations: translations_bool_exp
+    uuid: uuid_comparison_exp
+}
+
+"input type for incrementing numeric columns in table \"branch_languages\""
+input branch_languages_inc_input {
+    branch_id: Int
+    id: Int
+    language_id: Int
+}
+
+"input type for inserting data into table \"branch_languages\""
+input branch_languages_insert_input {
+    branch: branches_obj_rel_insert_input
+    branch_id: Int
+    id: Int
+    language: languages_obj_rel_insert_input
+    language_id: Int
+    translations: translations_arr_rel_insert_input
+    uuid: uuid
+}
+
+"order by max() on columns of table \"branch_languages\""
+input branch_languages_max_order_by {
+    branch_id: order_by
+    id: order_by
+    language_id: order_by
+    uuid: order_by
+}
+
+"order by min() on columns of table \"branch_languages\""
+input branch_languages_min_order_by {
+    branch_id: order_by
+    id: order_by
+    language_id: order_by
+    uuid: order_by
+}
+
+"input type for inserting object relation for remote table \"branch_languages\""
+input branch_languages_obj_rel_insert_input {
+    data: branch_languages_insert_input!
+    "on conflict condition"
+    on_conflict: branch_languages_on_conflict
+}
+
+"on conflict condition type for table \"branch_languages\""
+input branch_languages_on_conflict {
+    constraint: branch_languages_constraint!
+    update_columns: [branch_languages_update_column!]! = []
+    where: branch_languages_bool_exp
+}
+
+"Ordering options when selecting data from \"branch_languages\"."
+input branch_languages_order_by {
+    branch: branches_order_by
+    branch_id: order_by
+    id: order_by
+    language: languages_order_by
+    language_id: order_by
+    translations_aggregate: translations_aggregate_order_by
+    uuid: order_by
+}
+
+"primary key columns input for table: branch_languages"
+input branch_languages_pk_columns_input {
+    id: Int!
+}
+
+"input type for updating data in table \"branch_languages\""
+input branch_languages_set_input {
+    branch_id: Int
+    id: Int
+    language_id: Int
+    uuid: uuid
+}
+
+"order by stddev() on columns of table \"branch_languages\""
+input branch_languages_stddev_order_by {
+    branch_id: order_by
+    id: order_by
+    language_id: order_by
+}
+
+"order by stddev_pop() on columns of table \"branch_languages\""
+input branch_languages_stddev_pop_order_by {
+    branch_id: order_by
+    id: order_by
+    language_id: order_by
+}
+
+"order by stddev_samp() on columns of table \"branch_languages\""
+input branch_languages_stddev_samp_order_by {
+    branch_id: order_by
+    id: order_by
+    language_id: order_by
+}
+
+"order by sum() on columns of table \"branch_languages\""
+input branch_languages_sum_order_by {
+    branch_id: order_by
+    id: order_by
+    language_id: order_by
+}
+
+"order by var_pop() on columns of table \"branch_languages\""
+input branch_languages_var_pop_order_by {
+    branch_id: order_by
+    id: order_by
+    language_id: order_by
+}
+
+"order by var_samp() on columns of table \"branch_languages\""
+input branch_languages_var_samp_order_by {
+    branch_id: order_by
+    id: order_by
+    language_id: order_by
+}
+
+"order by variance() on columns of table \"branch_languages\""
+input branch_languages_variance_order_by {
+    branch_id: order_by
+    id: order_by
+    language_id: order_by
+}
+
+"order by aggregate values of table \"branches\""
+input branches_aggregate_order_by {
+    avg: branches_avg_order_by
+    count: order_by
+    max: branches_max_order_by
+    min: branches_min_order_by
+    stddev: branches_stddev_order_by
+    stddev_pop: branches_stddev_pop_order_by
+    stddev_samp: branches_stddev_samp_order_by
+    sum: branches_sum_order_by
+    var_pop: branches_var_pop_order_by
+    var_samp: branches_var_samp_order_by
+    variance: branches_variance_order_by
+}
+
+"input type for inserting array relation for remote table \"branches\""
+input branches_arr_rel_insert_input {
+    data: [branches_insert_input!]!
+    "on conflict condition"
+    on_conflict: branches_on_conflict
+}
+
+"order by avg() on columns of table \"branches\""
+input branches_avg_order_by {
+    id: order_by
+    project_id: order_by
+}
+
+"Boolean expression to filter rows from the table \"branches\". All fields are combined with a logical 'AND'."
+input branches_bool_exp {
+    _and: [branches_bool_exp!]
+    _not: branches_bool_exp
+    _or: [branches_bool_exp!]
+    branch_languages: branch_languages_bool_exp
+    id: Int_comparison_exp
+    name: String_comparison_exp
+    project: projects_bool_exp
+    project_id: Int_comparison_exp
+    terms: terms_bool_exp
+    uuid: uuid_comparison_exp
+}
+
+"input type for incrementing numeric columns in table \"branches\""
+input branches_inc_input {
+    id: Int
+    project_id: Int
+}
+
+"input type for inserting data into table \"branches\""
+input branches_insert_input {
+    branch_languages: branch_languages_arr_rel_insert_input
+    id: Int
+    name: String
+    project: projects_obj_rel_insert_input
+    project_id: Int
+    terms: terms_arr_rel_insert_input
+    uuid: uuid
+}
+
+"order by max() on columns of table \"branches\""
+input branches_max_order_by {
+    id: order_by
+    name: order_by
+    project_id: order_by
+    uuid: order_by
+}
+
+"order by min() on columns of table \"branches\""
+input branches_min_order_by {
+    id: order_by
+    name: order_by
+    project_id: order_by
+    uuid: order_by
+}
+
+"input type for inserting object relation for remote table \"branches\""
+input branches_obj_rel_insert_input {
+    data: branches_insert_input!
+    "on conflict condition"
+    on_conflict: branches_on_conflict
+}
+
+"on conflict condition type for table \"branches\""
+input branches_on_conflict {
+    constraint: branches_constraint!
+    update_columns: [branches_update_column!]! = []
+    where: branches_bool_exp
+}
+
+"Ordering options when selecting data from \"branches\"."
+input branches_order_by {
+    branch_languages_aggregate: branch_languages_aggregate_order_by
+    id: order_by
+    name: order_by
+    project: projects_order_by
+    project_id: order_by
+    terms_aggregate: terms_aggregate_order_by
+    uuid: order_by
+}
+
+"primary key columns input for table: branches"
+input branches_pk_columns_input {
+    id: Int!
+}
+
+"input type for updating data in table \"branches\""
+input branches_set_input {
+    id: Int
+    name: String
+    project_id: Int
+    uuid: uuid
+}
+
+"order by stddev() on columns of table \"branches\""
+input branches_stddev_order_by {
+    id: order_by
+    project_id: order_by
+}
+
+"order by stddev_pop() on columns of table \"branches\""
+input branches_stddev_pop_order_by {
+    id: order_by
+    project_id: order_by
+}
+
+"order by stddev_samp() on columns of table \"branches\""
+input branches_stddev_samp_order_by {
+    id: order_by
+    project_id: order_by
+}
+
+"order by sum() on columns of table \"branches\""
+input branches_sum_order_by {
+    id: order_by
+    project_id: order_by
+}
+
+"order by var_pop() on columns of table \"branches\""
+input branches_var_pop_order_by {
+    id: order_by
+    project_id: order_by
+}
+
+"order by var_samp() on columns of table \"branches\""
+input branches_var_samp_order_by {
+    id: order_by
+    project_id: order_by
+}
+
+"order by variance() on columns of table \"branches\""
+input branches_variance_order_by {
+    id: order_by
+    project_id: order_by
 }
 
 "Boolean expression to filter rows from the table \"companies\". All fields are combined with a logical 'AND'."
@@ -2951,7 +3535,7 @@ input languages_bool_exp {
     id: Int_comparison_exp
     iso_code: String_comparison_exp
     name: String_comparison_exp
-    project_links: project_language_link_bool_exp
+    project_languages: branch_languages_bool_exp
     uuid: uuid_comparison_exp
 }
 
@@ -2965,7 +3549,7 @@ input languages_insert_input {
     id: Int
     iso_code: String
     name: String
-    project_links: project_language_link_arr_rel_insert_input
+    project_languages: branch_languages_arr_rel_insert_input
     uuid: uuid
 }
 
@@ -2988,7 +3572,7 @@ input languages_order_by {
     id: order_by
     iso_code: order_by
     name: order_by
-    project_links_aggregate: project_language_link_aggregate_order_by
+    project_languages_aggregate: branch_languages_aggregate_order_by
     uuid: order_by
 }
 
@@ -3003,328 +3587,6 @@ input languages_set_input {
     iso_code: String
     name: String
     uuid: uuid
-}
-
-"order by aggregate values of table \"project_language_link\""
-input project_language_link_aggregate_order_by {
-    avg: project_language_link_avg_order_by
-    count: order_by
-    max: project_language_link_max_order_by
-    min: project_language_link_min_order_by
-    stddev: project_language_link_stddev_order_by
-    stddev_pop: project_language_link_stddev_pop_order_by
-    stddev_samp: project_language_link_stddev_samp_order_by
-    sum: project_language_link_sum_order_by
-    var_pop: project_language_link_var_pop_order_by
-    var_samp: project_language_link_var_samp_order_by
-    variance: project_language_link_variance_order_by
-}
-
-"input type for inserting array relation for remote table \"project_language_link\""
-input project_language_link_arr_rel_insert_input {
-    data: [project_language_link_insert_input!]!
-    "on conflict condition"
-    on_conflict: project_language_link_on_conflict
-}
-
-"order by avg() on columns of table \"project_language_link\""
-input project_language_link_avg_order_by {
-    id: order_by
-    language_id: order_by
-    project_id: order_by
-}
-
-"Boolean expression to filter rows from the table \"project_language_link\". All fields are combined with a logical 'AND'."
-input project_language_link_bool_exp {
-    _and: [project_language_link_bool_exp!]
-    _not: project_language_link_bool_exp
-    _or: [project_language_link_bool_exp!]
-    id: Int_comparison_exp
-    language: languages_bool_exp
-    language_id: Int_comparison_exp
-    project: projects_bool_exp
-    project_id: Int_comparison_exp
-    translation: translations_bool_exp
-    uuid: uuid_comparison_exp
-}
-
-"input type for incrementing numeric columns in table \"project_language_link\""
-input project_language_link_inc_input {
-    id: Int
-    language_id: Int
-    project_id: Int
-}
-
-"input type for inserting data into table \"project_language_link\""
-input project_language_link_insert_input {
-    id: Int
-    language: languages_obj_rel_insert_input
-    language_id: Int
-    project: projects_obj_rel_insert_input
-    project_id: Int
-    translation: translations_arr_rel_insert_input
-    uuid: uuid
-}
-
-"order by max() on columns of table \"project_language_link\""
-input project_language_link_max_order_by {
-    id: order_by
-    language_id: order_by
-    project_id: order_by
-    uuid: order_by
-}
-
-"order by min() on columns of table \"project_language_link\""
-input project_language_link_min_order_by {
-    id: order_by
-    language_id: order_by
-    project_id: order_by
-    uuid: order_by
-}
-
-"input type for inserting object relation for remote table \"project_language_link\""
-input project_language_link_obj_rel_insert_input {
-    data: project_language_link_insert_input!
-    "on conflict condition"
-    on_conflict: project_language_link_on_conflict
-}
-
-"on conflict condition type for table \"project_language_link\""
-input project_language_link_on_conflict {
-    constraint: project_language_link_constraint!
-    update_columns: [project_language_link_update_column!]! = []
-    where: project_language_link_bool_exp
-}
-
-"Ordering options when selecting data from \"project_language_link\"."
-input project_language_link_order_by {
-    id: order_by
-    language: languages_order_by
-    language_id: order_by
-    project: projects_order_by
-    project_id: order_by
-    translation_aggregate: translations_aggregate_order_by
-    uuid: order_by
-}
-
-"primary key columns input for table: project_language_link"
-input project_language_link_pk_columns_input {
-    id: Int!
-}
-
-"input type for updating data in table \"project_language_link\""
-input project_language_link_set_input {
-    id: Int
-    language_id: Int
-    project_id: Int
-    uuid: uuid
-}
-
-"order by stddev() on columns of table \"project_language_link\""
-input project_language_link_stddev_order_by {
-    id: order_by
-    language_id: order_by
-    project_id: order_by
-}
-
-"order by stddev_pop() on columns of table \"project_language_link\""
-input project_language_link_stddev_pop_order_by {
-    id: order_by
-    language_id: order_by
-    project_id: order_by
-}
-
-"order by stddev_samp() on columns of table \"project_language_link\""
-input project_language_link_stddev_samp_order_by {
-    id: order_by
-    language_id: order_by
-    project_id: order_by
-}
-
-"order by sum() on columns of table \"project_language_link\""
-input project_language_link_sum_order_by {
-    id: order_by
-    language_id: order_by
-    project_id: order_by
-}
-
-"order by var_pop() on columns of table \"project_language_link\""
-input project_language_link_var_pop_order_by {
-    id: order_by
-    language_id: order_by
-    project_id: order_by
-}
-
-"order by var_samp() on columns of table \"project_language_link\""
-input project_language_link_var_samp_order_by {
-    id: order_by
-    language_id: order_by
-    project_id: order_by
-}
-
-"order by variance() on columns of table \"project_language_link\""
-input project_language_link_variance_order_by {
-    id: order_by
-    language_id: order_by
-    project_id: order_by
-}
-
-"order by aggregate values of table \"project_terms\""
-input project_terms_aggregate_order_by {
-    avg: project_terms_avg_order_by
-    count: order_by
-    max: project_terms_max_order_by
-    min: project_terms_min_order_by
-    stddev: project_terms_stddev_order_by
-    stddev_pop: project_terms_stddev_pop_order_by
-    stddev_samp: project_terms_stddev_samp_order_by
-    sum: project_terms_sum_order_by
-    var_pop: project_terms_var_pop_order_by
-    var_samp: project_terms_var_samp_order_by
-    variance: project_terms_variance_order_by
-}
-
-"input type for inserting array relation for remote table \"project_terms\""
-input project_terms_arr_rel_insert_input {
-    data: [project_terms_insert_input!]!
-    "on conflict condition"
-    on_conflict: project_terms_on_conflict
-}
-
-"order by avg() on columns of table \"project_terms\""
-input project_terms_avg_order_by {
-    id: order_by
-    project_id: order_by
-}
-
-"Boolean expression to filter rows from the table \"project_terms\". All fields are combined with a logical 'AND'."
-input project_terms_bool_exp {
-    _and: [project_terms_bool_exp!]
-    _not: project_terms_bool_exp
-    _or: [project_terms_bool_exp!]
-    description: String_comparison_exp
-    id: Int_comparison_exp
-    key: String_comparison_exp
-    project: projects_bool_exp
-    project_id: Int_comparison_exp
-    translations: translations_bool_exp
-    uuid: uuid_comparison_exp
-}
-
-"input type for incrementing numeric columns in table \"project_terms\""
-input project_terms_inc_input {
-    id: Int
-    project_id: Int
-}
-
-"input type for inserting data into table \"project_terms\""
-input project_terms_insert_input {
-    description: String
-    id: Int
-    key: String
-    project: projects_obj_rel_insert_input
-    project_id: Int
-    translations: translations_arr_rel_insert_input
-    uuid: uuid
-}
-
-"order by max() on columns of table \"project_terms\""
-input project_terms_max_order_by {
-    description: order_by
-    id: order_by
-    key: order_by
-    project_id: order_by
-    uuid: order_by
-}
-
-"order by min() on columns of table \"project_terms\""
-input project_terms_min_order_by {
-    description: order_by
-    id: order_by
-    key: order_by
-    project_id: order_by
-    uuid: order_by
-}
-
-"input type for inserting object relation for remote table \"project_terms\""
-input project_terms_obj_rel_insert_input {
-    data: project_terms_insert_input!
-    "on conflict condition"
-    on_conflict: project_terms_on_conflict
-}
-
-"on conflict condition type for table \"project_terms\""
-input project_terms_on_conflict {
-    constraint: project_terms_constraint!
-    update_columns: [project_terms_update_column!]! = []
-    where: project_terms_bool_exp
-}
-
-"Ordering options when selecting data from \"project_terms\"."
-input project_terms_order_by {
-    description: order_by
-    id: order_by
-    key: order_by
-    project: projects_order_by
-    project_id: order_by
-    translations_aggregate: translations_aggregate_order_by
-    uuid: order_by
-}
-
-"primary key columns input for table: project_terms"
-input project_terms_pk_columns_input {
-    id: Int!
-}
-
-"input type for updating data in table \"project_terms\""
-input project_terms_set_input {
-    description: String
-    id: Int
-    key: String
-    project_id: Int
-    uuid: uuid
-}
-
-"order by stddev() on columns of table \"project_terms\""
-input project_terms_stddev_order_by {
-    id: order_by
-    project_id: order_by
-}
-
-"order by stddev_pop() on columns of table \"project_terms\""
-input project_terms_stddev_pop_order_by {
-    id: order_by
-    project_id: order_by
-}
-
-"order by stddev_samp() on columns of table \"project_terms\""
-input project_terms_stddev_samp_order_by {
-    id: order_by
-    project_id: order_by
-}
-
-"order by sum() on columns of table \"project_terms\""
-input project_terms_sum_order_by {
-    id: order_by
-    project_id: order_by
-}
-
-"order by var_pop() on columns of table \"project_terms\""
-input project_terms_var_pop_order_by {
-    id: order_by
-    project_id: order_by
-}
-
-"order by var_samp() on columns of table \"project_terms\""
-input project_terms_var_samp_order_by {
-    id: order_by
-    project_id: order_by
-}
-
-"order by variance() on columns of table \"project_terms\""
-input project_terms_variance_order_by {
-    id: order_by
-    project_id: order_by
 }
 
 "order by aggregate values of table \"projects\""
@@ -3360,13 +3622,12 @@ input projects_bool_exp {
     _and: [projects_bool_exp!]
     _not: projects_bool_exp
     _or: [projects_bool_exp!]
+    branches: branches_bool_exp
     company: companies_bool_exp
     company_id: Int_comparison_exp
     id: Int_comparison_exp
-    language_links: project_language_link_bool_exp
     name: String_comparison_exp
     statuses: translation_statuses_bool_exp
-    terms: project_terms_bool_exp
     user_links: user_project_link_bool_exp
     uuid: uuid_comparison_exp
 }
@@ -3379,13 +3640,12 @@ input projects_inc_input {
 
 "input type for inserting data into table \"projects\""
 input projects_insert_input {
+    branches: branches_arr_rel_insert_input
     company: companies_obj_rel_insert_input
     company_id: Int
     id: Int
-    language_links: project_language_link_arr_rel_insert_input
     name: String
     statuses: translation_statuses_arr_rel_insert_input
-    terms: project_terms_arr_rel_insert_input
     user_links: user_project_link_arr_rel_insert_input
     uuid: uuid
 }
@@ -3422,13 +3682,12 @@ input projects_on_conflict {
 
 "Ordering options when selecting data from \"projects\"."
 input projects_order_by {
+    branches_aggregate: branches_aggregate_order_by
     company: companies_order_by
     company_id: order_by
     id: order_by
-    language_links_aggregate: project_language_link_aggregate_order_by
     name: order_by
     statuses_aggregate: translation_statuses_aggregate_order_by
-    terms_aggregate: project_terms_aggregate_order_by
     user_links_aggregate: user_project_link_aggregate_order_by
     uuid: order_by
 }
@@ -3485,6 +3744,164 @@ input projects_var_samp_order_by {
 "order by variance() on columns of table \"projects\""
 input projects_variance_order_by {
     company_id: order_by
+    id: order_by
+}
+
+"order by aggregate values of table \"terms\""
+input terms_aggregate_order_by {
+    avg: terms_avg_order_by
+    count: order_by
+    max: terms_max_order_by
+    min: terms_min_order_by
+    stddev: terms_stddev_order_by
+    stddev_pop: terms_stddev_pop_order_by
+    stddev_samp: terms_stddev_samp_order_by
+    sum: terms_sum_order_by
+    var_pop: terms_var_pop_order_by
+    var_samp: terms_var_samp_order_by
+    variance: terms_variance_order_by
+}
+
+"input type for inserting array relation for remote table \"terms\""
+input terms_arr_rel_insert_input {
+    data: [terms_insert_input!]!
+    "on conflict condition"
+    on_conflict: terms_on_conflict
+}
+
+"order by avg() on columns of table \"terms\""
+input terms_avg_order_by {
+    branch_id: order_by
+    id: order_by
+}
+
+"Boolean expression to filter rows from the table \"terms\". All fields are combined with a logical 'AND'."
+input terms_bool_exp {
+    _and: [terms_bool_exp!]
+    _not: terms_bool_exp
+    _or: [terms_bool_exp!]
+    branch: branches_bool_exp
+    branch_id: Int_comparison_exp
+    description: String_comparison_exp
+    id: Int_comparison_exp
+    key: String_comparison_exp
+    translations: translations_bool_exp
+    uuid: uuid_comparison_exp
+}
+
+"input type for incrementing numeric columns in table \"terms\""
+input terms_inc_input {
+    branch_id: Int
+    id: Int
+}
+
+"input type for inserting data into table \"terms\""
+input terms_insert_input {
+    branch: branches_obj_rel_insert_input
+    branch_id: Int
+    description: String
+    id: Int
+    key: String
+    translations: translations_arr_rel_insert_input
+    uuid: uuid
+}
+
+"order by max() on columns of table \"terms\""
+input terms_max_order_by {
+    branch_id: order_by
+    description: order_by
+    id: order_by
+    key: order_by
+    uuid: order_by
+}
+
+"order by min() on columns of table \"terms\""
+input terms_min_order_by {
+    branch_id: order_by
+    description: order_by
+    id: order_by
+    key: order_by
+    uuid: order_by
+}
+
+"input type for inserting object relation for remote table \"terms\""
+input terms_obj_rel_insert_input {
+    data: terms_insert_input!
+    "on conflict condition"
+    on_conflict: terms_on_conflict
+}
+
+"on conflict condition type for table \"terms\""
+input terms_on_conflict {
+    constraint: terms_constraint!
+    update_columns: [terms_update_column!]! = []
+    where: terms_bool_exp
+}
+
+"Ordering options when selecting data from \"terms\"."
+input terms_order_by {
+    branch: branches_order_by
+    branch_id: order_by
+    description: order_by
+    id: order_by
+    key: order_by
+    translations_aggregate: translations_aggregate_order_by
+    uuid: order_by
+}
+
+"primary key columns input for table: terms"
+input terms_pk_columns_input {
+    id: Int!
+}
+
+"input type for updating data in table \"terms\""
+input terms_set_input {
+    branch_id: Int
+    description: String
+    id: Int
+    key: String
+    uuid: uuid
+}
+
+"order by stddev() on columns of table \"terms\""
+input terms_stddev_order_by {
+    branch_id: order_by
+    id: order_by
+}
+
+"order by stddev_pop() on columns of table \"terms\""
+input terms_stddev_pop_order_by {
+    branch_id: order_by
+    id: order_by
+}
+
+"order by stddev_samp() on columns of table \"terms\""
+input terms_stddev_samp_order_by {
+    branch_id: order_by
+    id: order_by
+}
+
+"order by sum() on columns of table \"terms\""
+input terms_sum_order_by {
+    branch_id: order_by
+    id: order_by
+}
+
+"order by var_pop() on columns of table \"terms\""
+input terms_var_pop_order_by {
+    branch_id: order_by
+    id: order_by
+}
+
+"order by var_samp() on columns of table \"terms\""
+input terms_var_samp_order_by {
+    branch_id: order_by
+    id: order_by
+}
+
+"order by variance() on columns of table \"terms\""
+input terms_variance_order_by {
+    branch_id: order_by
     id: order_by
 }
 
@@ -3664,10 +4081,10 @@ input translations_arr_rel_insert_input {
 
 "order by avg() on columns of table \"translations\""
 input translations_avg_order_by {
+    branch_language_id: order_by
     id: order_by
-    project_language_link_id: order_by
+    status_id: order_by
     term_id: order_by
-    translation_status_id: order_by
 }
 
 "Boolean expression to filter rows from the table \"translations\". All fields are combined with a logical 'AND'."
@@ -3675,54 +4092,54 @@ input translations_bool_exp {
     _and: [translations_bool_exp!]
     _not: translations_bool_exp
     _or: [translations_bool_exp!]
+    branch_language_id: Int_comparison_exp
     id: Int_comparison_exp
-    project_language_link: project_language_link_bool_exp
-    project_language_link_id: Int_comparison_exp
-    term: project_terms_bool_exp
+    project_language: branch_languages_bool_exp
+    status: translation_statuses_bool_exp
+    status_id: Int_comparison_exp
+    term: terms_bool_exp
     term_id: Int_comparison_exp
-    translation_status: translation_statuses_bool_exp
-    translation_status_id: Int_comparison_exp
     translation_value: String_comparison_exp
     uuid: uuid_comparison_exp
 }
 
 "input type for incrementing numeric columns in table \"translations\""
 input translations_inc_input {
+    branch_language_id: Int
     id: Int
-    project_language_link_id: Int
+    status_id: Int
     term_id: Int
-    translation_status_id: Int
 }
 
 "input type for inserting data into table \"translations\""
 input translations_insert_input {
+    branch_language_id: Int
     id: Int
-    project_language_link: project_language_link_obj_rel_insert_input
-    project_language_link_id: Int
-    term: project_terms_obj_rel_insert_input
+    project_language: branch_languages_obj_rel_insert_input
+    status: translation_statuses_obj_rel_insert_input
+    status_id: Int
+    term: terms_obj_rel_insert_input
     term_id: Int
-    translation_status: translation_statuses_obj_rel_insert_input
-    translation_status_id: Int
     translation_value: String
     uuid: uuid
 }
 
 "order by max() on columns of table \"translations\""
 input translations_max_order_by {
+    branch_language_id: order_by
     id: order_by
-    project_language_link_id: order_by
+    status_id: order_by
     term_id: order_by
-    translation_status_id: order_by
     translation_value: order_by
     uuid: order_by
 }
 
 "order by min() on columns of table \"translations\""
 input translations_min_order_by {
+    branch_language_id: order_by
     id: order_by
-    project_language_link_id: order_by
+    status_id: order_by
     term_id: order_by
-    translation_status_id: order_by
     translation_value: order_by
     uuid: order_by
 }
@@ -3736,13 +4153,13 @@ input translations_on_conflict {
 
 "Ordering options when selecting data from \"translations\"."
 input translations_order_by {
+    branch_language_id: order_by
     id: order_by
-    project_language_link: project_language_link_order_by
-    project_language_link_id: order_by
-    term: project_terms_order_by
+    project_language: branch_languages_order_by
+    status: translation_statuses_order_by
+    status_id: order_by
+    term: terms_order_by
     term_id: order_by
-    translation_status: translation_statuses_order_by
-    translation_status_id: order_by
     translation_value: order_by
     uuid: order_by
 }
@@ -3754,68 +4171,68 @@ input translations_pk_columns_input {
 
 "input type for updating data in table \"translations\""
 input translations_set_input {
+    branch_language_id: Int
     id: Int
-    project_language_link_id: Int
+    status_id: Int
     term_id: Int
-    translation_status_id: Int
     translation_value: String
     uuid: uuid
 }
 
 "order by stddev() on columns of table \"translations\""
 input translations_stddev_order_by {
+    branch_language_id: order_by
     id: order_by
-    project_language_link_id: order_by
+    status_id: order_by
     term_id: order_by
-    translation_status_id: order_by
 }
 
 "order by stddev_pop() on columns of table \"translations\""
 input translations_stddev_pop_order_by {
+    branch_language_id: order_by
     id: order_by
-    project_language_link_id: order_by
+    status_id: order_by
     term_id: order_by
-    translation_status_id: order_by
 }
 
 "order by stddev_samp() on columns of table \"translations\""
 input translations_stddev_samp_order_by {
+    branch_language_id: order_by
     id: order_by
-    project_language_link_id: order_by
+    status_id: order_by
     term_id: order_by
-    translation_status_id: order_by
 }
 
 "order by sum() on columns of table \"translations\""
 input translations_sum_order_by {
+    branch_language_id: order_by
     id: order_by
-    project_language_link_id: order_by
+    status_id: order_by
     term_id: order_by
-    translation_status_id: order_by
 }
 
 "order by var_pop() on columns of table \"translations\""
 input translations_var_pop_order_by {
+    branch_language_id: order_by
     id: order_by
-    project_language_link_id: order_by
+    status_id: order_by
     term_id: order_by
-    translation_status_id: order_by
 }
 
 "order by var_samp() on columns of table \"translations\""
 input translations_var_samp_order_by {
+    branch_language_id: order_by
     id: order_by
-    project_language_link_id: order_by
+    status_id: order_by
     term_id: order_by
-    translation_status_id: order_by
 }
 
 "order by variance() on columns of table \"translations\""
 input translations_variance_order_by {
+    branch_language_id: order_by
     id: order_by
-    project_language_link_id: order_by
+    status_id: order_by
     term_id: order_by
-    translation_status_id: order_by
 }
 
 "order by aggregate values of table \"user_project_link\""
@@ -4057,6 +4474,3 @@ input uuid_comparison_exp {
     _neq: uuid
     _nin: [uuid!]
 }
-
-
-scalar uuid

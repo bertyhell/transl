@@ -6,12 +6,12 @@ object_relationships:
   using:
     foreign_key_constraint_on: company_id
 array_relationships:
-- name: languages
+- name: branches
   using:
     foreign_key_constraint_on:
       column: project_id
       table:
-        name: project_language_link
+        name: branches
         schema: public
 - name: statuses
   using:
@@ -19,13 +19,6 @@ array_relationships:
       column: project_id
       table:
         name: translation_statuses
-        schema: public
-- name: terms
-  using:
-    foreign_key_constraint_on:
-      column: project_id
-      table:
-        name: project_terms
         schema: public
 - name: user_links
   using:

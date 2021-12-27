@@ -2,10 +2,10 @@ table:
   name: languages
   schema: public
 array_relationships:
-- name: project_links
+- name: project_languages
   using:
     foreign_key_constraint_on:
       column: language_id
       table:
-        name: project_language_link
+        name: branch_languages
         schema: public

@@ -1,17 +1,17 @@
-query getTranslations($projectUuid: uuid, $languageCodes: [String!], $offset: Int) {
-    project_terms(where: {project: {uuid: {_eq: $projectUuid}}}, limit: 100, offset: $offset) {
+query getTranslations($branchUuid: uuid, $languageCodes: [String!], $offset: Int) {
+    terms(where: {branch: {uuid: {_eq: $branchUuid}}}, limit: 100, offset: $offset) {
         key
         description
-        translations(where: {project_language_link: {language: {iso_code: {_in: $languageCodes}}}}) {
+        translations(where: {project_language: {language: {iso_code: {_in: $languageCodes}}}}) {
             translation_value
-            translation_status {
+            status {
                 name
                 uuid
                 id
             }
             uuid
             id
-            project_language_link {
+            project_language {
                 language {
                     iso_code
                     id
@@ -22,7 +22,7 @@ query getTranslations($projectUuid: uuid, $languageCodes: [String!], $offset: In
         uuid
         id
     }
-    project_terms_aggregate(where: {project: {uuid: {_eq: $projectUuid}}}, limit: 100, offset: $offset) {
+    terms_aggregate(where: {branch: {uuid: {_eq: $branchUuid}}}, limit: 100, offset: $offset) {
         aggregate {
             count
         }
