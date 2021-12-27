@@ -9,7 +9,7 @@ import { USER_UUID } from '../../constants/user';
 import { $t } from '../../helpers/i18n';
 import { DATABASE_CONFIG } from '../../queries/config/database.constants';
 import { useGetCompaniesAndProjectsQuery } from '../../queries/config/graphql-generated-types';
-import { Company, Project, ProjectLanguageLink } from '../../queries/type-aliasses';
+import { Branch, BranchLanguage, Company, Project } from '../../queries/type-aliasses';
 import { AddCompanyModal } from '../modals/AddCompanyModal';
 import { AddLanguageModal } from '../modals/AddLanguageModal';
 import { AddProjectModal } from '../modals/AddProjectModal';
@@ -24,23 +24,31 @@ export function Sidebar() {
   const [isAddProjectModalOpen, setIsAddProjectModalOpen] = useState(false);
   const [isAddLanguageModalOpen, setIsAddLanguageModalOpen] = useState(false);
 
-  const renderLanguage = (company: Company, project: Project, projectLanguageLink: ProjectLanguageLink): ReactNode => {
+  const renderLanguage = (branch: Branch, branchLanguage: BranchLanguage): ReactNode => {
     return (
       <NavItem
-        key={projectLanguageLink.language.uuid}
-        title={$t(projectLanguageLink.language.iso_code)}
-        to={`/companies/${company.uuid}/projects/${project.uuid}/translations?${new URLSearchParams({
-          languageCodes: projectLanguageLink.language.iso_code,
+        key={branchLanguage.language.uuid}
+        title={$t(branchLanguage.language.iso_code)}
+        to={`/branches/${branch.uuid}/translations?${new URLSearchParams({
+          languageCodes: branchLanguage.language.iso_code,
         }).toString()}`}
       />
     );
   };
 
-  const renderProject = (company: Company, project: Project): ReactNode => {
+  const renderBranch = (branch: Branch): ReactNode => {
     return (
-      <NavItem key={project.uuid} title={project.name} to={`/companies/${company.uuid}/projects/${project.uuid}`}>
-        {project?.language_links?.length &&
-          project.language_links.map(languageLink => renderLanguage(company, project, languageLink))}
+      <NavItem key={branch.uuid} title={branch.name} to={`/branches/${branch.uuid}`}>
+        {branch?.branch_languages?.length &&
+          branch.branch_languages.map(branchLanguage => renderLanguage(branch, branchLanguage))}
+      </NavItem>
+    );
+  };
+
+  const renderProject = (project: Project): ReactNode => {
+    return (
+      <NavItem key={project.uuid} title={project.name} to={`/projects/${project.uuid}`}>
+        {project?.branches?.length && project.branches.map(branch => renderBranch(branch))}
       </NavItem>
     );
   };
@@ -48,7 +56,7 @@ export function Sidebar() {
   const renderCompany = (company: Company): ReactNode => {
     return (
       <NavItem key={company?.uuid} title={company?.name} to={`/companies/${company?.uuid}`}>
-        {company?.projects?.length && company.projects.map(project => renderProject(company, project))}
+        {company?.projects?.length && company.projects.map(project => renderProject(project))}
       </NavItem>
     );
   };

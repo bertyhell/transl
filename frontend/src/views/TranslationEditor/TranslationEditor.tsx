@@ -9,7 +9,7 @@ import { $t } from '../../helpers/i18n';
 import { useTableSort } from '../../hooks/useTableSort';
 import { DATABASE_CONFIG } from '../../queries/config/database.constants';
 import { useGetTranslationsQuery, useUpdateTranslationValueMutation } from '../../queries/config/graphql-generated-types';
-import { ProjectTerm } from '../../queries/type-aliasses';
+import { Term } from '../../queries/type-aliasses';
 
 import './TranslationEditor.scss';
 
@@ -23,7 +23,7 @@ const ENTRIES_PER_PAGE = 20;
  * Shows a tabular view of the data and allows the user to edit the data
  */
 export const TranslationEditor: FunctionComponent = () => {
-  const { projectUuid } = useParams();
+  const { branchUuid } = useParams();
   const [searchParams] = useSearchParams();
   const [page, setPage] = useState<number>(0);
 
@@ -32,9 +32,9 @@ export const TranslationEditor: FunctionComponent = () => {
   const { data, refetch: refetchTranslations } = useGetTranslationsQuery(
     DATABASE_CONFIG,
     {
+      branchUuid,
       languageCodes: languageCodes,
       offset: page * ITEMS_PER_PAGE,
-      projectUuid,
     },
     {
       enabled: !!languageCodes?.length,
@@ -47,8 +47,8 @@ export const TranslationEditor: FunctionComponent = () => {
   const onValueChanged = async (languageCode: string, key: string, value: string) => {
     try {
       await updateTranslation({
+        branchUuid,
         languageCode,
-        projectUuid,
         translationKey: key,
         translationValue: value,
       });
@@ -60,7 +60,7 @@ export const TranslationEditor: FunctionComponent = () => {
     }
   };
 
-  const renderCell = (projectTerm: ProjectTerm, columnId: ColumnId): ReactNode | null => {
+  const renderCell = (projectTerm: Term, columnId: ColumnId): ReactNode | null => {
     switch (columnId) {
       case 'key':
         return <div>{projectTerm.key}</div>;
@@ -71,7 +71,7 @@ export const TranslationEditor: FunctionComponent = () => {
           <TranslationInputField
             onBlur={(newValue: string) => onValueChanged(columnId, projectTerm.key, newValue)}
             value={
-              projectTerm.translations.find(translation => translation?.project_language_link?.language?.iso_code === columnId)
+              projectTerm.translations.find(translation => translation?.project_language?.language?.iso_code === columnId)
                 ?.translation_value || ''
             }
           />
@@ -95,10 +95,10 @@ export const TranslationEditor: FunctionComponent = () => {
       <div className='align-right'>
         <TextInput className='filter-input' icon='Filter' onChange={setFilterString} value={filterString} />
       </div>
-      {data?.project_terms?.length ? (
-        <Table<ProjectTerm>
+      {data?.terms?.length ? (
+        <Table<Term>
           columns={getColumns()}
-          data={data.project_terms}
+          data={data.terms}
           emptyStateMessage={filterString ? $t('no data') : $t('no data for the selected filters')}
           onColumnClick={(columnId: string) => handleSortClick(columnId)}
           renderCell={renderCell}
@@ -112,7 +112,7 @@ export const TranslationEditor: FunctionComponent = () => {
       <Pagination
         currentPage={page}
         onPageChange={setPage}
-        pageCount={Math.ceil((data?.project_terms_aggregate?.aggregate?.count || 0) / ENTRIES_PER_PAGE)}
+        pageCount={Math.ceil((data?.terms_aggregate?.aggregate?.count || 0) / ENTRIES_PER_PAGE)}
       />
     </div>
   );

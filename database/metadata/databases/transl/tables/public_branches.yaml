@@ -6,10 +6,17 @@ object_relationships:
   using:
     foreign_key_constraint_on: project_id
 array_relationships:
+- name: branch_languages
+  using:
+    foreign_key_constraint_on:
+      column: branch_id
+      table:
+        name: branch_languages
+        schema: public
 - name: terms
   using:
     foreign_key_constraint_on:
       column: branch_id
       table:
-        name: project_terms
+        name: terms
         schema: public

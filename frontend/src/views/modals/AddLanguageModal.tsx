@@ -14,11 +14,11 @@ import { USER_UUID } from '../../constants/user';
 import { $t } from '../../helpers/i18n';
 import { DATABASE_CONFIG } from '../../queries/config/database.constants';
 import {
-  Project_Language_Link_Insert_Input,
+  Branch_Languages_Insert_Input,
   useAddProjectLanguageLinksMutation,
   useGetCompaniesAndProjectsQuery,
 } from '../../queries/config/graphql-generated-types';
-import { Company, Language, Project } from '../../queries/type-aliasses';
+import { Branch, Company, Language, Project } from '../../queries/type-aliasses';
 
 interface AddLanguageModalProps {
   isOpen: boolean;
@@ -26,11 +26,12 @@ interface AddLanguageModalProps {
 }
 
 export const AddLanguageModal: FunctionComponent<AddLanguageModalProps> = ({ isOpen, onClose }) => {
-  const { projectUuid } = useParams();
+  const { branchUuid } = useParams();
   const { data: companiesAndProjects } = useGetCompaniesAndProjectsQuery(DATABASE_CONFIG, { userUuid: USER_UUID });
-  const { mutateAsync: addProjectLanguageLinks } = useAddProjectLanguageLinksMutation(DATABASE_CONFIG);
+  const { mutateAsync: addBranchLanguages } = useAddProjectLanguageLinksMutation(DATABASE_CONFIG);
   const [selectedCompany, setSelectedCompany] = useState<Company | null>(null);
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
+  const [selectedBranch, setSelectedBranch] = useState<Branch | null>(null);
   const [selectedLanguages, setSelectedLanguages] = useState<Language[]>([]);
 
   // Set initially selected project
@@ -40,39 +41,46 @@ export const AddLanguageModal: FunctionComponent<AddLanguageModalProps> = ({ isO
     }
     companiesAndProjects.companies.forEach(company => {
       company.projects.forEach(project => {
-        if (project.uuid === projectUuid) {
-          setSelectedCompany(selectedCompanyTemp => {
-            if (selectedCompanyTemp) {
-              return selectedCompanyTemp;
-            }
-            return company;
-          });
+        project.branches.forEach(branch => {
+          if (branch.uuid === branchUuid) {
+            setSelectedCompany(selectedCompanyTemp => {
+              if (selectedCompanyTemp) {
+                return selectedCompanyTemp;
+              }
+              return company;
+            });
 
-          setSelectedProject(selectedProjectTemp => {
-            if (selectedProjectTemp) {
-              return selectedProjectTemp; // Don't update selected project if already set
-            }
-            return project;
-          });
-        }
+            setSelectedProject(selectedProjectTemp => {
+              if (selectedProjectTemp) {
+                return selectedProjectTemp; // Don't update selected project if already set
+              }
+              return project;
+            });
+
+            setSelectedBranch(selectedBranchTemp => {
+              if (selectedBranchTemp) {
+                return selectedBranchTemp; // Don't update selected branch if already set
+              }
+              return branch;
+            });
+          }
+        });
       });
     });
   }, [companiesAndProjects]);
 
   const handleAddLanguageButtonClick = async () => {
-    if (!selectedProject) {
+    if (!selectedBranch) {
       // TODO toast error
       return;
     }
-    await addProjectLanguageLinks({
-      projectLanguageLinks: (selectedLanguages || []).map(
-        (selectedLanguage): Project_Language_Link_Insert_Input => {
-          return {
-            language_id: selectedLanguage.id,
-            project_id: selectedProject.id,
-          };
-        },
-      ),
+    await addBranchLanguages({
+      branchLanguages: (selectedLanguages || []).map((selectedLanguage): Branch_Languages_Insert_Input => {
+        return {
+          branch_id: selectedBranch.id,
+          language_id: selectedLanguage.id,
+        };
+      }),
     });
     onClose();
   };
