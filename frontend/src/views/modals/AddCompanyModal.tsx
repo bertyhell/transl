@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useState } from 'react';
+import React, { FunctionComponent, useEffect, useState } from 'react';
 
 import { Button } from '../../components/Button/Button';
 import { Form } from '../../components/Form/Form';
@@ -19,22 +19,35 @@ export const AddCompanyModal: FunctionComponent<AddCompanyModalProps> = ({ isOpe
   const [companyName, setCompanyName] = useState<string>('');
   const { mutateAsync: addCompany } = useAddCompanyMutation(DATABASE_CONFIG);
 
+  const inputRef = React.createRef<HTMLInputElement>();
+
+  useEffect(() => {
+    inputRef.current?.focus();
+  }, [inputRef]);
+
   const handleAddCompanyButtonClick = async () => {
     await addCompany({ companyName });
+    handleClose();
+  };
+
+  const handleClose = () => {
+    setCompanyName('');
     onClose();
   };
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose} size='medium' title={$t('Add company')}>
+    <Modal isOpen={isOpen} onClose={handleClose} size='small' title={$t('Add company')}>
       <ModalBody>
         <Form>
           <FormGroup label={$t('Company name')} labelFor='company-name'>
-            <TextInput id='company-name' onChange={setCompanyName} type='text' value={companyName} />
+            <TextInput id='company-name' onChange={setCompanyName} ref={inputRef} type='text' value={companyName} />
           </FormGroup>
         </Form>
       </ModalBody>
       <ModalFooterRight>
-        <Button onClick={handleAddCompanyButtonClick}>{$t('Add Company')}</Button>
+        <Button onClick={handleAddCompanyButtonClick} type='primary'>
+          {$t('Add Company')}
+        </Button>
       </ModalFooterRight>
     </Modal>
   );

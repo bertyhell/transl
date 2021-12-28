@@ -46,7 +46,7 @@ const Button: FunctionComponent<ButtonProps> = ({
     }
     switch (type) {
       case 'primary':
-        return 'cursor-pointer bg-sky-300 hover:bg-sky-200 border-2 border-sky-300 border-solid';
+        return 'cursor-pointer bg-sky-300 hover:bg-sky-200 hover:border-sky-200 border-2 border-sky-300 border-solid';
       case 'secondary':
         return 'cursor-pointer bg-gray-100 hover:bg-white border-2 border-gray-200 border-solid';
       case 'danger':
@@ -61,7 +61,7 @@ const Button: FunctionComponent<ButtonProps> = ({
   return (
     <button
       aria-label={ariaLabel}
-      className={classnames(className, { 'w-full': block })}
+      className={classnames(className, { 'w-full': block }, getTypeStyles(), 'rounded p-2')}
       disabled={disabled}
       id={id}
       onClick={handleButtonClick}
@@ -70,7 +70,7 @@ const Button: FunctionComponent<ButtonProps> = ({
       {children ? (
         children
       ) : (
-        <div className={classnames('flex flex-row p-2 rounded', getTypeStyles())}>
+        <div className={classnames('flex flex-row')}>
           {icon && <Icon name={icon} />}
           {label && <div className='ml-2'>{label}</div>}
         </div>

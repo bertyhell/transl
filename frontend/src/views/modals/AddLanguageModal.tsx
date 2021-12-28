@@ -38,10 +38,14 @@ export const AddLanguageModal: FunctionComponent<AddLanguageModalProps> = ({
   const { branchUuid } = useParams();
   const { data: companiesAndProjects } = useGetCompaniesAndProjectsQuery(DATABASE_CONFIG, { userUuid: USER_UUID });
   const { mutateAsync: addBranchLanguages } = useAddProjectLanguageLinksMutation(DATABASE_CONFIG);
-  const [selectedCompany, setSelectedCompany] = useState<Company | null>(initialCompany);
-  const [selectedProject, setSelectedProject] = useState<Project | null>(initialProject);
-  const [selectedBranch, setSelectedBranch] = useState<Branch | null>(initialBranch);
+  const [selectedCompany, setSelectedCompany] = useState<Company | null>(null);
+  const [selectedProject, setSelectedProject] = useState<Project | null>(null);
+  const [selectedBranch, setSelectedBranch] = useState<Branch | null>(null);
   const [selectedLanguages, setSelectedLanguages] = useState<Language[]>([]);
+
+  const company = selectedCompany || initialCompany;
+  const project = selectedProject || initialProject;
+  const branch = selectedBranch || initialBranch;
 
   // Set initially selected project
   useEffect(() => {
@@ -78,20 +82,26 @@ export const AddLanguageModal: FunctionComponent<AddLanguageModalProps> = ({
     });
   }, [companiesAndProjects, branchUuid, setSelectedCompany, setSelectedProject, setSelectedBranch]);
 
+  const handleClose = () => {
+    setSelectedLanguages([]);
+    onClose();
+  };
+
   const handleAddLanguageButtonClick = async () => {
-    if (!selectedBranch) {
+    const branch = selectedBranch || initialBranch;
+    if (!branch) {
       // TODO toast error
       return;
     }
     await addBranchLanguages({
       branchLanguages: (selectedLanguages || []).map((selectedLanguage): Branch_Languages_Insert_Input => {
         return {
-          branch_id: selectedBranch.id,
+          branch_id: branch.id,
           language_id: selectedLanguage.id,
         };
       }),
     });
-    onClose();
+    handleClose();
   };
 
   const handleLanguageChanged = (newValue: OnChangeValue<Language, true>, _actionMeta: ActionMeta<Language>) => {
@@ -99,31 +109,34 @@ export const AddLanguageModal: FunctionComponent<AddLanguageModalProps> = ({
   };
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose} size='medium' title={$t('Add languages to project')}>
+    <Modal isOpen={isOpen} onClose={handleClose} size='small' title={$t('Add languages to project')}>
       <ModalBody>
         <Form>
           <FormGroup label={$t('Company')} labelFor='select-company'>
             <Select<Company, false>
               id='select-company'
+              key={`select-company-${initialCompany?.id}`}
               onChange={setSelectedCompany}
               options={companiesAndProjects?.companies || []}
-              value={selectedCompany}
+              value={company}
             />
           </FormGroup>
           <FormGroup label={$t('Project')} labelFor='select-project'>
             <Select<Project, false>
               id='select-project'
+              key={`select-project-${initialProject?.id}`}
               onChange={setSelectedProject}
               options={selectedCompany?.projects || []}
-              value={selectedProject}
+              value={project}
             />
           </FormGroup>
           <FormGroup label={$t('Branch')} labelFor='select-branch'>
             <Select<Branch, false>
               id='select-branch'
+              key={`select-branch-${initialBranch?.id}`}
               onChange={setSelectedBranch}
               options={selectedProject?.branches || []}
-              value={selectedBranch}
+              value={branch}
             />
           </FormGroup>
           <FormGroup label={$t('Languages')} labelFor='select-languages'>
@@ -133,7 +146,7 @@ export const AddLanguageModal: FunctionComponent<AddLanguageModalProps> = ({
       </ModalBody>
       <ModalFooterRight>
         <Button onClick={handleAddLanguageButtonClick} type='primary'>
-          {$t('Add Language')}
+          {selectedLanguages.length > 1 ? $t('Add Languages') : $t('Add Language')}
         </Button>
       </ModalFooterRight>
     </Modal>

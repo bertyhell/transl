@@ -1,6 +1,7 @@
-import React, { ReactElement } from 'react';
-import ReactSelect, { ActionMeta } from 'react-select';
-import { OnChangeValue, PropsValue } from 'react-select/dist/declarations/src/types';
+import React, { ComponentType, JSXElementConstructor, ReactElement } from 'react';
+import ReactSelect, { ActionMeta, components } from 'react-select';
+import { InputProps, InputSpecificProps } from 'react-select/dist/declarations/src/components/Input';
+import { GroupBase, OnChangeValue, PropsValue } from 'react-select/dist/declarations/src/types';
 
 import { $t } from '../../helpers/i18n';
 
@@ -10,7 +11,7 @@ export interface SelectProps<Option, IsMulti extends boolean = false> {
   className?: string;
   clearable?: boolean;
   disabled?: boolean;
-  formatOptionLabel?: (option: Option) => ReactElement<any, any>;
+  formatOptionLabel?: (option: Option) => ReactElement<string, JSXElementConstructor<unknown>>;
   getOptionLabel?: (option: Option) => string;
   id?: string;
   isMulti?: IsMulti;
@@ -41,10 +42,15 @@ export function Select<Option, IsMulti extends boolean = false>({
     return label || name || key || JSON.stringify(option);
   },
 }: SelectProps<Option, IsMulti>) {
+  const Input = ((props: InputSpecificProps) => {
+    return <components.Input {...props} type='search' />;
+  }) as unknown as ComponentType<InputProps<Option, IsMulti, GroupBase<Option>>>;
+
   return (
     <ReactSelect<Option, IsMulti>
       className={'c-select' + (className ? ' ' + className : '')}
       classNamePrefix='c-select'
+      components={{ Input }}
       formatOptionLabel={formatOptionLabel}
       getOptionLabel={getOptionLabel}
       id={id}

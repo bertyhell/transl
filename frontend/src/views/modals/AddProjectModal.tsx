@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useState } from 'react';
+import React, { FunctionComponent, useEffect, useState } from 'react';
 
 import { Button } from '../../components/Button/Button';
 import { Form } from '../../components/Form/Form';
@@ -20,34 +20,47 @@ interface AddProjectModalProps {
 }
 
 export const AddProjectModal: FunctionComponent<AddProjectModalProps> = ({ isOpen, onClose, initialCompany }) => {
-  const [selectedCompany, setSelectedCompany] = useState<Company | null>(initialCompany);
+  const [selectedCompany, setSelectedCompany] = useState<Company | null>(null);
   const { data: companiesAndProjects } = useGetCompaniesAndProjectsQuery(DATABASE_CONFIG, { userUuid: USER_UUID });
   const [projectName, setProjectName] = useState<string>('');
   const { mutateAsync: addProject } = useAddProjectMutation(DATABASE_CONFIG);
 
+  const inputRef = React.createRef<HTMLInputElement>();
+
+  useEffect(() => {
+    inputRef.current?.focus();
+  }, [inputRef]);
+
   const handleAddCompanyButtonClick = async () => {
-    if (!selectedCompany) {
+    const company = selectedCompany || initialCompany;
+    if (!company) {
       // TODO toast
       return;
     }
-    await addProject({ companyId: selectedCompany.id, projectName });
+    await addProject({ companyId: company.id, projectName });
+    handleClose();
+  };
+
+  const handleClose = () => {
+    setProjectName('');
     onClose();
   };
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose} size='medium' title={$t('Add project to company')}>
+    <Modal isOpen={isOpen} onClose={handleClose} size='small' title={$t('Add project to company')}>
       <ModalBody>
         <Form>
           <FormGroup label={$t('Company')} labelFor='select-company'>
             <Select<Company, false>
               id='select-company'
+              key={`select-company-${initialCompany?.id}`}
               onChange={setSelectedCompany}
               options={companiesAndProjects?.companies || []}
-              value={selectedCompany}
+              value={selectedCompany || initialCompany}
             />
           </FormGroup>
           <FormGroup label={$t('Project name')} labelFor='project-name'>
-            <TextInput id='project-name' onChange={setProjectName} type='text' value={projectName} />
+            <TextInput id='project-name' onChange={setProjectName} ref={inputRef} type='text' value={projectName} />
           </FormGroup>
         </Form>
       </ModalBody>
