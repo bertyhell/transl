@@ -34,9 +34,7 @@ export const AddCompanyModal: FunctionComponent<AddCompanyModalProps> = ({ isOpe
         </Form>
       </ModalBody>
       <ModalFooterRight>
-        <Button onClick={handleAddCompanyButtonClick} type='primary'>
-          Add Company
-        </Button>
+        <Button onClick={handleAddCompanyButtonClick}>{$t('Add Company')}</Button>
       </ModalFooterRight>
     </Modal>
   );

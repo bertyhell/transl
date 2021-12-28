@@ -1,11 +1,8 @@
-import React, { FunctionComponent, useState } from 'react';
+import React, { FunctionComponent } from 'react';
 import { useParams } from 'react-router-dom';
 
-import { Button } from '../components/Button/Button';
-import { $t } from '../helpers/i18n';
 import { DATABASE_CONFIG } from '../queries/config/database.constants';
 import { useGetProjectQuery } from '../queries/config/graphql-generated-types';
-import { ImportLanguageFromJsonModal } from './modals/ImportLanguageFromJsonModal';
 
 export const ProjectDetail: FunctionComponent = () => {
   const { projectUuid } = useParams();
@@ -14,7 +11,6 @@ export const ProjectDetail: FunctionComponent = () => {
     { projectUuid: projectUuid as string },
     { enabled: !!projectUuid },
   );
-  const [isImportJsonModalOpen, setIsImportJsonModalOpen] = useState<boolean>(false);
 
   if (isLoading) {
     return <>loading...</>;
@@ -25,9 +21,6 @@ export const ProjectDetail: FunctionComponent = () => {
       Company: {data?.projects?.[0]?.company?.name}
       <br />
       Project: {data?.projects?.[0]?.name}
-      <br />
-      <Button label={$t('Import JSON')} onClick={() => setIsImportJsonModalOpen(true)} />
-      <ImportLanguageFromJsonModal isOpen={isImportJsonModalOpen} onClose={() => setIsImportJsonModalOpen(false)} />
     </>
   );
 };

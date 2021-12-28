@@ -48,13 +48,13 @@ export const TranslationInputField: FunctionComponent<TranslationInputFieldProps
     if (isFocused) {
       return (
         <textarea
-          className={classnames(className, 'text-area', 'c-input')}
+          className={classnames(className, 'border-2 border-sky-500 border-solid rounded p-2 pt-4 outline-0 w-full')}
           id={id}
           name={name}
           onBlur={handleBlur}
           onChange={evt => setTempValue(evt.target.value)}
           ref={textAreaRef}
-          style={{ display: isFocused ? 'block' : 'none' }}
+          // style={{ display: isFocused ? 'block' : 'none' }}
           value={tempValue}
         />
       );

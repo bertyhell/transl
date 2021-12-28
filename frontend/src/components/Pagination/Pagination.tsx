@@ -1,9 +1,7 @@
 import classnames from 'classnames';
 import React, { FunctionComponent } from 'react';
 
-import { Icon } from '../icons/Icon';
-
-import './Pagination.scss';
+import { PaginationButton } from './PaginationButton';
 
 export interface PaginationProps {
   className?: string;
@@ -52,14 +50,10 @@ export const Pagination: FunctionComponent<PaginationProps> = ({
   const pagesToDisplay = generatePages();
 
   return (
-    <div className={classnames(className, 'c-pagination')}>
-      <div className='c-pagination__btn' onClick={() => changePage(0)}>
-        <Icon name='ChevronLeft' />
-      </div>
-      <div className='c-pagination__btn' onClick={() => changePage(currentPage - 1)}>
-        <Icon name='ChevronsLeft' />
-      </div>
-      <div className='c-pagination__pages'>
+    <div className={classnames(className, 'c-pagination flex flex-row justify-center w-full')}>
+      <PaginationButton icon='ChevronsLeft' onClick={() => changePage(0)} />
+      <PaginationButton icon='ChevronLeft' onClick={() => changePage(currentPage - 1)} />
+      <div className='w-10 h-10 text-center p-2 leading-5'>
         {pagesToDisplay.map((pageIndex: number) => (
           <div
             className={classnames('c-pagination__btn', {
@@ -71,12 +65,8 @@ export const Pagination: FunctionComponent<PaginationProps> = ({
           </div>
         ))}
       </div>
-      <div className='c-pagination__btn' onClick={() => changePage(currentPage + 1)}>
-        <Icon name='ChevronRight' />
-      </div>
-      <div className='c-pagination__btn' onClick={() => changePage(pageCount - 1)}>
-        <Icon name='ChevronsRight' />
-      </div>
+      <PaginationButton icon='ChevronRight' onClick={() => changePage(currentPage + 1)} />
+      <PaginationButton icon='ChevronsRight' onClick={() => changePage(pageCount - 1)} />
     </div>
   );
 };

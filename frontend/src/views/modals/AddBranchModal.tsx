@@ -10,27 +10,29 @@ import { TextInput } from '../../components/TextInput/TextInput';
 import { USER_UUID } from '../../constants/user';
 import { $t } from '../../helpers/i18n';
 import { DATABASE_CONFIG } from '../../queries/config/database.constants';
-import { useAddProjectMutation, useGetCompaniesAndProjectsQuery } from '../../queries/config/graphql-generated-types';
-import { Company } from '../../queries/type-aliasses';
+import { useAddBranchMutation, useGetCompaniesAndProjectsQuery } from '../../queries/config/graphql-generated-types';
+import { Company, Project } from '../../queries/type-aliasses';
 
-interface AddProjectModalProps {
+interface AddCompanyModalProps {
   initialCompany: Company | null;
+  initialProject: Project | null;
   isOpen: boolean;
   onClose: () => void;
 }
 
-export const AddProjectModal: FunctionComponent<AddProjectModalProps> = ({ isOpen, onClose, initialCompany }) => {
+export const AddBranchModal: FunctionComponent<AddCompanyModalProps> = ({ isOpen, onClose, initialCompany, initialProject }) => {
   const [selectedCompany, setSelectedCompany] = useState<Company | null>(initialCompany);
+  const [selectedProject, setSelectedProject] = useState<Project | null>(initialProject);
   const { data: companiesAndProjects } = useGetCompaniesAndProjectsQuery(DATABASE_CONFIG, { userUuid: USER_UUID });
-  const [projectName, setProjectName] = useState<string>('');
-  const { mutateAsync: addProject } = useAddProjectMutation(DATABASE_CONFIG);
+  const [branchName, setBranchName] = useState<string>('');
+  const { mutateAsync: addBranch } = useAddBranchMutation(DATABASE_CONFIG);
 
   const handleAddCompanyButtonClick = async () => {
-    if (!selectedCompany) {
+    if (!selectedProject) {
       // TODO toast
       return;
     }
-    await addProject({ companyId: selectedCompany.id, projectName });
+    await addBranch({ branchName, projectId: selectedProject.id });
     onClose();
   };
 
@@ -46,14 +48,17 @@ export const AddProjectModal: FunctionComponent<AddProjectModalProps> = ({ isOpe
               value={selectedCompany}
             />
           </FormGroup>
-          <FormGroup label={$t('Project name')} labelFor='project-name'>
-            <TextInput id='project-name' onChange={setProjectName} type='text' value={projectName} />
+          <FormGroup label={$t('Project')} labelFor='select-project'>
+            <Select<Project, false> id='select-project' onChange={setSelectedProject} options={selectedCompany?.projects || []} />
+          </FormGroup>
+          <FormGroup label={$t('Branch name')} labelFor='branch-name'>
+            <TextInput id='branch-name' onChange={setBranchName} type='text' value={branchName} />
           </FormGroup>
         </Form>
       </ModalBody>
       <ModalFooterRight>
         <Button onClick={handleAddCompanyButtonClick} type='primary'>
-          {$t('Add Project')}
+          {$t('Add Branch')}
         </Button>
       </ModalFooterRight>
     </Modal>

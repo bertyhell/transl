@@ -6,8 +6,6 @@ import { Checkbox } from '../Checkbox/Checkbox';
 import { IconName } from '../icons';
 import { Icon } from '../icons/Icon';
 
-import './Table.scss';
-
 export type TableColumn = {
   // Relative units. eg: 1, 2, 1 => 25% , 50%, 25%
   dataType?: 'string' | 'dateTime' | 'boolean' | 'number';
@@ -20,14 +18,11 @@ export type TableColumn = {
 };
 
 export interface TableProps<RowType> {
-  align?: boolean;
   children?: ReactNode;
   className?: string;
   columns?: TableColumn[];
   data?: RowType[];
   emptyStateMessage?: string;
-  horizontal?: boolean;
-  nowrap?: boolean;
   onColumnClick?: (id: string) => void;
   onRowClick?: (rowData: RowType) => void;
   onSelectAll?: () => void;
@@ -41,14 +36,11 @@ export interface TableProps<RowType> {
 }
 
 export function Table<RowType>({
-  align = true,
   children,
   className,
   columns = [],
   data = [],
   emptyStateMessage,
-  horizontal,
-  nowrap,
   onColumnClick = () => {},
   onRowClick,
   renderCell = () => null,
@@ -64,10 +56,10 @@ export function Table<RowType>({
 
   const getRowKey = (rowData: RowType): string => {
     if (isString(rowKey)) {
-      return ((rowData as unknown) as Record<string, string>)[rowKey];
+      return (rowData as unknown as Record<string, string>)[rowKey];
     }
     if (isNil(rowKey)) {
-      return ((rowData as unknown) as Record<string, string>).id;
+      return (rowData as unknown as Record<string, string>).id;
     }
     return rowKey(rowData);
   };
@@ -114,14 +106,8 @@ export function Table<RowType>({
     }
 
     return (
-      <th
-        className={classnames({
-          'c-table__header__sortable': sortable,
-        })}
-        key={`table-head-${id}`}
-        onClick={() => sortable && onColumnClick(id)}
-        title={tooltip}>
-        <div>
+      <th className='rounded' key={`table-head-${id}`} onClick={() => sortable && onColumnClick(id)} title={tooltip}>
+        <div className='flex flex-row p-2'>
           {!!icon && <Icon name={icon} />}
           <span>{label || null}</span>
           {sortable && <Icon {...sortIconProps} />}
@@ -132,18 +118,13 @@ export function Table<RowType>({
 
   const renderTable = () => (
     <>
-      <table
-        className={classnames(className, 'c-table', {
-          'c-table__align-middle': align,
-          'c-table__horizontal': horizontal,
-          'c-table__nowrap': nowrap,
-        })}>
+      <table className={classnames(className, 'w-full')}>
         {children ? (
           children
         ) : (
           <>
             {columns.length > 0 && (
-              <thead>
+              <thead className='bg-sky-300'>
                 <tr>
                   {showCheckboxes && (
                     <th className='c-table__checkbox-column'>
@@ -172,7 +153,10 @@ export function Table<RowType>({
                     {columns.map((col, columnIndex) => {
                       const columnPercentageWidth = Math.round((100 / totalColUnits) * (col.width || 1) * 100) / 100;
                       return (
-                        <td key={columnIndex} style={{ width: columnPercentageWidth + '%' }}>
+                        <td
+                          className={classnames({ 'pl-2': columnIndex === 0 })}
+                          key={columnIndex}
+                          style={{ width: columnPercentageWidth + '%' }}>
                           {renderCell(rowData, col.id, rowIndex, columnIndex)}
                         </td>
                       );

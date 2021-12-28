@@ -14,14 +14,14 @@ function Layout() {
   const queryClient = new QueryClient();
 
   return (
-    <div className='main-app'>
-      <QueryClientProvider client={queryClient}>
-        <Sidebar />
-        <div className='main-view'>
+    <QueryClientProvider client={queryClient}>
+      <div className='flex flex-row'>
+        <Sidebar className='w-1/4' />
+        <div className='w-3/4 p-2'>
           <Outlet />
         </div>
-      </QueryClientProvider>
-    </div>
+      </div>
+    </QueryClientProvider>
   );
 }
 
@@ -29,9 +29,9 @@ function App() {
   return (
     <Routes>
       <Route element={<Layout />} path='/'>
-        <Route element={<CompanyDetail />} path='companies/:companyUuid' />
-        <Route element={<ProjectDetail />} path='projects/:projectUuid' />
-        <Route element={<BranchDetail />} path='branches/:branchUuid' />
+        <Route element={<CompanyDetail />} path='companies/:companyUuid/details' />
+        <Route element={<ProjectDetail />} path='projects/:projectUuid/details' />
+        <Route element={<BranchDetail />} path='branches/:branchUuid/details' />
         <Route element={<TranslationEditor />} path='branches/:branchUuid/translations' />
         <Route element={<p>No found route</p>} path='*' />
       </Route>

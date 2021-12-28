@@ -8,10 +8,11 @@ import { TranslationInputField } from '../../components/TranslationInputField/Tr
 import { $t } from '../../helpers/i18n';
 import { useTableSort } from '../../hooks/useTableSort';
 import { DATABASE_CONFIG } from '../../queries/config/database.constants';
-import { useGetTranslationsQuery, useUpdateTranslationValueMutation } from '../../queries/config/graphql-generated-types';
+import {
+  useGetTranslationsByLanguageCodesQuery,
+  useUpdateTranslationValueMutation,
+} from '../../queries/config/graphql-generated-types';
 import { Term } from '../../queries/type-aliasses';
-
-import './TranslationEditor.scss';
 
 export const ITEMS_PER_PAGE = 100;
 
@@ -26,19 +27,19 @@ export const TranslationEditor: FunctionComponent = () => {
   const { branchUuid } = useParams();
   const [searchParams] = useSearchParams();
   const [page, setPage] = useState<number>(0);
+  const allLanguageCodes =
+    searchParams.get('languageCodes') === 'all'
+      ? null
+      : (searchParams.get('languageCodes') || '').split('|').map(code => code.trim());
 
-  const languageCodes = (searchParams.get('languageCodes') || '').split('|').map(code => code.trim());
-
-  const { data, refetch: refetchTranslations } = useGetTranslationsQuery(
+  const { data, refetch: refetchTranslations } = useGetTranslationsByLanguageCodesQuery(
     DATABASE_CONFIG,
     {
       branchUuid,
-      languageCodes: languageCodes,
+      languageCodes: allLanguageCodes,
       offset: page * ITEMS_PER_PAGE,
     },
-    {
-      enabled: !!languageCodes?.length,
-    },
+    { enabled: !!allLanguageCodes },
   );
   const { mutateAsync: updateTranslation } = useUpdateTranslationValueMutation(DATABASE_CONFIG);
   const [filterString, setFilterString] = useState<string>('');
@@ -81,7 +82,7 @@ export const TranslationEditor: FunctionComponent = () => {
 
   const getColumns = () => {
     const columns = [{ id: 'key', label: $t('key'), sortable: true }];
-    languageCodes?.forEach(languageCode => {
+    allLanguageCodes?.forEach(languageCode => {
       if (languageCode) {
         columns.push({ id: languageCode, label: $t(languageCode), sortable: true });
       }
@@ -92,11 +93,12 @@ export const TranslationEditor: FunctionComponent = () => {
   console.log('rerendering', data);
   return (
     <div className='c-key-value-editor'>
-      <div className='align-right'>
-        <TextInput className='filter-input' icon='Filter' onChange={setFilterString} value={filterString} />
+      <div className='flex flex-row-reverse'>
+        <TextInput className='w-60' icon='Filter' onChange={setFilterString} value={filterString} />
       </div>
       {data?.terms?.length ? (
         <Table<Term>
+          className='my-4'
           columns={getColumns()}
           data={data.terms}
           emptyStateMessage={filterString ? $t('no data') : $t('no data for the selected filters')}
