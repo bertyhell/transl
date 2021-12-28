@@ -4898,6 +4898,14 @@ export type Uuid_Comparison_Exp = {
   _nin?: Maybe<Array<Scalars['uuid']>>;
 };
 
+export type AddBranchMutationVariables = Exact<{
+  branchName?: Maybe<Scalars['String']>;
+  projectId?: Maybe<Scalars['Int']>;
+}>;
+
+
+export type AddBranchMutation = { __typename?: 'mutation_root', insert_branches?: { __typename?: 'branches_mutation_response', returning: Array<{ __typename?: 'branches', uuid: any }> } | null | undefined };
+
 export type AddCompanyMutationVariables = Exact<{
   companyName?: Maybe<Scalars['String']>;
 }>;
@@ -4981,6 +4989,26 @@ export type UpdateTranslationValueMutationVariables = Exact<{
 export type UpdateTranslationValueMutation = { __typename?: 'mutation_root', update_translations?: { __typename?: 'translations_mutation_response', affected_rows: number } | null | undefined };
 
 
+export const AddBranchDocument = `
+    mutation addBranch($branchName: String, $projectId: Int) {
+  insert_branches(objects: {name: $branchName, project_id: $projectId}) {
+    returning {
+      uuid
+    }
+  }
+}
+    `;
+export const useAddBranchMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(
+      dataSource: { endpoint: string, fetchParams?: RequestInit },
+      options?: UseMutationOptions<AddBranchMutation, TError, AddBranchMutationVariables, TContext>
+    ) =>
+    useMutation<AddBranchMutation, TError, AddBranchMutationVariables, TContext>(
+      (variables?: AddBranchMutationVariables) => fetcher<AddBranchMutation, AddBranchMutationVariables>(dataSource.endpoint, dataSource.fetchParams || {}, AddBranchDocument, variables)(),
+      options
+    );
 export const AddCompanyDocument = `
     mutation addCompany($companyName: String) {
   insert_companies(objects: {name: $companyName}) {

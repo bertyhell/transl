@@ -1,4 +1,3 @@
-import classnames from 'classnames';
 import React, { FunctionComponent, ReactNode } from 'react';
 
 import './ButtonToolbar.scss';
@@ -9,8 +8,8 @@ export interface ButtonToolbarProps {
   direction?: 'vertical' | 'horizontal';
 }
 
-const ButtonToolbar: FunctionComponent<ButtonToolbarProps> = ({ className = '', children, direction = 'horizontal' }) => (
-  <div className={classnames(className, 'c-button-toolbar', `c-button-toolbar-${direction}`)}>{children}</div>
+const ButtonToolbar: FunctionComponent<ButtonToolbarProps> = ({ className = '', children }) => (
+  <div className={className}>{children}</div>
 );
 
 export { ButtonToolbar };

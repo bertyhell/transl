@@ -29,9 +29,9 @@ function App() {
   return (
     <Routes>
       <Route element={<Layout />} path='/'>
-        <Route element={<CompanyDetail />} path='companies/:companyUuid' />
-        <Route element={<ProjectDetail />} path='projects/:projectUuid' />
-        <Route element={<BranchDetail />} path='branches/:branchUuid' />
+        <Route element={<CompanyDetail />} path='companies/:companyUuid/details' />
+        <Route element={<ProjectDetail />} path='projects/:projectUuid/details' />
+        <Route element={<BranchDetail />} path='branches/:branchUuid/details' />
         <Route element={<TranslationEditor />} path='branches/:branchUuid/translations' />
         <Route element={<p>No found route</p>} path='*' />
       </Route>

@@ -5,14 +5,8 @@ import { IconName } from '../icons';
 import { Icon } from '../icons/Icon';
 import { ButtonType } from './Button.types';
 
-import './Button.scss';
-
 export interface ButtonProps {
-  active?: boolean;
-  altTitle?: string;
   ariaLabel?: string;
-  arrow?: boolean;
-  autoHeight?: boolean;
   block?: boolean;
   children?: ReactNode;
   className?: string;
@@ -21,20 +15,14 @@ export interface ButtonProps {
   id?: string;
   label?: string;
   onClick?(event: MouseEvent<HTMLElement>): void;
-  size?: 'small' | 'large';
   style?: CSSProperties;
   title?: string;
-  tooltip?: string;
-
   type?: ButtonType;
 }
 
 const Button: FunctionComponent<ButtonProps> = ({
   style,
-  active,
   ariaLabel,
-  arrow,
-  autoHeight = false,
   block = false,
   children,
   className,
@@ -42,7 +30,6 @@ const Button: FunctionComponent<ButtonProps> = ({
   icon,
   label,
   onClick,
-  size,
   title,
   type = 'primary',
   id,
@@ -53,18 +40,28 @@ const Button: FunctionComponent<ButtonProps> = ({
     }
   };
 
+  const getTypeStyles = () => {
+    if (disabled) {
+      return 'bg-gray-300 cursor-default';
+    }
+    switch (type) {
+      case 'primary':
+        return 'cursor-pointer bg-sky-300 hover:bg-sky-200 border-2 border-sky-300 border-solid';
+      case 'secondary':
+        return 'cursor-pointer bg-gray-100 hover:bg-white border-2 border-gray-200 border-solid';
+      case 'danger':
+        return 'cursor-pointer bg-red-500 hover:bg-red-300 border-2 border-red-500 border-solid';
+      case 'borderless':
+        return 'cursor-pointer hover:bg-gray-100 border-2 border-transparent border-solid';
+      default:
+        return 'cursor-pointer border-2 border-gray-400 border-solid';
+    }
+  };
+
   return (
     <button
       aria-label={ariaLabel}
-      className={classnames(className, 'c-button', {
-        'c-button__active': active,
-        'c-button__auto': autoHeight,
-        'c-button__block': block,
-        'c-button__icon': icon && !label,
-        'c-button__large': size === 'large',
-        'c-button__small': size === 'small',
-        [`c-button__${type}`]: type,
-      })}
+      className={classnames(className, { 'w-full': block })}
       disabled={disabled}
       id={id}
       onClick={handleButtonClick}
@@ -73,10 +70,9 @@ const Button: FunctionComponent<ButtonProps> = ({
       {children ? (
         children
       ) : (
-        <div className='c-button__content'>
+        <div className={classnames('flex flex-row p-2 rounded', getTypeStyles())}>
           {icon && <Icon name={icon} />}
-          {label && <div className='c-button__label'>{label}</div>}
-          {arrow && <Icon name='CaretDown' />}
+          {label && <div className='ml-2'>{label}</div>}
         </div>
       )}
     </button>

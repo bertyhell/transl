@@ -1,5 +1,4 @@
-import { flatten, uniq } from 'lodash-es';
-import React, { FunctionComponent, ReactNode, useEffect, useState } from 'react';
+import React, { FunctionComponent, ReactNode, useState } from 'react';
 import { useParams, useSearchParams } from 'react-router-dom';
 
 import { Pagination } from '../../components/Pagination/Pagination';
@@ -11,7 +10,6 @@ import { useTableSort } from '../../hooks/useTableSort';
 import { DATABASE_CONFIG } from '../../queries/config/database.constants';
 import {
   useGetTranslationsByLanguageCodesQuery,
-  useGetTranslationsQuery,
   useUpdateTranslationValueMutation,
 } from '../../queries/config/graphql-generated-types';
 import { Term } from '../../queries/type-aliasses';
@@ -29,40 +27,23 @@ export const TranslationEditor: FunctionComponent = () => {
   const { branchUuid } = useParams();
   const [searchParams] = useSearchParams();
   const [page, setPage] = useState<number>(0);
-  const [selectedLanguageCodes, setSelectedLanguageCodes] = useState<string[] | null>(
+  const allLanguageCodes =
     searchParams.get('languageCodes') === 'all'
       ? null
-      : (searchParams.get('languageCodes') || '').split('|').map(code => code.trim()),
-  );
+      : (searchParams.get('languageCodes') || '').split('|').map(code => code.trim());
 
-  const { data, refetch: refetchTranslations } = selectedLanguageCodes
-    ? useGetTranslationsByLanguageCodesQuery(DATABASE_CONFIG, {
-        branchUuid,
-        languageCodes: selectedLanguageCodes,
-        offset: page * ITEMS_PER_PAGE,
-      })
-    : useGetTranslationsQuery(DATABASE_CONFIG, {
-        branchUuid,
-        offset: page * ITEMS_PER_PAGE,
-      });
+  const { data, refetch: refetchTranslations } = useGetTranslationsByLanguageCodesQuery(
+    DATABASE_CONFIG,
+    {
+      branchUuid,
+      languageCodes: allLanguageCodes,
+      offset: page * ITEMS_PER_PAGE,
+    },
+    { enabled: !!allLanguageCodes },
+  );
   const { mutateAsync: updateTranslation } = useUpdateTranslationValueMutation(DATABASE_CONFIG);
   const [filterString, setFilterString] = useState<string>('');
   const [sortColumn, sortOrder, handleSortClick] = useTableSort<ColumnId>('key');
-
-  useEffect(() => {
-    if (!selectedLanguageCodes && data) {
-      const languageCodes: string[] = uniq(
-        flatten(
-          data.terms.map((term): string[] => {
-            return term.translations.map((translation): string => {
-              return translation.project_language.language.iso_code;
-            });
-          }),
-        ),
-      );
-      setSelectedLanguageCodes(languageCodes);
-    }
-  }, [data, selectedLanguageCodes]);
 
   const onValueChanged = async (languageCode: string, key: string, value: string) => {
     try {
@@ -101,7 +82,7 @@ export const TranslationEditor: FunctionComponent = () => {
 
   const getColumns = () => {
     const columns = [{ id: 'key', label: $t('key'), sortable: true }];
-    selectedLanguageCodes?.forEach(languageCode => {
+    allLanguageCodes?.forEach(languageCode => {
       if (languageCode) {
         columns.push({ id: languageCode, label: $t(languageCode), sortable: true });
       }

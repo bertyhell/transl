@@ -21,17 +21,26 @@ import {
 import { Branch, Company, Language, Project } from '../../queries/type-aliasses';
 
 interface AddLanguageModalProps {
+  initialBranch: Branch | null;
+  initialCompany: Company | null;
+  initialProject: Project | null;
   isOpen: boolean;
   onClose: () => void;
 }
 
-export const AddLanguageModal: FunctionComponent<AddLanguageModalProps> = ({ isOpen, onClose }) => {
+export const AddLanguageModal: FunctionComponent<AddLanguageModalProps> = ({
+  isOpen,
+  onClose,
+  initialCompany,
+  initialProject,
+  initialBranch,
+}) => {
   const { branchUuid } = useParams();
   const { data: companiesAndProjects } = useGetCompaniesAndProjectsQuery(DATABASE_CONFIG, { userUuid: USER_UUID });
   const { mutateAsync: addBranchLanguages } = useAddProjectLanguageLinksMutation(DATABASE_CONFIG);
-  const [selectedCompany, setSelectedCompany] = useState<Company | null>(null);
-  const [selectedProject, setSelectedProject] = useState<Project | null>(null);
-  const [selectedBranch, setSelectedBranch] = useState<Branch | null>(null);
+  const [selectedCompany, setSelectedCompany] = useState<Company | null>(initialCompany);
+  const [selectedProject, setSelectedProject] = useState<Project | null>(initialProject);
+  const [selectedBranch, setSelectedBranch] = useState<Branch | null>(initialBranch);
   const [selectedLanguages, setSelectedLanguages] = useState<Language[]>([]);
 
   // Set initially selected project
@@ -67,7 +76,7 @@ export const AddLanguageModal: FunctionComponent<AddLanguageModalProps> = ({ isO
         });
       });
     });
-  }, [companiesAndProjects]);
+  }, [companiesAndProjects, branchUuid, setSelectedCompany, setSelectedProject, setSelectedBranch]);
 
   const handleAddLanguageButtonClick = async () => {
     if (!selectedBranch) {
@@ -98,13 +107,24 @@ export const AddLanguageModal: FunctionComponent<AddLanguageModalProps> = ({ isO
               id='select-company'
               onChange={setSelectedCompany}
               options={companiesAndProjects?.companies || []}
+              value={selectedCompany}
             />
           </FormGroup>
           <FormGroup label={$t('Project')} labelFor='select-project'>
-            <Select<Project, false> id='select-project' onChange={setSelectedProject} options={selectedCompany?.projects || []} />
+            <Select<Project, false>
+              id='select-project'
+              onChange={setSelectedProject}
+              options={selectedCompany?.projects || []}
+              value={selectedProject}
+            />
           </FormGroup>
           <FormGroup label={$t('Branch')} labelFor='select-branch'>
-            <Select<Branch, false> id='select-branch' onChange={setSelectedBranch} options={selectedProject?.branches || []} />
+            <Select<Branch, false>
+              id='select-branch'
+              onChange={setSelectedBranch}
+              options={selectedProject?.branches || []}
+              value={selectedBranch}
+            />
           </FormGroup>
           <FormGroup label={$t('Languages')} labelFor='select-languages'>
             <LanguageMultiSelect onChange={handleLanguageChanged} value={selectedLanguages} />
@@ -113,7 +133,7 @@ export const AddLanguageModal: FunctionComponent<AddLanguageModalProps> = ({ isO
       </ModalBody>
       <ModalFooterRight>
         <Button onClick={handleAddLanguageButtonClick} type='primary'>
-          Add
+          {$t('Add Language')}
         </Button>
       </ModalFooterRight>
     </Modal>

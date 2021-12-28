@@ -127,7 +127,7 @@ export const ImportLanguageFromJsonModal: FunctionComponent<ImportLanguageFromJs
       </ModalBody>
       <ModalFooterRight>
         <Button onClick={insertTranslations} type='primary'>
-          Import
+          {$t('Import')}
         </Button>
       </ModalFooterRight>
     </Modal>

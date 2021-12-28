@@ -4,8 +4,6 @@ import React, { ChangeEvent, FunctionComponent, KeyboardEvent } from 'react';
 import { IconName } from '../icons';
 import { Icon } from '../icons/Icon';
 
-import './TextInput.scss';
-
 type InputType = 'password' | 'text' | 'email' | 'search' | 'number' | 'tel' | 'url';
 
 export interface TextInputProps {

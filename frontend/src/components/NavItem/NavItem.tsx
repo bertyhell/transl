@@ -21,7 +21,8 @@ export const NavItem: FunctionComponent<NavItemProps> = ({ title, showChildrenIn
     <>
       <NavLink
         className={({ isActive }) => {
-          return classnames(`nav-item flex flex-row py-2 px-2 bg-gray-200 rounded my-0.5`, {
+          return classnames(`nav-item flex flex-row py-2 px-2 rounded my-0.5`, {
+            'bg-gray-200': !isActive,
             'bg-sky-300': isActive,
             collapsed: !showChildren,
           });
