@@ -15,44 +15,47 @@ import { AddCompanyModal } from '../modals/AddCompanyModal';
 import { AddLanguageModal } from '../modals/AddLanguageModal';
 import { AddProjectModal } from '../modals/AddProjectModal';
 
-import './Sidebar.scss';
-
 interface Props {
   className?: string;
 }
 
 export function Sidebar({ className }: Props) {
-  const { companyUuid, projectUuid } = useParams();
+  const { companyUuid, projectUuid, branchUuid } = useParams();
   const [searchTerm, setSearchTerm] = useState<string>('');
   const { data } = useGetCompaniesAndProjectsQuery(DATABASE_CONFIG, { userUuid: USER_UUID });
   const [isAddCompanyModalOpen, setIsAddCompanyModalOpen] = useState(false);
   const [isAddProjectModalOpen, setIsAddProjectModalOpen] = useState(false);
   const [isAddLanguageModalOpen, setIsAddLanguageModalOpen] = useState(false);
 
-  const renderLanguage = (branch: Branch, branchLanguage: BranchLanguage): ReactNode => {
-    return (
-      <NavItem
-        key={branchLanguage.language.uuid}
-        title={$t(branchLanguage.language.iso_code)}
-        to={`/branches/${branch.uuid}/translations?${new URLSearchParams({
-          languageCodes: branchLanguage.language.iso_code,
-        }).toString()}`}
-      />
-    );
-  };
-
   const renderBranch = (branch: Branch): ReactNode => {
     return (
-      <NavItem key={branch.uuid} title={branch.name} to={`/branches/${branch.uuid}`}>
-        {branch?.branch_languages?.length &&
-          branch.branch_languages.map(branchLanguage => renderLanguage(branch, branchLanguage))}
+      <NavItem
+        icon='GitBranch'
+        key={branch.uuid}
+        level={2}
+        showChildrenInitial={branchUuid === branch.uuid}
+        title={branch.name}
+        to={`/branches/${branch.uuid}`}>
+        <NavItem
+          icon='AlignJustify'
+          level={3}
+          showChildrenInitial={false}
+          title={$t('Translations')}
+          to={`/branches/${branch.uuid}/translations?languageCodes=all`}
+        />
       </NavItem>
     );
   };
 
   const renderProject = (project: Project): ReactNode => {
     return (
-      <NavItem key={project.uuid} title={project.name} to={`/projects/${project.uuid}`}>
+      <NavItem
+        icon='Layout'
+        key={project.uuid}
+        level={1}
+        showChildrenInitial={projectUuid === project.uuid || !!project.branches.find(branch => branch.uuid === branchUuid)}
+        title={project.name}
+        to={`/projects/${project.uuid}`}>
         {project?.branches?.length && project.branches.map(branch => renderBranch(branch))}
       </NavItem>
     );
@@ -60,7 +63,18 @@ export function Sidebar({ className }: Props) {
 
   const renderCompany = (company: Company): ReactNode => {
     return (
-      <NavItem key={company?.uuid} title={company?.name} to={`/companies/${company?.uuid}`}>
+      <NavItem
+        icon='Briefcase'
+        key={company?.uuid}
+        level={0}
+        showChildrenInitial={
+          companyUuid === company.uuid ||
+          !!company.projects.find(
+            project => project.uuid === projectUuid || !!project.branches.find(branch => branch.uuid === branchUuid),
+          )
+        }
+        title={company?.name}
+        to={`/companies/${company?.uuid}`}>
         {company?.projects?.length && company.projects.map(project => renderProject(project))}
       </NavItem>
     );
@@ -77,8 +91,16 @@ export function Sidebar({ className }: Props) {
         <Button
           block
           disabled={!companyUuid}
-          icon='Folder'
+          icon='Layout'
           label={$t('Add Project')}
+          onClick={() => setIsAddProjectModalOpen(true)}
+          type='primary'
+        />
+        <Button
+          block
+          disabled={!companyUuid}
+          icon='GitBranch'
+          label={$t('Add Branch')}
           onClick={() => setIsAddProjectModalOpen(true)}
           type='primary'
         />

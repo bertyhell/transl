@@ -13,5 +13,5 @@ export const Icon: FC<Props> = ({ name, className }) => {
     return null;
   }
   const IconComponent = ICONS[name] || ICONS.ErrorIcon;
-  return <IconComponent className={classnames('icon', className, name)} />;
+  return <IconComponent className={classnames('icon w-6', className, name)} />;
 };

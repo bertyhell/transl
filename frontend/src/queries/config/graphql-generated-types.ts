@@ -4955,12 +4955,20 @@ export type GetProjectQuery = { __typename?: 'query_root', projects: Array<{ __t
 
 export type GetTranslationsQueryVariables = Exact<{
   branchUuid?: Maybe<Scalars['uuid']>;
-  languageCodes?: Maybe<Array<Scalars['String']> | Scalars['String']>;
   offset?: Maybe<Scalars['Int']>;
 }>;
 
 
 export type GetTranslationsQuery = { __typename?: 'query_root', terms: Array<{ __typename?: 'terms', key: string, description?: string | null | undefined, uuid: any, id: number, translations: Array<{ __typename?: 'translations', translation_value?: string | null | undefined, uuid: any, id: number, status?: { __typename?: 'translation_statuses', name: string, uuid: any, id: number } | null | undefined, project_language: { __typename?: 'branch_languages', language: { __typename?: 'languages', iso_code: string, id: number, uuid: any } } }> }>, terms_aggregate: { __typename?: 'terms_aggregate', aggregate?: { __typename?: 'terms_aggregate_fields', count: number } | null | undefined } };
+
+export type GetTranslationsByLanguageCodesQueryVariables = Exact<{
+  branchUuid?: Maybe<Scalars['uuid']>;
+  languageCodes?: Maybe<Array<Scalars['String']> | Scalars['String']>;
+  offset?: Maybe<Scalars['Int']>;
+}>;
+
+
+export type GetTranslationsByLanguageCodesQuery = { __typename?: 'query_root', terms: Array<{ __typename?: 'terms', key: string, description?: string | null | undefined, uuid: any, id: number, translations: Array<{ __typename?: 'translations', translation_value?: string | null | undefined, uuid: any, id: number, status?: { __typename?: 'translation_statuses', name: string, uuid: any, id: number } | null | undefined, project_language: { __typename?: 'branch_languages', language: { __typename?: 'languages', iso_code: string, id: number, uuid: any } } }> }>, terms_aggregate: { __typename?: 'terms_aggregate', aggregate?: { __typename?: 'terms_aggregate_fields', count: number } | null | undefined } };
 
 export type UpdateTranslationValueMutationVariables = Exact<{
   branchUuid?: Maybe<Scalars['uuid']>;
@@ -5233,13 +5241,11 @@ export const useGetProjectQuery = <
 useGetProjectQuery.getKey = (variables?: GetProjectQueryVariables) => variables === undefined ? ['getProject'] : ['getProject', variables];
 
 export const GetTranslationsDocument = `
-    query getTranslations($branchUuid: uuid, $languageCodes: [String!], $offset: Int) {
+    query getTranslations($branchUuid: uuid, $offset: Int) {
   terms(where: {branch: {uuid: {_eq: $branchUuid}}}, limit: 100, offset: $offset) {
     key
     description
-    translations(
-      where: {project_language: {language: {iso_code: {_in: $languageCodes}}}}
-    ) {
+    translations {
       translation_value
       status {
         name
@@ -5284,6 +5290,59 @@ export const useGetTranslationsQuery = <
       options
     );
 useGetTranslationsQuery.getKey = (variables?: GetTranslationsQueryVariables) => variables === undefined ? ['getTranslations'] : ['getTranslations', variables];
+
+export const GetTranslationsByLanguageCodesDocument = `
+    query getTranslationsByLanguageCodes($branchUuid: uuid, $languageCodes: [String!], $offset: Int) {
+  terms(where: {branch: {uuid: {_eq: $branchUuid}}}, limit: 100, offset: $offset) {
+    key
+    description
+    translations(
+      where: {project_language: {language: {iso_code: {_in: $languageCodes}}}}
+    ) {
+      translation_value
+      status {
+        name
+        uuid
+        id
+      }
+      uuid
+      id
+      project_language {
+        language {
+          iso_code
+          id
+          uuid
+        }
+      }
+    }
+    uuid
+    id
+  }
+  terms_aggregate(
+    where: {branch: {uuid: {_eq: $branchUuid}}}
+    limit: 100
+    offset: $offset
+  ) {
+    aggregate {
+      count
+    }
+  }
+}
+    `;
+export const useGetTranslationsByLanguageCodesQuery = <
+      TData = GetTranslationsByLanguageCodesQuery,
+      TError = unknown
+    >(
+      dataSource: { endpoint: string, fetchParams?: RequestInit },
+      variables?: GetTranslationsByLanguageCodesQueryVariables,
+      options?: UseQueryOptions<GetTranslationsByLanguageCodesQuery, TError, TData>
+    ) =>
+    useQuery<GetTranslationsByLanguageCodesQuery, TError, TData>(
+      variables === undefined ? ['getTranslationsByLanguageCodes'] : ['getTranslationsByLanguageCodes', variables],
+      fetcher<GetTranslationsByLanguageCodesQuery, GetTranslationsByLanguageCodesQueryVariables>(dataSource.endpoint, dataSource.fetchParams || {}, GetTranslationsByLanguageCodesDocument, variables),
+      options
+    );
+useGetTranslationsByLanguageCodesQuery.getKey = (variables?: GetTranslationsByLanguageCodesQueryVariables) => variables === undefined ? ['getTranslationsByLanguageCodes'] : ['getTranslationsByLanguageCodes', variables];
 
 export const UpdateTranslationValueDocument = `
     mutation updateTranslationValue($branchUuid: uuid, $languageCode: String, $translationKey: String, $translationValue: String) {

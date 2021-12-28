@@ -7,7 +7,6 @@ import { $t } from '../../helpers/i18n';
 import { DATABASE_CONFIG } from '../../queries/config/database.constants';
 import { useGetLanguagesQuery } from '../../queries/config/graphql-generated-types';
 import { Language } from '../../queries/type-aliasses';
-import { Select } from '../Select/Select';
 
 interface LanguageSelectProps {
   id?: string;

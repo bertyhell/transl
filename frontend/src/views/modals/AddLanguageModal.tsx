@@ -103,6 +103,9 @@ export const AddLanguageModal: FunctionComponent<AddLanguageModalProps> = ({ isO
           <FormGroup label={$t('Project')} labelFor='select-project'>
             <Select<Project, false> id='select-project' onChange={setSelectedProject} options={selectedCompany?.projects || []} />
           </FormGroup>
+          <FormGroup label={$t('Branch')} labelFor='select-branch'>
+            <Select<Branch, false> id='select-branch' onChange={setSelectedBranch} options={selectedProject?.branches || []} />
+          </FormGroup>
           <FormGroup label={$t('Languages')} labelFor='select-languages'>
             <LanguageMultiSelect onChange={handleLanguageChanged} value={selectedLanguages} />
           </FormGroup>

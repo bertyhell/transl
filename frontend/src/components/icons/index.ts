@@ -30,6 +30,7 @@ import { ReactComponent as Battery } from './svg/battery.svg';
 import { ReactComponent as BatteryCharging } from './svg/battery-charging.svg';
 import { ReactComponent as Bell } from './svg/bell.svg';
 import { ReactComponent as BellOff } from './svg/bell-off.svg';
+import { ReactComponent as Blanc } from './svg/blanc.svg';
 import { ReactComponent as Bluetooth } from './svg/bluetooth.svg';
 import { ReactComponent as Bold } from './svg/bold.svg';
 import { ReactComponent as Book } from './svg/book.svg';
@@ -324,6 +325,7 @@ export const ICONS = {
   BatteryCharging,
   Bell,
   BellOff,
+  Blanc,
   Bluetooth,
   Bold,
   Book,
