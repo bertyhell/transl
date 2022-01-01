@@ -26,6 +26,12 @@ export class TranslationEventController {
           translationEvent.value,
           translationEvent.project_id,
         );
+      case 'merge_branch':
+        await this.translationEventService.mergeBranch(
+          translationEvent.project_id,
+          parseInt(translationEvent.value, 10),
+          translationEvent.branch_id,
+        );
     }
   }
 }

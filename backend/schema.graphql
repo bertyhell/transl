@@ -181,9 +181,37 @@ type branches {
         "filter the rows returned"
         where: branch_languages_bool_exp
     ): branch_languages_aggregate!
+    "An array relationship"
+    child_branches(
+        "distinct select on columns"
+        distinct_on: [branches_select_column!],
+        "limit the number of rows returned"
+        limit: Int,
+        "skip the first n rows. Use only with order_by"
+        offset: Int,
+        "sort the rows by one or more columns"
+        order_by: [branches_order_by!],
+        "filter the rows returned"
+        where: branches_bool_exp
+    ): [branches!]!
+    "An aggregate relationship"
+    child_branches_aggregate(
+        "distinct select on columns"
+        distinct_on: [branches_select_column!],
+        "limit the number of rows returned"
+        limit: Int,
+        "skip the first n rows. Use only with order_by"
+        offset: Int,
+        "sort the rows by one or more columns"
+        order_by: [branches_order_by!],
+        "filter the rows returned"
+        where: branches_bool_exp
+    ): branches_aggregate!
     date: timestamptz!
     id: Int!
     name: String!
+    "An object relationship"
+    parent_branch: branches
     parent_branch_id: Int
     "An object relationship"
     project: projects!
@@ -3505,9 +3533,11 @@ input branches_bool_exp {
     _not: branches_bool_exp
     _or: [branches_bool_exp!]
     branch_languages: branch_languages_bool_exp
+    child_branches: branches_bool_exp
     date: timestamptz_comparison_exp
     id: Int_comparison_exp
     name: String_comparison_exp
+    parent_branch: branches_bool_exp
     parent_branch_id: Int_comparison_exp
     project: projects_bool_exp
     project_id: Int_comparison_exp
@@ -3525,9 +3555,11 @@ input branches_inc_input {
 "input type for inserting data into table \"branches\""
 input branches_insert_input {
     branch_languages: branch_languages_arr_rel_insert_input
+    child_branches: branches_arr_rel_insert_input
     date: timestamptz
     id: Int
     name: String
+    parent_branch: branches_obj_rel_insert_input
     parent_branch_id: Int
     project: projects_obj_rel_insert_input
     project_id: Int
@@ -3572,9 +3604,11 @@ input branches_on_conflict {
 "Ordering options when selecting data from \"branches\"."
 input branches_order_by {
     branch_languages_aggregate: branch_languages_aggregate_order_by
+    child_branches_aggregate: branches_aggregate_order_by
     date: order_by
     id: order_by
     name: order_by
+    parent_branch: branches_order_by
     parent_branch_id: order_by
     project: projects_order_by
     project_id: order_by

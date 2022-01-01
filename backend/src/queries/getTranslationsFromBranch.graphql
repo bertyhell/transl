@@ -1,0 +1,28 @@
+query getTranslationsFromBranch($branchId: Int) {
+    branches(where: {id: {_eq: $branchId}}) {
+        terms {
+            id
+            key
+            translations {
+                id
+                translation_value
+                project_language {
+                    language_id
+                }
+            }
+        }
+        parent_branch {
+            terms {
+                id
+                key
+                translations {
+                    id
+                    translation_value
+                    project_language {
+                        language_id
+                    }
+                }
+            }
+        }
+    }
+}

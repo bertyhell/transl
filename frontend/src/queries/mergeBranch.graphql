@@ -1,0 +1,7 @@
+mutation mergeBranch($projectId: Int, $fromBranchId: String, $intoBranchId: Int) {
+    insert_translation_events(objects: {project_id: $projectId, value: $fromBranchId, branch_id: $intoBranchId, operation: "merge_branch"}) {
+        returning {
+            uuid
+        }
+    }
+}

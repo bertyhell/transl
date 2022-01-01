@@ -5398,7 +5398,7 @@ export type GetBranchQueryVariables = Exact<{
 }>;
 
 
-export type GetBranchQuery = { __typename?: 'query_root', branches: Array<{ __typename?: 'branches', id: number, uuid: any, name: string, branch_languages: Array<{ __typename?: 'branch_languages', uuid: any, language: { __typename?: 'languages', iso_code: string, name: string, uuid: any } }>, project: { __typename?: 'projects', id: number, uuid: any, name: string, company: { __typename?: 'companies', id: number, uuid: any, name: string } } }> };
+export type GetBranchQuery = { __typename?: 'query_root', branches: Array<{ __typename?: 'branches', id: number, uuid: any, name: string, branch_languages: Array<{ __typename?: 'branch_languages', uuid: any, language: { __typename?: 'languages', iso_code: string, name: string, uuid: any } }>, project: { __typename?: 'projects', id: number, uuid: any, name: string, company: { __typename?: 'companies', id: number, uuid: any, name: string }, branches: Array<{ __typename?: 'branches', id: number, uuid: any, name: string }> } }> };
 
 export type GetCompaniesAndProjectsQueryVariables = Exact<{
   userUuid?: InputMaybe<Scalars['uuid']>;
@@ -5442,6 +5442,15 @@ export type GetTranslationsByLanguageCodesQueryVariables = Exact<{
 
 
 export type GetTranslationsByLanguageCodesQuery = { __typename?: 'query_root', terms: Array<{ __typename?: 'terms', key: string, description?: string | null | undefined, uuid: any, id: number, translations: Array<{ __typename?: 'translations', translation_value?: string | null | undefined, uuid: any, id: number, status?: { __typename?: 'translation_statuses', name: string, uuid: any, id: number } | null | undefined, project_language: { __typename?: 'branch_languages', language: { __typename?: 'languages', iso_code: string, id: number, uuid: any } } }> }>, terms_aggregate: { __typename?: 'terms_aggregate', aggregate?: { __typename?: 'terms_aggregate_fields', count: number } | null | undefined } };
+
+export type MergeBranchMutationVariables = Exact<{
+  projectId?: InputMaybe<Scalars['Int']>;
+  fromBranchId?: InputMaybe<Scalars['String']>;
+  intoBranchId?: InputMaybe<Scalars['Int']>;
+}>;
+
+
+export type MergeBranchMutation = { __typename?: 'mutation_root', insert_translation_events?: { __typename?: 'translation_events_mutation_response', returning: Array<{ __typename?: 'translation_events', uuid: any }> } | null | undefined };
 
 export type UpdateTranslationValueMutationVariables = Exact<{
   branchUuid?: InputMaybe<Scalars['uuid']>;
@@ -5559,6 +5568,11 @@ export const GetBranchDocument = `
       uuid
       name
       company {
+        id
+        uuid
+        name
+      }
+      branches {
         id
         uuid
         name
@@ -5857,6 +5871,29 @@ export const useGetTranslationsByLanguageCodesQuery = <
 useGetTranslationsByLanguageCodesQuery.getKey = (variables?: GetTranslationsByLanguageCodesQueryVariables) => variables === undefined ? ['getTranslationsByLanguageCodes'] : ['getTranslationsByLanguageCodes', variables];
 ;
 
+export const MergeBranchDocument = `
+    mutation mergeBranch($projectId: Int, $fromBranchId: String, $intoBranchId: Int) {
+  insert_translation_events(
+    objects: {project_id: $projectId, value: $fromBranchId, branch_id: $intoBranchId, operation: "merge_branch"}
+  ) {
+    returning {
+      uuid
+    }
+  }
+}
+    `;
+export const useMergeBranchMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(
+      dataSource: { endpoint: string, fetchParams?: RequestInit },
+      options?: UseMutationOptions<MergeBranchMutation, TError, MergeBranchMutationVariables, TContext>
+    ) =>
+    useMutation<MergeBranchMutation, TError, MergeBranchMutationVariables, TContext>(
+      'mergeBranch',
+      (variables?: MergeBranchMutationVariables) => fetcher<MergeBranchMutation, MergeBranchMutationVariables>(dataSource.endpoint, dataSource.fetchParams || {}, MergeBranchDocument, variables)(),
+      options
+    );
 export const UpdateTranslationValueDocument = `
     mutation updateTranslationValue($branchUuid: uuid, $languageCode: String, $translationKey: String, $translationValue: String) {
   update_translations(

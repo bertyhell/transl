@@ -20,6 +20,11 @@ query getBranch($branchUuid: uuid) {
                 uuid
                 name
             }
+            branches {
+                id
+                uuid
+                name
+            }
         }
     }
 }
