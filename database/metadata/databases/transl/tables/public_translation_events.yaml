@@ -1,0 +1,14 @@
+table:
+  name: translation_events
+  schema: public
+event_triggers:
+- definition:
+    enable_manual: false
+    insert:
+      columns: "*"
+  name: new_translation_event
+  retry_conf:
+    interval_sec: 10
+    num_retries: 0
+    timeout_sec: 60
+  webhook: http://host.docker.internal:3001/translation_event/new

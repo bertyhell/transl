@@ -1,0 +1,1 @@
+comment on column "public"."translation_events"."operation" is E'possible values: add_branch, merge_branch, delete_branch, add_term, delete_term, update_term, add_translation, update_translation, delete_translation';

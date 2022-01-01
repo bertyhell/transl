@@ -6,6 +6,7 @@ CREATE TABLE public.branches (
     project_id integer NOT NULL,
     name text NOT NULL
 );
+
 CREATE SEQUENCE public.branches_id_seq
     AS integer
     START WITH 1
@@ -241,8 +242,6 @@ alter table "public"."projects"
   foreign key ("company_id")
   references "public"."companies"
   ("id") on update cascade on delete cascade;
-
-CREATE TABLE "public"."branches" ("id" integer NOT NULL, "uuid" uuid NOT NULL, "project_id" integer NOT NULL, "name" text NOT NULL, PRIMARY KEY ("id") , FOREIGN KEY ("project_id") REFERENCES "public"."projects"("id") ON UPDATE cascade ON DELETE cascade, UNIQUE ("uuid"), UNIQUE ("id"));
 
 alter table "public"."project_terms" rename column "project_id" to "branch_id";
 

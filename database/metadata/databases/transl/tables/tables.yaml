@@ -5,6 +5,7 @@
 - "!include public_languages.yaml"
 - "!include public_projects.yaml"
 - "!include public_terms.yaml"
+- "!include public_translation_events.yaml"
 - "!include public_translation_statuses.yaml"
 - "!include public_translations.yaml"
 - "!include public_user_project_link.yaml"

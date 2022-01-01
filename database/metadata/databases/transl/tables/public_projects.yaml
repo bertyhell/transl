@@ -6,13 +6,6 @@ object_relationships:
   using:
     foreign_key_constraint_on: company_id
 array_relationships:
-- name: branches
-  using:
-    foreign_key_constraint_on:
-      column: project_id
-      table:
-        name: branches
-        schema: public
 - name: statuses
   using:
     foreign_key_constraint_on:
