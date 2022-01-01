@@ -11,24 +11,33 @@ import { USER_UUID } from '../../constants/user';
 import { $t } from '../../helpers/i18n';
 import { DATABASE_CONFIG } from '../../queries/config/database.constants';
 import { useAddBranchMutation, useGetCompaniesAndProjectsQuery } from '../../queries/config/graphql-generated-types';
-import { Company, Project } from '../../queries/type-aliasses';
+import { Branch, Company, Project } from '../../queries/type-aliasses';
 
 interface AddBranchModalProps {
+  initialBranch: Branch | null;
   initialCompany: Company | null;
   initialProject: Project | null;
   isOpen: boolean;
   onClose: () => void;
 }
 
-export const AddBranchModal: FunctionComponent<AddBranchModalProps> = ({ isOpen, onClose, initialCompany, initialProject }) => {
+export const AddBranchModal: FunctionComponent<AddBranchModalProps> = ({
+  isOpen,
+  onClose,
+  initialCompany,
+  initialProject,
+  initialBranch,
+}) => {
   const [selectedCompany, setSelectedCompany] = useState<Company | null>(initialCompany);
   const [selectedProject, setSelectedProject] = useState<Project | null>(initialProject);
+  const [selectedBranch, setSelectedBranch] = useState<Branch | null>(initialBranch);
   const { data: companiesAndProjects } = useGetCompaniesAndProjectsQuery(DATABASE_CONFIG, { userUuid: USER_UUID });
   const [branchName, setBranchName] = useState<string>('');
   const { mutateAsync: addBranch } = useAddBranchMutation(DATABASE_CONFIG);
 
   const company = selectedCompany || initialCompany;
   const project = selectedProject || initialProject;
+  const branch = selectedBranch || initialBranch;
 
   const inputRef = React.createRef<HTMLInputElement>();
 
@@ -41,12 +50,16 @@ export const AddBranchModal: FunctionComponent<AddBranchModalProps> = ({ isOpen,
     onClose();
   };
 
-  const handleAddCompanyButtonClick = async () => {
+  const handleAddBranchButtonClick = async () => {
     if (!project) {
       // TODO toast
       return;
     }
-    await addBranch({ branchName, projectId: project.id });
+    if (!branch) {
+      // TODO toast
+      return;
+    }
+    await addBranch({ from_branch_id: branch.id, project_id: project.id, value: branchName });
     handleClose();
   };
 
@@ -73,6 +86,15 @@ export const AddBranchModal: FunctionComponent<AddBranchModalProps> = ({ isOpen,
                 value={project}
               />
             </FormGroup>
+            <FormGroup label={$t('Source branch')} labelFor='select-branch'>
+              <Select<Branch, false>
+                id='select-branch'
+                key={`select-branch-${initialBranch?.id}`}
+                onChange={setSelectedBranch}
+                options={project?.branches || []}
+                value={branch}
+              />
+            </FormGroup>
             <FormGroup label={$t('Branch name')} labelFor='branch-name'>
               <TextInput id='branch-name' onChange={setBranchName} ref={inputRef} type='text' value={branchName} />
             </FormGroup>
@@ -80,7 +102,7 @@ export const AddBranchModal: FunctionComponent<AddBranchModalProps> = ({ isOpen,
         )}
       </ModalBody>
       <ModalFooterRight>
-        <Button onClick={handleAddCompanyButtonClick} type='primary'>
+        <Button onClick={handleAddBranchButtonClick} type='primary'>
           {$t('Add Branch')}
         </Button>
       </ModalFooterRight>

@@ -1,5 +1,5 @@
-mutation addBranch($branchName: String, $projectId: Int) {
-    insert_branches(objects: {name: $branchName, project_id: $projectId}) {
+mutation addBranch($branchName: String, $projectId: Int, $fromBranchId: Int) {
+    insert_branches(objects: {name: $branchName, project_id: $projectId, parent_branch_id: $fromBranchId}) {
         returning {
             uuid
         }

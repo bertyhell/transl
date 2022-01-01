@@ -1,28 +1,11 @@
-import { useMutation, UseMutationOptions, useQuery, UseQueryOptions } from 'react-query';
+import { GraphQLClient } from 'graphql-request';
+import * as Dom from 'graphql-request/dist/types.dom';
+import gql from 'graphql-tag';
 export type Maybe<T> = T | null;
+export type InputMaybe<T> = Maybe<T>;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
 export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
 export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
-
-function fetcher<TData, TVariables>(endpoint: string, requestInit: RequestInit, query: string, variables?: TVariables) {
-  return async (): Promise<TData> => {
-    const res = await fetch(endpoint, {
-      method: 'POST',
-      ...requestInit,
-      body: JSON.stringify({ query, variables }),
-    });
-
-    const json = await res.json();
-
-    if (json.errors) {
-      const { message } = json.errors[0];
-
-      throw new Error(message);
-    }
-
-    return json.data;
-  }
-}
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
   ID: string;
@@ -30,53 +13,54 @@ export type Scalars = {
   Boolean: boolean;
   Int: number;
   Float: number;
+  timestamptz: any;
   uuid: any;
 };
 
 /** Boolean expression to compare columns of type "Int". All fields are combined with logical 'AND'. */
 export type Int_Comparison_Exp = {
-  _eq?: Maybe<Scalars['Int']>;
-  _gt?: Maybe<Scalars['Int']>;
-  _gte?: Maybe<Scalars['Int']>;
-  _in?: Maybe<Array<Scalars['Int']>>;
-  _is_null?: Maybe<Scalars['Boolean']>;
-  _lt?: Maybe<Scalars['Int']>;
-  _lte?: Maybe<Scalars['Int']>;
-  _neq?: Maybe<Scalars['Int']>;
-  _nin?: Maybe<Array<Scalars['Int']>>;
+  _eq?: InputMaybe<Scalars['Int']>;
+  _gt?: InputMaybe<Scalars['Int']>;
+  _gte?: InputMaybe<Scalars['Int']>;
+  _in?: InputMaybe<Array<Scalars['Int']>>;
+  _is_null?: InputMaybe<Scalars['Boolean']>;
+  _lt?: InputMaybe<Scalars['Int']>;
+  _lte?: InputMaybe<Scalars['Int']>;
+  _neq?: InputMaybe<Scalars['Int']>;
+  _nin?: InputMaybe<Array<Scalars['Int']>>;
 };
 
 /** Boolean expression to compare columns of type "String". All fields are combined with logical 'AND'. */
 export type String_Comparison_Exp = {
-  _eq?: Maybe<Scalars['String']>;
-  _gt?: Maybe<Scalars['String']>;
-  _gte?: Maybe<Scalars['String']>;
+  _eq?: InputMaybe<Scalars['String']>;
+  _gt?: InputMaybe<Scalars['String']>;
+  _gte?: InputMaybe<Scalars['String']>;
   /** does the column match the given case-insensitive pattern */
-  _ilike?: Maybe<Scalars['String']>;
-  _in?: Maybe<Array<Scalars['String']>>;
+  _ilike?: InputMaybe<Scalars['String']>;
+  _in?: InputMaybe<Array<Scalars['String']>>;
   /** does the column match the given POSIX regular expression, case insensitive */
-  _iregex?: Maybe<Scalars['String']>;
-  _is_null?: Maybe<Scalars['Boolean']>;
+  _iregex?: InputMaybe<Scalars['String']>;
+  _is_null?: InputMaybe<Scalars['Boolean']>;
   /** does the column match the given pattern */
-  _like?: Maybe<Scalars['String']>;
-  _lt?: Maybe<Scalars['String']>;
-  _lte?: Maybe<Scalars['String']>;
-  _neq?: Maybe<Scalars['String']>;
+  _like?: InputMaybe<Scalars['String']>;
+  _lt?: InputMaybe<Scalars['String']>;
+  _lte?: InputMaybe<Scalars['String']>;
+  _neq?: InputMaybe<Scalars['String']>;
   /** does the column NOT match the given case-insensitive pattern */
-  _nilike?: Maybe<Scalars['String']>;
-  _nin?: Maybe<Array<Scalars['String']>>;
+  _nilike?: InputMaybe<Scalars['String']>;
+  _nin?: InputMaybe<Array<Scalars['String']>>;
   /** does the column NOT match the given POSIX regular expression, case insensitive */
-  _niregex?: Maybe<Scalars['String']>;
+  _niregex?: InputMaybe<Scalars['String']>;
   /** does the column NOT match the given pattern */
-  _nlike?: Maybe<Scalars['String']>;
+  _nlike?: InputMaybe<Scalars['String']>;
   /** does the column NOT match the given POSIX regular expression, case sensitive */
-  _nregex?: Maybe<Scalars['String']>;
+  _nregex?: InputMaybe<Scalars['String']>;
   /** does the column NOT match the given SQL regular expression */
-  _nsimilar?: Maybe<Scalars['String']>;
+  _nsimilar?: InputMaybe<Scalars['String']>;
   /** does the column match the given POSIX regular expression, case sensitive */
-  _regex?: Maybe<Scalars['String']>;
+  _regex?: InputMaybe<Scalars['String']>;
   /** does the column match the given SQL regular expression */
-  _similar?: Maybe<Scalars['String']>;
+  _similar?: InputMaybe<Scalars['String']>;
 };
 
 /** columns and relationships of "branch_languages" */
@@ -99,21 +83,21 @@ export type Branch_Languages = {
 
 /** columns and relationships of "branch_languages" */
 export type Branch_LanguagesTranslationsArgs = {
-  distinct_on?: Maybe<Array<Translations_Select_Column>>;
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<Translations_Order_By>>;
-  where?: Maybe<Translations_Bool_Exp>;
+  distinct_on?: InputMaybe<Array<Translations_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Translations_Order_By>>;
+  where?: InputMaybe<Translations_Bool_Exp>;
 };
 
 
 /** columns and relationships of "branch_languages" */
 export type Branch_LanguagesTranslations_AggregateArgs = {
-  distinct_on?: Maybe<Array<Translations_Select_Column>>;
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<Translations_Order_By>>;
-  where?: Maybe<Translations_Bool_Exp>;
+  distinct_on?: InputMaybe<Array<Translations_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Translations_Order_By>>;
+  where?: InputMaybe<Translations_Bool_Exp>;
 };
 
 /** aggregated selection of "branch_languages" */
@@ -142,30 +126,30 @@ export type Branch_Languages_Aggregate_Fields = {
 
 /** aggregate fields of "branch_languages" */
 export type Branch_Languages_Aggregate_FieldsCountArgs = {
-  columns?: Maybe<Array<Branch_Languages_Select_Column>>;
-  distinct?: Maybe<Scalars['Boolean']>;
+  columns?: InputMaybe<Array<Branch_Languages_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']>;
 };
 
 /** order by aggregate values of table "branch_languages" */
 export type Branch_Languages_Aggregate_Order_By = {
-  avg?: Maybe<Branch_Languages_Avg_Order_By>;
-  count?: Maybe<Order_By>;
-  max?: Maybe<Branch_Languages_Max_Order_By>;
-  min?: Maybe<Branch_Languages_Min_Order_By>;
-  stddev?: Maybe<Branch_Languages_Stddev_Order_By>;
-  stddev_pop?: Maybe<Branch_Languages_Stddev_Pop_Order_By>;
-  stddev_samp?: Maybe<Branch_Languages_Stddev_Samp_Order_By>;
-  sum?: Maybe<Branch_Languages_Sum_Order_By>;
-  var_pop?: Maybe<Branch_Languages_Var_Pop_Order_By>;
-  var_samp?: Maybe<Branch_Languages_Var_Samp_Order_By>;
-  variance?: Maybe<Branch_Languages_Variance_Order_By>;
+  avg?: InputMaybe<Branch_Languages_Avg_Order_By>;
+  count?: InputMaybe<Order_By>;
+  max?: InputMaybe<Branch_Languages_Max_Order_By>;
+  min?: InputMaybe<Branch_Languages_Min_Order_By>;
+  stddev?: InputMaybe<Branch_Languages_Stddev_Order_By>;
+  stddev_pop?: InputMaybe<Branch_Languages_Stddev_Pop_Order_By>;
+  stddev_samp?: InputMaybe<Branch_Languages_Stddev_Samp_Order_By>;
+  sum?: InputMaybe<Branch_Languages_Sum_Order_By>;
+  var_pop?: InputMaybe<Branch_Languages_Var_Pop_Order_By>;
+  var_samp?: InputMaybe<Branch_Languages_Var_Samp_Order_By>;
+  variance?: InputMaybe<Branch_Languages_Variance_Order_By>;
 };
 
 /** input type for inserting array relation for remote table "branch_languages" */
 export type Branch_Languages_Arr_Rel_Insert_Input = {
   data: Array<Branch_Languages_Insert_Input>;
   /** on conflict condition */
-  on_conflict?: Maybe<Branch_Languages_On_Conflict>;
+  on_conflict?: InputMaybe<Branch_Languages_On_Conflict>;
 };
 
 /** aggregate avg on columns */
@@ -178,23 +162,23 @@ export type Branch_Languages_Avg_Fields = {
 
 /** order by avg() on columns of table "branch_languages" */
 export type Branch_Languages_Avg_Order_By = {
-  branch_id?: Maybe<Order_By>;
-  id?: Maybe<Order_By>;
-  language_id?: Maybe<Order_By>;
+  branch_id?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  language_id?: InputMaybe<Order_By>;
 };
 
 /** Boolean expression to filter rows from the table "branch_languages". All fields are combined with a logical 'AND'. */
 export type Branch_Languages_Bool_Exp = {
-  _and?: Maybe<Array<Branch_Languages_Bool_Exp>>;
-  _not?: Maybe<Branch_Languages_Bool_Exp>;
-  _or?: Maybe<Array<Branch_Languages_Bool_Exp>>;
-  branch?: Maybe<Branches_Bool_Exp>;
-  branch_id?: Maybe<Int_Comparison_Exp>;
-  id?: Maybe<Int_Comparison_Exp>;
-  language?: Maybe<Languages_Bool_Exp>;
-  language_id?: Maybe<Int_Comparison_Exp>;
-  translations?: Maybe<Translations_Bool_Exp>;
-  uuid?: Maybe<Uuid_Comparison_Exp>;
+  _and?: InputMaybe<Array<Branch_Languages_Bool_Exp>>;
+  _not?: InputMaybe<Branch_Languages_Bool_Exp>;
+  _or?: InputMaybe<Array<Branch_Languages_Bool_Exp>>;
+  branch?: InputMaybe<Branches_Bool_Exp>;
+  branch_id?: InputMaybe<Int_Comparison_Exp>;
+  id?: InputMaybe<Int_Comparison_Exp>;
+  language?: InputMaybe<Languages_Bool_Exp>;
+  language_id?: InputMaybe<Int_Comparison_Exp>;
+  translations?: InputMaybe<Translations_Bool_Exp>;
+  uuid?: InputMaybe<Uuid_Comparison_Exp>;
 };
 
 /** unique or primary key constraints on table "branch_languages" */
@@ -207,20 +191,20 @@ export enum Branch_Languages_Constraint {
 
 /** input type for incrementing numeric columns in table "branch_languages" */
 export type Branch_Languages_Inc_Input = {
-  branch_id?: Maybe<Scalars['Int']>;
-  id?: Maybe<Scalars['Int']>;
-  language_id?: Maybe<Scalars['Int']>;
+  branch_id?: InputMaybe<Scalars['Int']>;
+  id?: InputMaybe<Scalars['Int']>;
+  language_id?: InputMaybe<Scalars['Int']>;
 };
 
 /** input type for inserting data into table "branch_languages" */
 export type Branch_Languages_Insert_Input = {
-  branch?: Maybe<Branches_Obj_Rel_Insert_Input>;
-  branch_id?: Maybe<Scalars['Int']>;
-  id?: Maybe<Scalars['Int']>;
-  language?: Maybe<Languages_Obj_Rel_Insert_Input>;
-  language_id?: Maybe<Scalars['Int']>;
-  translations?: Maybe<Translations_Arr_Rel_Insert_Input>;
-  uuid?: Maybe<Scalars['uuid']>;
+  branch?: InputMaybe<Branches_Obj_Rel_Insert_Input>;
+  branch_id?: InputMaybe<Scalars['Int']>;
+  id?: InputMaybe<Scalars['Int']>;
+  language?: InputMaybe<Languages_Obj_Rel_Insert_Input>;
+  language_id?: InputMaybe<Scalars['Int']>;
+  translations?: InputMaybe<Translations_Arr_Rel_Insert_Input>;
+  uuid?: InputMaybe<Scalars['uuid']>;
 };
 
 /** aggregate max on columns */
@@ -234,10 +218,10 @@ export type Branch_Languages_Max_Fields = {
 
 /** order by max() on columns of table "branch_languages" */
 export type Branch_Languages_Max_Order_By = {
-  branch_id?: Maybe<Order_By>;
-  id?: Maybe<Order_By>;
-  language_id?: Maybe<Order_By>;
-  uuid?: Maybe<Order_By>;
+  branch_id?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  language_id?: InputMaybe<Order_By>;
+  uuid?: InputMaybe<Order_By>;
 };
 
 /** aggregate min on columns */
@@ -251,10 +235,10 @@ export type Branch_Languages_Min_Fields = {
 
 /** order by min() on columns of table "branch_languages" */
 export type Branch_Languages_Min_Order_By = {
-  branch_id?: Maybe<Order_By>;
-  id?: Maybe<Order_By>;
-  language_id?: Maybe<Order_By>;
-  uuid?: Maybe<Order_By>;
+  branch_id?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  language_id?: InputMaybe<Order_By>;
+  uuid?: InputMaybe<Order_By>;
 };
 
 /** response of any mutation on the table "branch_languages" */
@@ -270,25 +254,25 @@ export type Branch_Languages_Mutation_Response = {
 export type Branch_Languages_Obj_Rel_Insert_Input = {
   data: Branch_Languages_Insert_Input;
   /** on conflict condition */
-  on_conflict?: Maybe<Branch_Languages_On_Conflict>;
+  on_conflict?: InputMaybe<Branch_Languages_On_Conflict>;
 };
 
 /** on conflict condition type for table "branch_languages" */
 export type Branch_Languages_On_Conflict = {
   constraint: Branch_Languages_Constraint;
   update_columns?: Array<Branch_Languages_Update_Column>;
-  where?: Maybe<Branch_Languages_Bool_Exp>;
+  where?: InputMaybe<Branch_Languages_Bool_Exp>;
 };
 
 /** Ordering options when selecting data from "branch_languages". */
 export type Branch_Languages_Order_By = {
-  branch?: Maybe<Branches_Order_By>;
-  branch_id?: Maybe<Order_By>;
-  id?: Maybe<Order_By>;
-  language?: Maybe<Languages_Order_By>;
-  language_id?: Maybe<Order_By>;
-  translations_aggregate?: Maybe<Translations_Aggregate_Order_By>;
-  uuid?: Maybe<Order_By>;
+  branch?: InputMaybe<Branches_Order_By>;
+  branch_id?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  language?: InputMaybe<Languages_Order_By>;
+  language_id?: InputMaybe<Order_By>;
+  translations_aggregate?: InputMaybe<Translations_Aggregate_Order_By>;
+  uuid?: InputMaybe<Order_By>;
 };
 
 /** primary key columns input for table: branch_languages */
@@ -310,10 +294,10 @@ export enum Branch_Languages_Select_Column {
 
 /** input type for updating data in table "branch_languages" */
 export type Branch_Languages_Set_Input = {
-  branch_id?: Maybe<Scalars['Int']>;
-  id?: Maybe<Scalars['Int']>;
-  language_id?: Maybe<Scalars['Int']>;
-  uuid?: Maybe<Scalars['uuid']>;
+  branch_id?: InputMaybe<Scalars['Int']>;
+  id?: InputMaybe<Scalars['Int']>;
+  language_id?: InputMaybe<Scalars['Int']>;
+  uuid?: InputMaybe<Scalars['uuid']>;
 };
 
 /** aggregate stddev on columns */
@@ -326,9 +310,9 @@ export type Branch_Languages_Stddev_Fields = {
 
 /** order by stddev() on columns of table "branch_languages" */
 export type Branch_Languages_Stddev_Order_By = {
-  branch_id?: Maybe<Order_By>;
-  id?: Maybe<Order_By>;
-  language_id?: Maybe<Order_By>;
+  branch_id?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  language_id?: InputMaybe<Order_By>;
 };
 
 /** aggregate stddev_pop on columns */
@@ -341,9 +325,9 @@ export type Branch_Languages_Stddev_Pop_Fields = {
 
 /** order by stddev_pop() on columns of table "branch_languages" */
 export type Branch_Languages_Stddev_Pop_Order_By = {
-  branch_id?: Maybe<Order_By>;
-  id?: Maybe<Order_By>;
-  language_id?: Maybe<Order_By>;
+  branch_id?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  language_id?: InputMaybe<Order_By>;
 };
 
 /** aggregate stddev_samp on columns */
@@ -356,9 +340,9 @@ export type Branch_Languages_Stddev_Samp_Fields = {
 
 /** order by stddev_samp() on columns of table "branch_languages" */
 export type Branch_Languages_Stddev_Samp_Order_By = {
-  branch_id?: Maybe<Order_By>;
-  id?: Maybe<Order_By>;
-  language_id?: Maybe<Order_By>;
+  branch_id?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  language_id?: InputMaybe<Order_By>;
 };
 
 /** aggregate sum on columns */
@@ -371,9 +355,9 @@ export type Branch_Languages_Sum_Fields = {
 
 /** order by sum() on columns of table "branch_languages" */
 export type Branch_Languages_Sum_Order_By = {
-  branch_id?: Maybe<Order_By>;
-  id?: Maybe<Order_By>;
-  language_id?: Maybe<Order_By>;
+  branch_id?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  language_id?: InputMaybe<Order_By>;
 };
 
 /** update columns of table "branch_languages" */
@@ -398,9 +382,9 @@ export type Branch_Languages_Var_Pop_Fields = {
 
 /** order by var_pop() on columns of table "branch_languages" */
 export type Branch_Languages_Var_Pop_Order_By = {
-  branch_id?: Maybe<Order_By>;
-  id?: Maybe<Order_By>;
-  language_id?: Maybe<Order_By>;
+  branch_id?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  language_id?: InputMaybe<Order_By>;
 };
 
 /** aggregate var_samp on columns */
@@ -413,9 +397,9 @@ export type Branch_Languages_Var_Samp_Fields = {
 
 /** order by var_samp() on columns of table "branch_languages" */
 export type Branch_Languages_Var_Samp_Order_By = {
-  branch_id?: Maybe<Order_By>;
-  id?: Maybe<Order_By>;
-  language_id?: Maybe<Order_By>;
+  branch_id?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  language_id?: InputMaybe<Order_By>;
 };
 
 /** aggregate variance on columns */
@@ -428,9 +412,9 @@ export type Branch_Languages_Variance_Fields = {
 
 /** order by variance() on columns of table "branch_languages" */
 export type Branch_Languages_Variance_Order_By = {
-  branch_id?: Maybe<Order_By>;
-  id?: Maybe<Order_By>;
-  language_id?: Maybe<Order_By>;
+  branch_id?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  language_id?: InputMaybe<Order_By>;
 };
 
 /** columns and relationships of "branches" */
@@ -440,8 +424,10 @@ export type Branches = {
   branch_languages: Array<Branch_Languages>;
   /** An aggregate relationship */
   branch_languages_aggregate: Branch_Languages_Aggregate;
+  date: Scalars['timestamptz'];
   id: Scalars['Int'];
   name: Scalars['String'];
+  parent_branch_id?: Maybe<Scalars['Int']>;
   /** An object relationship */
   project: Projects;
   project_id: Scalars['Int'];
@@ -455,41 +441,41 @@ export type Branches = {
 
 /** columns and relationships of "branches" */
 export type BranchesBranch_LanguagesArgs = {
-  distinct_on?: Maybe<Array<Branch_Languages_Select_Column>>;
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<Branch_Languages_Order_By>>;
-  where?: Maybe<Branch_Languages_Bool_Exp>;
+  distinct_on?: InputMaybe<Array<Branch_Languages_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Branch_Languages_Order_By>>;
+  where?: InputMaybe<Branch_Languages_Bool_Exp>;
 };
 
 
 /** columns and relationships of "branches" */
 export type BranchesBranch_Languages_AggregateArgs = {
-  distinct_on?: Maybe<Array<Branch_Languages_Select_Column>>;
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<Branch_Languages_Order_By>>;
-  where?: Maybe<Branch_Languages_Bool_Exp>;
+  distinct_on?: InputMaybe<Array<Branch_Languages_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Branch_Languages_Order_By>>;
+  where?: InputMaybe<Branch_Languages_Bool_Exp>;
 };
 
 
 /** columns and relationships of "branches" */
 export type BranchesTermsArgs = {
-  distinct_on?: Maybe<Array<Terms_Select_Column>>;
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<Terms_Order_By>>;
-  where?: Maybe<Terms_Bool_Exp>;
+  distinct_on?: InputMaybe<Array<Terms_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Terms_Order_By>>;
+  where?: InputMaybe<Terms_Bool_Exp>;
 };
 
 
 /** columns and relationships of "branches" */
 export type BranchesTerms_AggregateArgs = {
-  distinct_on?: Maybe<Array<Terms_Select_Column>>;
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<Terms_Order_By>>;
-  where?: Maybe<Terms_Bool_Exp>;
+  distinct_on?: InputMaybe<Array<Terms_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Terms_Order_By>>;
+  where?: InputMaybe<Terms_Bool_Exp>;
 };
 
 /** aggregated selection of "branches" */
@@ -518,57 +504,61 @@ export type Branches_Aggregate_Fields = {
 
 /** aggregate fields of "branches" */
 export type Branches_Aggregate_FieldsCountArgs = {
-  columns?: Maybe<Array<Branches_Select_Column>>;
-  distinct?: Maybe<Scalars['Boolean']>;
+  columns?: InputMaybe<Array<Branches_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']>;
 };
 
 /** order by aggregate values of table "branches" */
 export type Branches_Aggregate_Order_By = {
-  avg?: Maybe<Branches_Avg_Order_By>;
-  count?: Maybe<Order_By>;
-  max?: Maybe<Branches_Max_Order_By>;
-  min?: Maybe<Branches_Min_Order_By>;
-  stddev?: Maybe<Branches_Stddev_Order_By>;
-  stddev_pop?: Maybe<Branches_Stddev_Pop_Order_By>;
-  stddev_samp?: Maybe<Branches_Stddev_Samp_Order_By>;
-  sum?: Maybe<Branches_Sum_Order_By>;
-  var_pop?: Maybe<Branches_Var_Pop_Order_By>;
-  var_samp?: Maybe<Branches_Var_Samp_Order_By>;
-  variance?: Maybe<Branches_Variance_Order_By>;
+  avg?: InputMaybe<Branches_Avg_Order_By>;
+  count?: InputMaybe<Order_By>;
+  max?: InputMaybe<Branches_Max_Order_By>;
+  min?: InputMaybe<Branches_Min_Order_By>;
+  stddev?: InputMaybe<Branches_Stddev_Order_By>;
+  stddev_pop?: InputMaybe<Branches_Stddev_Pop_Order_By>;
+  stddev_samp?: InputMaybe<Branches_Stddev_Samp_Order_By>;
+  sum?: InputMaybe<Branches_Sum_Order_By>;
+  var_pop?: InputMaybe<Branches_Var_Pop_Order_By>;
+  var_samp?: InputMaybe<Branches_Var_Samp_Order_By>;
+  variance?: InputMaybe<Branches_Variance_Order_By>;
 };
 
 /** input type for inserting array relation for remote table "branches" */
 export type Branches_Arr_Rel_Insert_Input = {
   data: Array<Branches_Insert_Input>;
   /** on conflict condition */
-  on_conflict?: Maybe<Branches_On_Conflict>;
+  on_conflict?: InputMaybe<Branches_On_Conflict>;
 };
 
 /** aggregate avg on columns */
 export type Branches_Avg_Fields = {
   __typename?: 'branches_avg_fields';
   id?: Maybe<Scalars['Float']>;
+  parent_branch_id?: Maybe<Scalars['Float']>;
   project_id?: Maybe<Scalars['Float']>;
 };
 
 /** order by avg() on columns of table "branches" */
 export type Branches_Avg_Order_By = {
-  id?: Maybe<Order_By>;
-  project_id?: Maybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  parent_branch_id?: InputMaybe<Order_By>;
+  project_id?: InputMaybe<Order_By>;
 };
 
 /** Boolean expression to filter rows from the table "branches". All fields are combined with a logical 'AND'. */
 export type Branches_Bool_Exp = {
-  _and?: Maybe<Array<Branches_Bool_Exp>>;
-  _not?: Maybe<Branches_Bool_Exp>;
-  _or?: Maybe<Array<Branches_Bool_Exp>>;
-  branch_languages?: Maybe<Branch_Languages_Bool_Exp>;
-  id?: Maybe<Int_Comparison_Exp>;
-  name?: Maybe<String_Comparison_Exp>;
-  project?: Maybe<Projects_Bool_Exp>;
-  project_id?: Maybe<Int_Comparison_Exp>;
-  terms?: Maybe<Terms_Bool_Exp>;
-  uuid?: Maybe<Uuid_Comparison_Exp>;
+  _and?: InputMaybe<Array<Branches_Bool_Exp>>;
+  _not?: InputMaybe<Branches_Bool_Exp>;
+  _or?: InputMaybe<Array<Branches_Bool_Exp>>;
+  branch_languages?: InputMaybe<Branch_Languages_Bool_Exp>;
+  date?: InputMaybe<Timestamptz_Comparison_Exp>;
+  id?: InputMaybe<Int_Comparison_Exp>;
+  name?: InputMaybe<String_Comparison_Exp>;
+  parent_branch_id?: InputMaybe<Int_Comparison_Exp>;
+  project?: InputMaybe<Projects_Bool_Exp>;
+  project_id?: InputMaybe<Int_Comparison_Exp>;
+  terms?: InputMaybe<Terms_Bool_Exp>;
+  uuid?: InputMaybe<Uuid_Comparison_Exp>;
 };
 
 /** unique or primary key constraints on table "branches" */
@@ -581,53 +571,64 @@ export enum Branches_Constraint {
 
 /** input type for incrementing numeric columns in table "branches" */
 export type Branches_Inc_Input = {
-  id?: Maybe<Scalars['Int']>;
-  project_id?: Maybe<Scalars['Int']>;
+  id?: InputMaybe<Scalars['Int']>;
+  parent_branch_id?: InputMaybe<Scalars['Int']>;
+  project_id?: InputMaybe<Scalars['Int']>;
 };
 
 /** input type for inserting data into table "branches" */
 export type Branches_Insert_Input = {
-  branch_languages?: Maybe<Branch_Languages_Arr_Rel_Insert_Input>;
-  id?: Maybe<Scalars['Int']>;
-  name?: Maybe<Scalars['String']>;
-  project?: Maybe<Projects_Obj_Rel_Insert_Input>;
-  project_id?: Maybe<Scalars['Int']>;
-  terms?: Maybe<Terms_Arr_Rel_Insert_Input>;
-  uuid?: Maybe<Scalars['uuid']>;
+  branch_languages?: InputMaybe<Branch_Languages_Arr_Rel_Insert_Input>;
+  date?: InputMaybe<Scalars['timestamptz']>;
+  id?: InputMaybe<Scalars['Int']>;
+  name?: InputMaybe<Scalars['String']>;
+  parent_branch_id?: InputMaybe<Scalars['Int']>;
+  project?: InputMaybe<Projects_Obj_Rel_Insert_Input>;
+  project_id?: InputMaybe<Scalars['Int']>;
+  terms?: InputMaybe<Terms_Arr_Rel_Insert_Input>;
+  uuid?: InputMaybe<Scalars['uuid']>;
 };
 
 /** aggregate max on columns */
 export type Branches_Max_Fields = {
   __typename?: 'branches_max_fields';
+  date?: Maybe<Scalars['timestamptz']>;
   id?: Maybe<Scalars['Int']>;
   name?: Maybe<Scalars['String']>;
+  parent_branch_id?: Maybe<Scalars['Int']>;
   project_id?: Maybe<Scalars['Int']>;
   uuid?: Maybe<Scalars['uuid']>;
 };
 
 /** order by max() on columns of table "branches" */
 export type Branches_Max_Order_By = {
-  id?: Maybe<Order_By>;
-  name?: Maybe<Order_By>;
-  project_id?: Maybe<Order_By>;
-  uuid?: Maybe<Order_By>;
+  date?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  name?: InputMaybe<Order_By>;
+  parent_branch_id?: InputMaybe<Order_By>;
+  project_id?: InputMaybe<Order_By>;
+  uuid?: InputMaybe<Order_By>;
 };
 
 /** aggregate min on columns */
 export type Branches_Min_Fields = {
   __typename?: 'branches_min_fields';
+  date?: Maybe<Scalars['timestamptz']>;
   id?: Maybe<Scalars['Int']>;
   name?: Maybe<Scalars['String']>;
+  parent_branch_id?: Maybe<Scalars['Int']>;
   project_id?: Maybe<Scalars['Int']>;
   uuid?: Maybe<Scalars['uuid']>;
 };
 
 /** order by min() on columns of table "branches" */
 export type Branches_Min_Order_By = {
-  id?: Maybe<Order_By>;
-  name?: Maybe<Order_By>;
-  project_id?: Maybe<Order_By>;
-  uuid?: Maybe<Order_By>;
+  date?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  name?: InputMaybe<Order_By>;
+  parent_branch_id?: InputMaybe<Order_By>;
+  project_id?: InputMaybe<Order_By>;
+  uuid?: InputMaybe<Order_By>;
 };
 
 /** response of any mutation on the table "branches" */
@@ -643,25 +644,27 @@ export type Branches_Mutation_Response = {
 export type Branches_Obj_Rel_Insert_Input = {
   data: Branches_Insert_Input;
   /** on conflict condition */
-  on_conflict?: Maybe<Branches_On_Conflict>;
+  on_conflict?: InputMaybe<Branches_On_Conflict>;
 };
 
 /** on conflict condition type for table "branches" */
 export type Branches_On_Conflict = {
   constraint: Branches_Constraint;
   update_columns?: Array<Branches_Update_Column>;
-  where?: Maybe<Branches_Bool_Exp>;
+  where?: InputMaybe<Branches_Bool_Exp>;
 };
 
 /** Ordering options when selecting data from "branches". */
 export type Branches_Order_By = {
-  branch_languages_aggregate?: Maybe<Branch_Languages_Aggregate_Order_By>;
-  id?: Maybe<Order_By>;
-  name?: Maybe<Order_By>;
-  project?: Maybe<Projects_Order_By>;
-  project_id?: Maybe<Order_By>;
-  terms_aggregate?: Maybe<Terms_Aggregate_Order_By>;
-  uuid?: Maybe<Order_By>;
+  branch_languages_aggregate?: InputMaybe<Branch_Languages_Aggregate_Order_By>;
+  date?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  name?: InputMaybe<Order_By>;
+  parent_branch_id?: InputMaybe<Order_By>;
+  project?: InputMaybe<Projects_Order_By>;
+  project_id?: InputMaybe<Order_By>;
+  terms_aggregate?: InputMaybe<Terms_Aggregate_Order_By>;
+  uuid?: InputMaybe<Order_By>;
 };
 
 /** primary key columns input for table: branches */
@@ -672,9 +675,13 @@ export type Branches_Pk_Columns_Input = {
 /** select columns of table "branches" */
 export enum Branches_Select_Column {
   /** column name */
+  Date = 'date',
+  /** column name */
   Id = 'id',
   /** column name */
   Name = 'name',
+  /** column name */
+  ParentBranchId = 'parent_branch_id',
   /** column name */
   ProjectId = 'project_id',
   /** column name */
@@ -683,70 +690,84 @@ export enum Branches_Select_Column {
 
 /** input type for updating data in table "branches" */
 export type Branches_Set_Input = {
-  id?: Maybe<Scalars['Int']>;
-  name?: Maybe<Scalars['String']>;
-  project_id?: Maybe<Scalars['Int']>;
-  uuid?: Maybe<Scalars['uuid']>;
+  date?: InputMaybe<Scalars['timestamptz']>;
+  id?: InputMaybe<Scalars['Int']>;
+  name?: InputMaybe<Scalars['String']>;
+  parent_branch_id?: InputMaybe<Scalars['Int']>;
+  project_id?: InputMaybe<Scalars['Int']>;
+  uuid?: InputMaybe<Scalars['uuid']>;
 };
 
 /** aggregate stddev on columns */
 export type Branches_Stddev_Fields = {
   __typename?: 'branches_stddev_fields';
   id?: Maybe<Scalars['Float']>;
+  parent_branch_id?: Maybe<Scalars['Float']>;
   project_id?: Maybe<Scalars['Float']>;
 };
 
 /** order by stddev() on columns of table "branches" */
 export type Branches_Stddev_Order_By = {
-  id?: Maybe<Order_By>;
-  project_id?: Maybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  parent_branch_id?: InputMaybe<Order_By>;
+  project_id?: InputMaybe<Order_By>;
 };
 
 /** aggregate stddev_pop on columns */
 export type Branches_Stddev_Pop_Fields = {
   __typename?: 'branches_stddev_pop_fields';
   id?: Maybe<Scalars['Float']>;
+  parent_branch_id?: Maybe<Scalars['Float']>;
   project_id?: Maybe<Scalars['Float']>;
 };
 
 /** order by stddev_pop() on columns of table "branches" */
 export type Branches_Stddev_Pop_Order_By = {
-  id?: Maybe<Order_By>;
-  project_id?: Maybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  parent_branch_id?: InputMaybe<Order_By>;
+  project_id?: InputMaybe<Order_By>;
 };
 
 /** aggregate stddev_samp on columns */
 export type Branches_Stddev_Samp_Fields = {
   __typename?: 'branches_stddev_samp_fields';
   id?: Maybe<Scalars['Float']>;
+  parent_branch_id?: Maybe<Scalars['Float']>;
   project_id?: Maybe<Scalars['Float']>;
 };
 
 /** order by stddev_samp() on columns of table "branches" */
 export type Branches_Stddev_Samp_Order_By = {
-  id?: Maybe<Order_By>;
-  project_id?: Maybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  parent_branch_id?: InputMaybe<Order_By>;
+  project_id?: InputMaybe<Order_By>;
 };
 
 /** aggregate sum on columns */
 export type Branches_Sum_Fields = {
   __typename?: 'branches_sum_fields';
   id?: Maybe<Scalars['Int']>;
+  parent_branch_id?: Maybe<Scalars['Int']>;
   project_id?: Maybe<Scalars['Int']>;
 };
 
 /** order by sum() on columns of table "branches" */
 export type Branches_Sum_Order_By = {
-  id?: Maybe<Order_By>;
-  project_id?: Maybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  parent_branch_id?: InputMaybe<Order_By>;
+  project_id?: InputMaybe<Order_By>;
 };
 
 /** update columns of table "branches" */
 export enum Branches_Update_Column {
   /** column name */
+  Date = 'date',
+  /** column name */
   Id = 'id',
   /** column name */
   Name = 'name',
+  /** column name */
+  ParentBranchId = 'parent_branch_id',
   /** column name */
   ProjectId = 'project_id',
   /** column name */
@@ -757,39 +778,45 @@ export enum Branches_Update_Column {
 export type Branches_Var_Pop_Fields = {
   __typename?: 'branches_var_pop_fields';
   id?: Maybe<Scalars['Float']>;
+  parent_branch_id?: Maybe<Scalars['Float']>;
   project_id?: Maybe<Scalars['Float']>;
 };
 
 /** order by var_pop() on columns of table "branches" */
 export type Branches_Var_Pop_Order_By = {
-  id?: Maybe<Order_By>;
-  project_id?: Maybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  parent_branch_id?: InputMaybe<Order_By>;
+  project_id?: InputMaybe<Order_By>;
 };
 
 /** aggregate var_samp on columns */
 export type Branches_Var_Samp_Fields = {
   __typename?: 'branches_var_samp_fields';
   id?: Maybe<Scalars['Float']>;
+  parent_branch_id?: Maybe<Scalars['Float']>;
   project_id?: Maybe<Scalars['Float']>;
 };
 
 /** order by var_samp() on columns of table "branches" */
 export type Branches_Var_Samp_Order_By = {
-  id?: Maybe<Order_By>;
-  project_id?: Maybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  parent_branch_id?: InputMaybe<Order_By>;
+  project_id?: InputMaybe<Order_By>;
 };
 
 /** aggregate variance on columns */
 export type Branches_Variance_Fields = {
   __typename?: 'branches_variance_fields';
   id?: Maybe<Scalars['Float']>;
+  parent_branch_id?: Maybe<Scalars['Float']>;
   project_id?: Maybe<Scalars['Float']>;
 };
 
 /** order by variance() on columns of table "branches" */
 export type Branches_Variance_Order_By = {
-  id?: Maybe<Order_By>;
-  project_id?: Maybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  parent_branch_id?: InputMaybe<Order_By>;
+  project_id?: InputMaybe<Order_By>;
 };
 
 /** columns and relationships of "companies" */
@@ -811,41 +838,41 @@ export type Companies = {
 
 /** columns and relationships of "companies" */
 export type CompaniesProjectsArgs = {
-  distinct_on?: Maybe<Array<Projects_Select_Column>>;
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<Projects_Order_By>>;
-  where?: Maybe<Projects_Bool_Exp>;
+  distinct_on?: InputMaybe<Array<Projects_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Projects_Order_By>>;
+  where?: InputMaybe<Projects_Bool_Exp>;
 };
 
 
 /** columns and relationships of "companies" */
 export type CompaniesProjects_AggregateArgs = {
-  distinct_on?: Maybe<Array<Projects_Select_Column>>;
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<Projects_Order_By>>;
-  where?: Maybe<Projects_Bool_Exp>;
+  distinct_on?: InputMaybe<Array<Projects_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Projects_Order_By>>;
+  where?: InputMaybe<Projects_Bool_Exp>;
 };
 
 
 /** columns and relationships of "companies" */
 export type CompaniesUser_LinksArgs = {
-  distinct_on?: Maybe<Array<Company_User_Link_Select_Column>>;
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<Company_User_Link_Order_By>>;
-  where?: Maybe<Company_User_Link_Bool_Exp>;
+  distinct_on?: InputMaybe<Array<Company_User_Link_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Company_User_Link_Order_By>>;
+  where?: InputMaybe<Company_User_Link_Bool_Exp>;
 };
 
 
 /** columns and relationships of "companies" */
 export type CompaniesUser_Links_AggregateArgs = {
-  distinct_on?: Maybe<Array<Company_User_Link_Select_Column>>;
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<Company_User_Link_Order_By>>;
-  where?: Maybe<Company_User_Link_Bool_Exp>;
+  distinct_on?: InputMaybe<Array<Company_User_Link_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Company_User_Link_Order_By>>;
+  where?: InputMaybe<Company_User_Link_Bool_Exp>;
 };
 
 /** aggregated selection of "companies" */
@@ -874,8 +901,8 @@ export type Companies_Aggregate_Fields = {
 
 /** aggregate fields of "companies" */
 export type Companies_Aggregate_FieldsCountArgs = {
-  columns?: Maybe<Array<Companies_Select_Column>>;
-  distinct?: Maybe<Scalars['Boolean']>;
+  columns?: InputMaybe<Array<Companies_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']>;
 };
 
 /** aggregate avg on columns */
@@ -886,14 +913,14 @@ export type Companies_Avg_Fields = {
 
 /** Boolean expression to filter rows from the table "companies". All fields are combined with a logical 'AND'. */
 export type Companies_Bool_Exp = {
-  _and?: Maybe<Array<Companies_Bool_Exp>>;
-  _not?: Maybe<Companies_Bool_Exp>;
-  _or?: Maybe<Array<Companies_Bool_Exp>>;
-  id?: Maybe<Int_Comparison_Exp>;
-  name?: Maybe<String_Comparison_Exp>;
-  projects?: Maybe<Projects_Bool_Exp>;
-  user_links?: Maybe<Company_User_Link_Bool_Exp>;
-  uuid?: Maybe<Uuid_Comparison_Exp>;
+  _and?: InputMaybe<Array<Companies_Bool_Exp>>;
+  _not?: InputMaybe<Companies_Bool_Exp>;
+  _or?: InputMaybe<Array<Companies_Bool_Exp>>;
+  id?: InputMaybe<Int_Comparison_Exp>;
+  name?: InputMaybe<String_Comparison_Exp>;
+  projects?: InputMaybe<Projects_Bool_Exp>;
+  user_links?: InputMaybe<Company_User_Link_Bool_Exp>;
+  uuid?: InputMaybe<Uuid_Comparison_Exp>;
 };
 
 /** unique or primary key constraints on table "companies" */
@@ -906,16 +933,16 @@ export enum Companies_Constraint {
 
 /** input type for incrementing numeric columns in table "companies" */
 export type Companies_Inc_Input = {
-  id?: Maybe<Scalars['Int']>;
+  id?: InputMaybe<Scalars['Int']>;
 };
 
 /** input type for inserting data into table "companies" */
 export type Companies_Insert_Input = {
-  id?: Maybe<Scalars['Int']>;
-  name?: Maybe<Scalars['String']>;
-  projects?: Maybe<Projects_Arr_Rel_Insert_Input>;
-  user_links?: Maybe<Company_User_Link_Arr_Rel_Insert_Input>;
-  uuid?: Maybe<Scalars['uuid']>;
+  id?: InputMaybe<Scalars['Int']>;
+  name?: InputMaybe<Scalars['String']>;
+  projects?: InputMaybe<Projects_Arr_Rel_Insert_Input>;
+  user_links?: InputMaybe<Company_User_Link_Arr_Rel_Insert_Input>;
+  uuid?: InputMaybe<Scalars['uuid']>;
 };
 
 /** aggregate max on columns */
@@ -947,23 +974,23 @@ export type Companies_Mutation_Response = {
 export type Companies_Obj_Rel_Insert_Input = {
   data: Companies_Insert_Input;
   /** on conflict condition */
-  on_conflict?: Maybe<Companies_On_Conflict>;
+  on_conflict?: InputMaybe<Companies_On_Conflict>;
 };
 
 /** on conflict condition type for table "companies" */
 export type Companies_On_Conflict = {
   constraint: Companies_Constraint;
   update_columns?: Array<Companies_Update_Column>;
-  where?: Maybe<Companies_Bool_Exp>;
+  where?: InputMaybe<Companies_Bool_Exp>;
 };
 
 /** Ordering options when selecting data from "companies". */
 export type Companies_Order_By = {
-  id?: Maybe<Order_By>;
-  name?: Maybe<Order_By>;
-  projects_aggregate?: Maybe<Projects_Aggregate_Order_By>;
-  user_links_aggregate?: Maybe<Company_User_Link_Aggregate_Order_By>;
-  uuid?: Maybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  name?: InputMaybe<Order_By>;
+  projects_aggregate?: InputMaybe<Projects_Aggregate_Order_By>;
+  user_links_aggregate?: InputMaybe<Company_User_Link_Aggregate_Order_By>;
+  uuid?: InputMaybe<Order_By>;
 };
 
 /** primary key columns input for table: companies */
@@ -983,9 +1010,9 @@ export enum Companies_Select_Column {
 
 /** input type for updating data in table "companies" */
 export type Companies_Set_Input = {
-  id?: Maybe<Scalars['Int']>;
-  name?: Maybe<Scalars['String']>;
-  uuid?: Maybe<Scalars['uuid']>;
+  id?: InputMaybe<Scalars['Int']>;
+  name?: InputMaybe<Scalars['String']>;
+  uuid?: InputMaybe<Scalars['uuid']>;
 };
 
 /** aggregate stddev on columns */
@@ -1079,30 +1106,30 @@ export type Company_User_Link_Aggregate_Fields = {
 
 /** aggregate fields of "company_user_link" */
 export type Company_User_Link_Aggregate_FieldsCountArgs = {
-  columns?: Maybe<Array<Company_User_Link_Select_Column>>;
-  distinct?: Maybe<Scalars['Boolean']>;
+  columns?: InputMaybe<Array<Company_User_Link_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']>;
 };
 
 /** order by aggregate values of table "company_user_link" */
 export type Company_User_Link_Aggregate_Order_By = {
-  avg?: Maybe<Company_User_Link_Avg_Order_By>;
-  count?: Maybe<Order_By>;
-  max?: Maybe<Company_User_Link_Max_Order_By>;
-  min?: Maybe<Company_User_Link_Min_Order_By>;
-  stddev?: Maybe<Company_User_Link_Stddev_Order_By>;
-  stddev_pop?: Maybe<Company_User_Link_Stddev_Pop_Order_By>;
-  stddev_samp?: Maybe<Company_User_Link_Stddev_Samp_Order_By>;
-  sum?: Maybe<Company_User_Link_Sum_Order_By>;
-  var_pop?: Maybe<Company_User_Link_Var_Pop_Order_By>;
-  var_samp?: Maybe<Company_User_Link_Var_Samp_Order_By>;
-  variance?: Maybe<Company_User_Link_Variance_Order_By>;
+  avg?: InputMaybe<Company_User_Link_Avg_Order_By>;
+  count?: InputMaybe<Order_By>;
+  max?: InputMaybe<Company_User_Link_Max_Order_By>;
+  min?: InputMaybe<Company_User_Link_Min_Order_By>;
+  stddev?: InputMaybe<Company_User_Link_Stddev_Order_By>;
+  stddev_pop?: InputMaybe<Company_User_Link_Stddev_Pop_Order_By>;
+  stddev_samp?: InputMaybe<Company_User_Link_Stddev_Samp_Order_By>;
+  sum?: InputMaybe<Company_User_Link_Sum_Order_By>;
+  var_pop?: InputMaybe<Company_User_Link_Var_Pop_Order_By>;
+  var_samp?: InputMaybe<Company_User_Link_Var_Samp_Order_By>;
+  variance?: InputMaybe<Company_User_Link_Variance_Order_By>;
 };
 
 /** input type for inserting array relation for remote table "company_user_link" */
 export type Company_User_Link_Arr_Rel_Insert_Input = {
   data: Array<Company_User_Link_Insert_Input>;
   /** on conflict condition */
-  on_conflict?: Maybe<Company_User_Link_On_Conflict>;
+  on_conflict?: InputMaybe<Company_User_Link_On_Conflict>;
 };
 
 /** aggregate avg on columns */
@@ -1115,22 +1142,22 @@ export type Company_User_Link_Avg_Fields = {
 
 /** order by avg() on columns of table "company_user_link" */
 export type Company_User_Link_Avg_Order_By = {
-  company_id?: Maybe<Order_By>;
-  id?: Maybe<Order_By>;
-  user_id?: Maybe<Order_By>;
+  company_id?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  user_id?: InputMaybe<Order_By>;
 };
 
 /** Boolean expression to filter rows from the table "company_user_link". All fields are combined with a logical 'AND'. */
 export type Company_User_Link_Bool_Exp = {
-  _and?: Maybe<Array<Company_User_Link_Bool_Exp>>;
-  _not?: Maybe<Company_User_Link_Bool_Exp>;
-  _or?: Maybe<Array<Company_User_Link_Bool_Exp>>;
-  company?: Maybe<Companies_Bool_Exp>;
-  company_id?: Maybe<Int_Comparison_Exp>;
-  id?: Maybe<Int_Comparison_Exp>;
-  user?: Maybe<Users_Bool_Exp>;
-  user_id?: Maybe<Int_Comparison_Exp>;
-  uuid?: Maybe<Uuid_Comparison_Exp>;
+  _and?: InputMaybe<Array<Company_User_Link_Bool_Exp>>;
+  _not?: InputMaybe<Company_User_Link_Bool_Exp>;
+  _or?: InputMaybe<Array<Company_User_Link_Bool_Exp>>;
+  company?: InputMaybe<Companies_Bool_Exp>;
+  company_id?: InputMaybe<Int_Comparison_Exp>;
+  id?: InputMaybe<Int_Comparison_Exp>;
+  user?: InputMaybe<Users_Bool_Exp>;
+  user_id?: InputMaybe<Int_Comparison_Exp>;
+  uuid?: InputMaybe<Uuid_Comparison_Exp>;
 };
 
 /** unique or primary key constraints on table "company_user_link" */
@@ -1143,19 +1170,19 @@ export enum Company_User_Link_Constraint {
 
 /** input type for incrementing numeric columns in table "company_user_link" */
 export type Company_User_Link_Inc_Input = {
-  company_id?: Maybe<Scalars['Int']>;
-  id?: Maybe<Scalars['Int']>;
-  user_id?: Maybe<Scalars['Int']>;
+  company_id?: InputMaybe<Scalars['Int']>;
+  id?: InputMaybe<Scalars['Int']>;
+  user_id?: InputMaybe<Scalars['Int']>;
 };
 
 /** input type for inserting data into table "company_user_link" */
 export type Company_User_Link_Insert_Input = {
-  company?: Maybe<Companies_Obj_Rel_Insert_Input>;
-  company_id?: Maybe<Scalars['Int']>;
-  id?: Maybe<Scalars['Int']>;
-  user?: Maybe<Users_Obj_Rel_Insert_Input>;
-  user_id?: Maybe<Scalars['Int']>;
-  uuid?: Maybe<Scalars['uuid']>;
+  company?: InputMaybe<Companies_Obj_Rel_Insert_Input>;
+  company_id?: InputMaybe<Scalars['Int']>;
+  id?: InputMaybe<Scalars['Int']>;
+  user?: InputMaybe<Users_Obj_Rel_Insert_Input>;
+  user_id?: InputMaybe<Scalars['Int']>;
+  uuid?: InputMaybe<Scalars['uuid']>;
 };
 
 /** aggregate max on columns */
@@ -1169,10 +1196,10 @@ export type Company_User_Link_Max_Fields = {
 
 /** order by max() on columns of table "company_user_link" */
 export type Company_User_Link_Max_Order_By = {
-  company_id?: Maybe<Order_By>;
-  id?: Maybe<Order_By>;
-  user_id?: Maybe<Order_By>;
-  uuid?: Maybe<Order_By>;
+  company_id?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  user_id?: InputMaybe<Order_By>;
+  uuid?: InputMaybe<Order_By>;
 };
 
 /** aggregate min on columns */
@@ -1186,10 +1213,10 @@ export type Company_User_Link_Min_Fields = {
 
 /** order by min() on columns of table "company_user_link" */
 export type Company_User_Link_Min_Order_By = {
-  company_id?: Maybe<Order_By>;
-  id?: Maybe<Order_By>;
-  user_id?: Maybe<Order_By>;
-  uuid?: Maybe<Order_By>;
+  company_id?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  user_id?: InputMaybe<Order_By>;
+  uuid?: InputMaybe<Order_By>;
 };
 
 /** response of any mutation on the table "company_user_link" */
@@ -1205,17 +1232,17 @@ export type Company_User_Link_Mutation_Response = {
 export type Company_User_Link_On_Conflict = {
   constraint: Company_User_Link_Constraint;
   update_columns?: Array<Company_User_Link_Update_Column>;
-  where?: Maybe<Company_User_Link_Bool_Exp>;
+  where?: InputMaybe<Company_User_Link_Bool_Exp>;
 };
 
 /** Ordering options when selecting data from "company_user_link". */
 export type Company_User_Link_Order_By = {
-  company?: Maybe<Companies_Order_By>;
-  company_id?: Maybe<Order_By>;
-  id?: Maybe<Order_By>;
-  user?: Maybe<Users_Order_By>;
-  user_id?: Maybe<Order_By>;
-  uuid?: Maybe<Order_By>;
+  company?: InputMaybe<Companies_Order_By>;
+  company_id?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  user?: InputMaybe<Users_Order_By>;
+  user_id?: InputMaybe<Order_By>;
+  uuid?: InputMaybe<Order_By>;
 };
 
 /** primary key columns input for table: company_user_link */
@@ -1237,10 +1264,10 @@ export enum Company_User_Link_Select_Column {
 
 /** input type for updating data in table "company_user_link" */
 export type Company_User_Link_Set_Input = {
-  company_id?: Maybe<Scalars['Int']>;
-  id?: Maybe<Scalars['Int']>;
-  user_id?: Maybe<Scalars['Int']>;
-  uuid?: Maybe<Scalars['uuid']>;
+  company_id?: InputMaybe<Scalars['Int']>;
+  id?: InputMaybe<Scalars['Int']>;
+  user_id?: InputMaybe<Scalars['Int']>;
+  uuid?: InputMaybe<Scalars['uuid']>;
 };
 
 /** aggregate stddev on columns */
@@ -1253,9 +1280,9 @@ export type Company_User_Link_Stddev_Fields = {
 
 /** order by stddev() on columns of table "company_user_link" */
 export type Company_User_Link_Stddev_Order_By = {
-  company_id?: Maybe<Order_By>;
-  id?: Maybe<Order_By>;
-  user_id?: Maybe<Order_By>;
+  company_id?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  user_id?: InputMaybe<Order_By>;
 };
 
 /** aggregate stddev_pop on columns */
@@ -1268,9 +1295,9 @@ export type Company_User_Link_Stddev_Pop_Fields = {
 
 /** order by stddev_pop() on columns of table "company_user_link" */
 export type Company_User_Link_Stddev_Pop_Order_By = {
-  company_id?: Maybe<Order_By>;
-  id?: Maybe<Order_By>;
-  user_id?: Maybe<Order_By>;
+  company_id?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  user_id?: InputMaybe<Order_By>;
 };
 
 /** aggregate stddev_samp on columns */
@@ -1283,9 +1310,9 @@ export type Company_User_Link_Stddev_Samp_Fields = {
 
 /** order by stddev_samp() on columns of table "company_user_link" */
 export type Company_User_Link_Stddev_Samp_Order_By = {
-  company_id?: Maybe<Order_By>;
-  id?: Maybe<Order_By>;
-  user_id?: Maybe<Order_By>;
+  company_id?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  user_id?: InputMaybe<Order_By>;
 };
 
 /** aggregate sum on columns */
@@ -1298,9 +1325,9 @@ export type Company_User_Link_Sum_Fields = {
 
 /** order by sum() on columns of table "company_user_link" */
 export type Company_User_Link_Sum_Order_By = {
-  company_id?: Maybe<Order_By>;
-  id?: Maybe<Order_By>;
-  user_id?: Maybe<Order_By>;
+  company_id?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  user_id?: InputMaybe<Order_By>;
 };
 
 /** update columns of table "company_user_link" */
@@ -1325,9 +1352,9 @@ export type Company_User_Link_Var_Pop_Fields = {
 
 /** order by var_pop() on columns of table "company_user_link" */
 export type Company_User_Link_Var_Pop_Order_By = {
-  company_id?: Maybe<Order_By>;
-  id?: Maybe<Order_By>;
-  user_id?: Maybe<Order_By>;
+  company_id?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  user_id?: InputMaybe<Order_By>;
 };
 
 /** aggregate var_samp on columns */
@@ -1340,9 +1367,9 @@ export type Company_User_Link_Var_Samp_Fields = {
 
 /** order by var_samp() on columns of table "company_user_link" */
 export type Company_User_Link_Var_Samp_Order_By = {
-  company_id?: Maybe<Order_By>;
-  id?: Maybe<Order_By>;
-  user_id?: Maybe<Order_By>;
+  company_id?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  user_id?: InputMaybe<Order_By>;
 };
 
 /** aggregate variance on columns */
@@ -1355,9 +1382,9 @@ export type Company_User_Link_Variance_Fields = {
 
 /** order by variance() on columns of table "company_user_link" */
 export type Company_User_Link_Variance_Order_By = {
-  company_id?: Maybe<Order_By>;
-  id?: Maybe<Order_By>;
-  user_id?: Maybe<Order_By>;
+  company_id?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  user_id?: InputMaybe<Order_By>;
 };
 
 /** columns and relationships of "languages" */
@@ -1376,21 +1403,21 @@ export type Languages = {
 
 /** columns and relationships of "languages" */
 export type LanguagesProject_LanguagesArgs = {
-  distinct_on?: Maybe<Array<Branch_Languages_Select_Column>>;
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<Branch_Languages_Order_By>>;
-  where?: Maybe<Branch_Languages_Bool_Exp>;
+  distinct_on?: InputMaybe<Array<Branch_Languages_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Branch_Languages_Order_By>>;
+  where?: InputMaybe<Branch_Languages_Bool_Exp>;
 };
 
 
 /** columns and relationships of "languages" */
 export type LanguagesProject_Languages_AggregateArgs = {
-  distinct_on?: Maybe<Array<Branch_Languages_Select_Column>>;
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<Branch_Languages_Order_By>>;
-  where?: Maybe<Branch_Languages_Bool_Exp>;
+  distinct_on?: InputMaybe<Array<Branch_Languages_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Branch_Languages_Order_By>>;
+  where?: InputMaybe<Branch_Languages_Bool_Exp>;
 };
 
 /** aggregated selection of "languages" */
@@ -1419,8 +1446,8 @@ export type Languages_Aggregate_Fields = {
 
 /** aggregate fields of "languages" */
 export type Languages_Aggregate_FieldsCountArgs = {
-  columns?: Maybe<Array<Languages_Select_Column>>;
-  distinct?: Maybe<Scalars['Boolean']>;
+  columns?: InputMaybe<Array<Languages_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']>;
 };
 
 /** aggregate avg on columns */
@@ -1431,14 +1458,14 @@ export type Languages_Avg_Fields = {
 
 /** Boolean expression to filter rows from the table "languages". All fields are combined with a logical 'AND'. */
 export type Languages_Bool_Exp = {
-  _and?: Maybe<Array<Languages_Bool_Exp>>;
-  _not?: Maybe<Languages_Bool_Exp>;
-  _or?: Maybe<Array<Languages_Bool_Exp>>;
-  id?: Maybe<Int_Comparison_Exp>;
-  iso_code?: Maybe<String_Comparison_Exp>;
-  name?: Maybe<String_Comparison_Exp>;
-  project_languages?: Maybe<Branch_Languages_Bool_Exp>;
-  uuid?: Maybe<Uuid_Comparison_Exp>;
+  _and?: InputMaybe<Array<Languages_Bool_Exp>>;
+  _not?: InputMaybe<Languages_Bool_Exp>;
+  _or?: InputMaybe<Array<Languages_Bool_Exp>>;
+  id?: InputMaybe<Int_Comparison_Exp>;
+  iso_code?: InputMaybe<String_Comparison_Exp>;
+  name?: InputMaybe<String_Comparison_Exp>;
+  project_languages?: InputMaybe<Branch_Languages_Bool_Exp>;
+  uuid?: InputMaybe<Uuid_Comparison_Exp>;
 };
 
 /** unique or primary key constraints on table "languages" */
@@ -1451,16 +1478,16 @@ export enum Languages_Constraint {
 
 /** input type for incrementing numeric columns in table "languages" */
 export type Languages_Inc_Input = {
-  id?: Maybe<Scalars['Int']>;
+  id?: InputMaybe<Scalars['Int']>;
 };
 
 /** input type for inserting data into table "languages" */
 export type Languages_Insert_Input = {
-  id?: Maybe<Scalars['Int']>;
-  iso_code?: Maybe<Scalars['String']>;
-  name?: Maybe<Scalars['String']>;
-  project_languages?: Maybe<Branch_Languages_Arr_Rel_Insert_Input>;
-  uuid?: Maybe<Scalars['uuid']>;
+  id?: InputMaybe<Scalars['Int']>;
+  iso_code?: InputMaybe<Scalars['String']>;
+  name?: InputMaybe<Scalars['String']>;
+  project_languages?: InputMaybe<Branch_Languages_Arr_Rel_Insert_Input>;
+  uuid?: InputMaybe<Scalars['uuid']>;
 };
 
 /** aggregate max on columns */
@@ -1494,23 +1521,23 @@ export type Languages_Mutation_Response = {
 export type Languages_Obj_Rel_Insert_Input = {
   data: Languages_Insert_Input;
   /** on conflict condition */
-  on_conflict?: Maybe<Languages_On_Conflict>;
+  on_conflict?: InputMaybe<Languages_On_Conflict>;
 };
 
 /** on conflict condition type for table "languages" */
 export type Languages_On_Conflict = {
   constraint: Languages_Constraint;
   update_columns?: Array<Languages_Update_Column>;
-  where?: Maybe<Languages_Bool_Exp>;
+  where?: InputMaybe<Languages_Bool_Exp>;
 };
 
 /** Ordering options when selecting data from "languages". */
 export type Languages_Order_By = {
-  id?: Maybe<Order_By>;
-  iso_code?: Maybe<Order_By>;
-  name?: Maybe<Order_By>;
-  project_languages_aggregate?: Maybe<Branch_Languages_Aggregate_Order_By>;
-  uuid?: Maybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  iso_code?: InputMaybe<Order_By>;
+  name?: InputMaybe<Order_By>;
+  project_languages_aggregate?: InputMaybe<Branch_Languages_Aggregate_Order_By>;
+  uuid?: InputMaybe<Order_By>;
 };
 
 /** primary key columns input for table: languages */
@@ -1532,10 +1559,10 @@ export enum Languages_Select_Column {
 
 /** input type for updating data in table "languages" */
 export type Languages_Set_Input = {
-  id?: Maybe<Scalars['Int']>;
-  iso_code?: Maybe<Scalars['String']>;
-  name?: Maybe<Scalars['String']>;
-  uuid?: Maybe<Scalars['uuid']>;
+  id?: InputMaybe<Scalars['Int']>;
+  iso_code?: InputMaybe<Scalars['String']>;
+  name?: InputMaybe<Scalars['String']>;
+  uuid?: InputMaybe<Scalars['uuid']>;
 };
 
 /** aggregate stddev on columns */
@@ -1623,6 +1650,10 @@ export type Mutation_Root = {
   delete_terms?: Maybe<Terms_Mutation_Response>;
   /** delete single row from the table: "terms" */
   delete_terms_by_pk?: Maybe<Terms>;
+  /** delete data from the table: "translation_events" */
+  delete_translation_events?: Maybe<Translation_Events_Mutation_Response>;
+  /** delete single row from the table: "translation_events" */
+  delete_translation_events_by_pk?: Maybe<Translation_Events>;
   /** delete data from the table: "translation_statuses" */
   delete_translation_statuses?: Maybe<Translation_Statuses_Mutation_Response>;
   /** delete single row from the table: "translation_statuses" */
@@ -1667,6 +1698,10 @@ export type Mutation_Root = {
   insert_terms?: Maybe<Terms_Mutation_Response>;
   /** insert a single row into the table: "terms" */
   insert_terms_one?: Maybe<Terms>;
+  /** insert data into the table: "translation_events" */
+  insert_translation_events?: Maybe<Translation_Events_Mutation_Response>;
+  /** insert a single row into the table: "translation_events" */
+  insert_translation_events_one?: Maybe<Translation_Events>;
   /** insert data into the table: "translation_statuses" */
   insert_translation_statuses?: Maybe<Translation_Statuses_Mutation_Response>;
   /** insert a single row into the table: "translation_statuses" */
@@ -1711,6 +1746,10 @@ export type Mutation_Root = {
   update_terms?: Maybe<Terms_Mutation_Response>;
   /** update single row of the table: "terms" */
   update_terms_by_pk?: Maybe<Terms>;
+  /** update data of the table: "translation_events" */
+  update_translation_events?: Maybe<Translation_Events_Mutation_Response>;
+  /** update single row of the table: "translation_events" */
+  update_translation_events_by_pk?: Maybe<Translation_Events>;
   /** update data of the table: "translation_statuses" */
   update_translation_statuses?: Maybe<Translation_Statuses_Mutation_Response>;
   /** update single row of the table: "translation_statuses" */
@@ -1815,6 +1854,18 @@ export type Mutation_RootDelete_Terms_By_PkArgs = {
 
 
 /** mutation root */
+export type Mutation_RootDelete_Translation_EventsArgs = {
+  where: Translation_Events_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Translation_Events_By_PkArgs = {
+  id: Scalars['Int'];
+};
+
+
+/** mutation root */
 export type Mutation_RootDelete_Translation_StatusesArgs = {
   where: Translation_Statuses_Bool_Exp;
 };
@@ -1865,329 +1916,359 @@ export type Mutation_RootDelete_Users_By_PkArgs = {
 /** mutation root */
 export type Mutation_RootInsert_Branch_LanguagesArgs = {
   objects: Array<Branch_Languages_Insert_Input>;
-  on_conflict?: Maybe<Branch_Languages_On_Conflict>;
+  on_conflict?: InputMaybe<Branch_Languages_On_Conflict>;
 };
 
 
 /** mutation root */
 export type Mutation_RootInsert_Branch_Languages_OneArgs = {
   object: Branch_Languages_Insert_Input;
-  on_conflict?: Maybe<Branch_Languages_On_Conflict>;
+  on_conflict?: InputMaybe<Branch_Languages_On_Conflict>;
 };
 
 
 /** mutation root */
 export type Mutation_RootInsert_BranchesArgs = {
   objects: Array<Branches_Insert_Input>;
-  on_conflict?: Maybe<Branches_On_Conflict>;
+  on_conflict?: InputMaybe<Branches_On_Conflict>;
 };
 
 
 /** mutation root */
 export type Mutation_RootInsert_Branches_OneArgs = {
   object: Branches_Insert_Input;
-  on_conflict?: Maybe<Branches_On_Conflict>;
+  on_conflict?: InputMaybe<Branches_On_Conflict>;
 };
 
 
 /** mutation root */
 export type Mutation_RootInsert_CompaniesArgs = {
   objects: Array<Companies_Insert_Input>;
-  on_conflict?: Maybe<Companies_On_Conflict>;
+  on_conflict?: InputMaybe<Companies_On_Conflict>;
 };
 
 
 /** mutation root */
 export type Mutation_RootInsert_Companies_OneArgs = {
   object: Companies_Insert_Input;
-  on_conflict?: Maybe<Companies_On_Conflict>;
+  on_conflict?: InputMaybe<Companies_On_Conflict>;
 };
 
 
 /** mutation root */
 export type Mutation_RootInsert_Company_User_LinkArgs = {
   objects: Array<Company_User_Link_Insert_Input>;
-  on_conflict?: Maybe<Company_User_Link_On_Conflict>;
+  on_conflict?: InputMaybe<Company_User_Link_On_Conflict>;
 };
 
 
 /** mutation root */
 export type Mutation_RootInsert_Company_User_Link_OneArgs = {
   object: Company_User_Link_Insert_Input;
-  on_conflict?: Maybe<Company_User_Link_On_Conflict>;
+  on_conflict?: InputMaybe<Company_User_Link_On_Conflict>;
 };
 
 
 /** mutation root */
 export type Mutation_RootInsert_LanguagesArgs = {
   objects: Array<Languages_Insert_Input>;
-  on_conflict?: Maybe<Languages_On_Conflict>;
+  on_conflict?: InputMaybe<Languages_On_Conflict>;
 };
 
 
 /** mutation root */
 export type Mutation_RootInsert_Languages_OneArgs = {
   object: Languages_Insert_Input;
-  on_conflict?: Maybe<Languages_On_Conflict>;
+  on_conflict?: InputMaybe<Languages_On_Conflict>;
 };
 
 
 /** mutation root */
 export type Mutation_RootInsert_ProjectsArgs = {
   objects: Array<Projects_Insert_Input>;
-  on_conflict?: Maybe<Projects_On_Conflict>;
+  on_conflict?: InputMaybe<Projects_On_Conflict>;
 };
 
 
 /** mutation root */
 export type Mutation_RootInsert_Projects_OneArgs = {
   object: Projects_Insert_Input;
-  on_conflict?: Maybe<Projects_On_Conflict>;
+  on_conflict?: InputMaybe<Projects_On_Conflict>;
 };
 
 
 /** mutation root */
 export type Mutation_RootInsert_TermsArgs = {
   objects: Array<Terms_Insert_Input>;
-  on_conflict?: Maybe<Terms_On_Conflict>;
+  on_conflict?: InputMaybe<Terms_On_Conflict>;
 };
 
 
 /** mutation root */
 export type Mutation_RootInsert_Terms_OneArgs = {
   object: Terms_Insert_Input;
-  on_conflict?: Maybe<Terms_On_Conflict>;
+  on_conflict?: InputMaybe<Terms_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Translation_EventsArgs = {
+  objects: Array<Translation_Events_Insert_Input>;
+  on_conflict?: InputMaybe<Translation_Events_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Translation_Events_OneArgs = {
+  object: Translation_Events_Insert_Input;
+  on_conflict?: InputMaybe<Translation_Events_On_Conflict>;
 };
 
 
 /** mutation root */
 export type Mutation_RootInsert_Translation_StatusesArgs = {
   objects: Array<Translation_Statuses_Insert_Input>;
-  on_conflict?: Maybe<Translation_Statuses_On_Conflict>;
+  on_conflict?: InputMaybe<Translation_Statuses_On_Conflict>;
 };
 
 
 /** mutation root */
 export type Mutation_RootInsert_Translation_Statuses_OneArgs = {
   object: Translation_Statuses_Insert_Input;
-  on_conflict?: Maybe<Translation_Statuses_On_Conflict>;
+  on_conflict?: InputMaybe<Translation_Statuses_On_Conflict>;
 };
 
 
 /** mutation root */
 export type Mutation_RootInsert_TranslationsArgs = {
   objects: Array<Translations_Insert_Input>;
-  on_conflict?: Maybe<Translations_On_Conflict>;
+  on_conflict?: InputMaybe<Translations_On_Conflict>;
 };
 
 
 /** mutation root */
 export type Mutation_RootInsert_Translations_OneArgs = {
   object: Translations_Insert_Input;
-  on_conflict?: Maybe<Translations_On_Conflict>;
+  on_conflict?: InputMaybe<Translations_On_Conflict>;
 };
 
 
 /** mutation root */
 export type Mutation_RootInsert_User_Project_LinkArgs = {
   objects: Array<User_Project_Link_Insert_Input>;
-  on_conflict?: Maybe<User_Project_Link_On_Conflict>;
+  on_conflict?: InputMaybe<User_Project_Link_On_Conflict>;
 };
 
 
 /** mutation root */
 export type Mutation_RootInsert_User_Project_Link_OneArgs = {
   object: User_Project_Link_Insert_Input;
-  on_conflict?: Maybe<User_Project_Link_On_Conflict>;
+  on_conflict?: InputMaybe<User_Project_Link_On_Conflict>;
 };
 
 
 /** mutation root */
 export type Mutation_RootInsert_UsersArgs = {
   objects: Array<Users_Insert_Input>;
-  on_conflict?: Maybe<Users_On_Conflict>;
+  on_conflict?: InputMaybe<Users_On_Conflict>;
 };
 
 
 /** mutation root */
 export type Mutation_RootInsert_Users_OneArgs = {
   object: Users_Insert_Input;
-  on_conflict?: Maybe<Users_On_Conflict>;
+  on_conflict?: InputMaybe<Users_On_Conflict>;
 };
 
 
 /** mutation root */
 export type Mutation_RootUpdate_Branch_LanguagesArgs = {
-  _inc?: Maybe<Branch_Languages_Inc_Input>;
-  _set?: Maybe<Branch_Languages_Set_Input>;
+  _inc?: InputMaybe<Branch_Languages_Inc_Input>;
+  _set?: InputMaybe<Branch_Languages_Set_Input>;
   where: Branch_Languages_Bool_Exp;
 };
 
 
 /** mutation root */
 export type Mutation_RootUpdate_Branch_Languages_By_PkArgs = {
-  _inc?: Maybe<Branch_Languages_Inc_Input>;
-  _set?: Maybe<Branch_Languages_Set_Input>;
+  _inc?: InputMaybe<Branch_Languages_Inc_Input>;
+  _set?: InputMaybe<Branch_Languages_Set_Input>;
   pk_columns: Branch_Languages_Pk_Columns_Input;
 };
 
 
 /** mutation root */
 export type Mutation_RootUpdate_BranchesArgs = {
-  _inc?: Maybe<Branches_Inc_Input>;
-  _set?: Maybe<Branches_Set_Input>;
+  _inc?: InputMaybe<Branches_Inc_Input>;
+  _set?: InputMaybe<Branches_Set_Input>;
   where: Branches_Bool_Exp;
 };
 
 
 /** mutation root */
 export type Mutation_RootUpdate_Branches_By_PkArgs = {
-  _inc?: Maybe<Branches_Inc_Input>;
-  _set?: Maybe<Branches_Set_Input>;
+  _inc?: InputMaybe<Branches_Inc_Input>;
+  _set?: InputMaybe<Branches_Set_Input>;
   pk_columns: Branches_Pk_Columns_Input;
 };
 
 
 /** mutation root */
 export type Mutation_RootUpdate_CompaniesArgs = {
-  _inc?: Maybe<Companies_Inc_Input>;
-  _set?: Maybe<Companies_Set_Input>;
+  _inc?: InputMaybe<Companies_Inc_Input>;
+  _set?: InputMaybe<Companies_Set_Input>;
   where: Companies_Bool_Exp;
 };
 
 
 /** mutation root */
 export type Mutation_RootUpdate_Companies_By_PkArgs = {
-  _inc?: Maybe<Companies_Inc_Input>;
-  _set?: Maybe<Companies_Set_Input>;
+  _inc?: InputMaybe<Companies_Inc_Input>;
+  _set?: InputMaybe<Companies_Set_Input>;
   pk_columns: Companies_Pk_Columns_Input;
 };
 
 
 /** mutation root */
 export type Mutation_RootUpdate_Company_User_LinkArgs = {
-  _inc?: Maybe<Company_User_Link_Inc_Input>;
-  _set?: Maybe<Company_User_Link_Set_Input>;
+  _inc?: InputMaybe<Company_User_Link_Inc_Input>;
+  _set?: InputMaybe<Company_User_Link_Set_Input>;
   where: Company_User_Link_Bool_Exp;
 };
 
 
 /** mutation root */
 export type Mutation_RootUpdate_Company_User_Link_By_PkArgs = {
-  _inc?: Maybe<Company_User_Link_Inc_Input>;
-  _set?: Maybe<Company_User_Link_Set_Input>;
+  _inc?: InputMaybe<Company_User_Link_Inc_Input>;
+  _set?: InputMaybe<Company_User_Link_Set_Input>;
   pk_columns: Company_User_Link_Pk_Columns_Input;
 };
 
 
 /** mutation root */
 export type Mutation_RootUpdate_LanguagesArgs = {
-  _inc?: Maybe<Languages_Inc_Input>;
-  _set?: Maybe<Languages_Set_Input>;
+  _inc?: InputMaybe<Languages_Inc_Input>;
+  _set?: InputMaybe<Languages_Set_Input>;
   where: Languages_Bool_Exp;
 };
 
 
 /** mutation root */
 export type Mutation_RootUpdate_Languages_By_PkArgs = {
-  _inc?: Maybe<Languages_Inc_Input>;
-  _set?: Maybe<Languages_Set_Input>;
+  _inc?: InputMaybe<Languages_Inc_Input>;
+  _set?: InputMaybe<Languages_Set_Input>;
   pk_columns: Languages_Pk_Columns_Input;
 };
 
 
 /** mutation root */
 export type Mutation_RootUpdate_ProjectsArgs = {
-  _inc?: Maybe<Projects_Inc_Input>;
-  _set?: Maybe<Projects_Set_Input>;
+  _inc?: InputMaybe<Projects_Inc_Input>;
+  _set?: InputMaybe<Projects_Set_Input>;
   where: Projects_Bool_Exp;
 };
 
 
 /** mutation root */
 export type Mutation_RootUpdate_Projects_By_PkArgs = {
-  _inc?: Maybe<Projects_Inc_Input>;
-  _set?: Maybe<Projects_Set_Input>;
+  _inc?: InputMaybe<Projects_Inc_Input>;
+  _set?: InputMaybe<Projects_Set_Input>;
   pk_columns: Projects_Pk_Columns_Input;
 };
 
 
 /** mutation root */
 export type Mutation_RootUpdate_TermsArgs = {
-  _inc?: Maybe<Terms_Inc_Input>;
-  _set?: Maybe<Terms_Set_Input>;
+  _inc?: InputMaybe<Terms_Inc_Input>;
+  _set?: InputMaybe<Terms_Set_Input>;
   where: Terms_Bool_Exp;
 };
 
 
 /** mutation root */
 export type Mutation_RootUpdate_Terms_By_PkArgs = {
-  _inc?: Maybe<Terms_Inc_Input>;
-  _set?: Maybe<Terms_Set_Input>;
+  _inc?: InputMaybe<Terms_Inc_Input>;
+  _set?: InputMaybe<Terms_Set_Input>;
   pk_columns: Terms_Pk_Columns_Input;
 };
 
 
 /** mutation root */
+export type Mutation_RootUpdate_Translation_EventsArgs = {
+  _inc?: InputMaybe<Translation_Events_Inc_Input>;
+  _set?: InputMaybe<Translation_Events_Set_Input>;
+  where: Translation_Events_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Translation_Events_By_PkArgs = {
+  _inc?: InputMaybe<Translation_Events_Inc_Input>;
+  _set?: InputMaybe<Translation_Events_Set_Input>;
+  pk_columns: Translation_Events_Pk_Columns_Input;
+};
+
+
+/** mutation root */
 export type Mutation_RootUpdate_Translation_StatusesArgs = {
-  _inc?: Maybe<Translation_Statuses_Inc_Input>;
-  _set?: Maybe<Translation_Statuses_Set_Input>;
+  _inc?: InputMaybe<Translation_Statuses_Inc_Input>;
+  _set?: InputMaybe<Translation_Statuses_Set_Input>;
   where: Translation_Statuses_Bool_Exp;
 };
 
 
 /** mutation root */
 export type Mutation_RootUpdate_Translation_Statuses_By_PkArgs = {
-  _inc?: Maybe<Translation_Statuses_Inc_Input>;
-  _set?: Maybe<Translation_Statuses_Set_Input>;
+  _inc?: InputMaybe<Translation_Statuses_Inc_Input>;
+  _set?: InputMaybe<Translation_Statuses_Set_Input>;
   pk_columns: Translation_Statuses_Pk_Columns_Input;
 };
 
 
 /** mutation root */
 export type Mutation_RootUpdate_TranslationsArgs = {
-  _inc?: Maybe<Translations_Inc_Input>;
-  _set?: Maybe<Translations_Set_Input>;
+  _inc?: InputMaybe<Translations_Inc_Input>;
+  _set?: InputMaybe<Translations_Set_Input>;
   where: Translations_Bool_Exp;
 };
 
 
 /** mutation root */
 export type Mutation_RootUpdate_Translations_By_PkArgs = {
-  _inc?: Maybe<Translations_Inc_Input>;
-  _set?: Maybe<Translations_Set_Input>;
+  _inc?: InputMaybe<Translations_Inc_Input>;
+  _set?: InputMaybe<Translations_Set_Input>;
   pk_columns: Translations_Pk_Columns_Input;
 };
 
 
 /** mutation root */
 export type Mutation_RootUpdate_User_Project_LinkArgs = {
-  _inc?: Maybe<User_Project_Link_Inc_Input>;
-  _set?: Maybe<User_Project_Link_Set_Input>;
+  _inc?: InputMaybe<User_Project_Link_Inc_Input>;
+  _set?: InputMaybe<User_Project_Link_Set_Input>;
   where: User_Project_Link_Bool_Exp;
 };
 
 
 /** mutation root */
 export type Mutation_RootUpdate_User_Project_Link_By_PkArgs = {
-  _inc?: Maybe<User_Project_Link_Inc_Input>;
-  _set?: Maybe<User_Project_Link_Set_Input>;
+  _inc?: InputMaybe<User_Project_Link_Inc_Input>;
+  _set?: InputMaybe<User_Project_Link_Set_Input>;
   pk_columns: User_Project_Link_Pk_Columns_Input;
 };
 
 
 /** mutation root */
 export type Mutation_RootUpdate_UsersArgs = {
-  _inc?: Maybe<Users_Inc_Input>;
-  _set?: Maybe<Users_Set_Input>;
+  _inc?: InputMaybe<Users_Inc_Input>;
+  _set?: InputMaybe<Users_Set_Input>;
   where: Users_Bool_Exp;
 };
 
 
 /** mutation root */
 export type Mutation_RootUpdate_Users_By_PkArgs = {
-  _inc?: Maybe<Users_Inc_Input>;
-  _set?: Maybe<Users_Set_Input>;
+  _inc?: InputMaybe<Users_Inc_Input>;
+  _set?: InputMaybe<Users_Set_Input>;
   pk_columns: Users_Pk_Columns_Input;
 };
 
@@ -2233,61 +2314,61 @@ export type Projects = {
 
 /** columns and relationships of "projects" */
 export type ProjectsBranchesArgs = {
-  distinct_on?: Maybe<Array<Branches_Select_Column>>;
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<Branches_Order_By>>;
-  where?: Maybe<Branches_Bool_Exp>;
+  distinct_on?: InputMaybe<Array<Branches_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Branches_Order_By>>;
+  where?: InputMaybe<Branches_Bool_Exp>;
 };
 
 
 /** columns and relationships of "projects" */
 export type ProjectsBranches_AggregateArgs = {
-  distinct_on?: Maybe<Array<Branches_Select_Column>>;
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<Branches_Order_By>>;
-  where?: Maybe<Branches_Bool_Exp>;
+  distinct_on?: InputMaybe<Array<Branches_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Branches_Order_By>>;
+  where?: InputMaybe<Branches_Bool_Exp>;
 };
 
 
 /** columns and relationships of "projects" */
 export type ProjectsStatusesArgs = {
-  distinct_on?: Maybe<Array<Translation_Statuses_Select_Column>>;
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<Translation_Statuses_Order_By>>;
-  where?: Maybe<Translation_Statuses_Bool_Exp>;
+  distinct_on?: InputMaybe<Array<Translation_Statuses_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Translation_Statuses_Order_By>>;
+  where?: InputMaybe<Translation_Statuses_Bool_Exp>;
 };
 
 
 /** columns and relationships of "projects" */
 export type ProjectsStatuses_AggregateArgs = {
-  distinct_on?: Maybe<Array<Translation_Statuses_Select_Column>>;
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<Translation_Statuses_Order_By>>;
-  where?: Maybe<Translation_Statuses_Bool_Exp>;
+  distinct_on?: InputMaybe<Array<Translation_Statuses_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Translation_Statuses_Order_By>>;
+  where?: InputMaybe<Translation_Statuses_Bool_Exp>;
 };
 
 
 /** columns and relationships of "projects" */
 export type ProjectsUser_LinksArgs = {
-  distinct_on?: Maybe<Array<User_Project_Link_Select_Column>>;
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<User_Project_Link_Order_By>>;
-  where?: Maybe<User_Project_Link_Bool_Exp>;
+  distinct_on?: InputMaybe<Array<User_Project_Link_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<User_Project_Link_Order_By>>;
+  where?: InputMaybe<User_Project_Link_Bool_Exp>;
 };
 
 
 /** columns and relationships of "projects" */
 export type ProjectsUser_Links_AggregateArgs = {
-  distinct_on?: Maybe<Array<User_Project_Link_Select_Column>>;
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<User_Project_Link_Order_By>>;
-  where?: Maybe<User_Project_Link_Bool_Exp>;
+  distinct_on?: InputMaybe<Array<User_Project_Link_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<User_Project_Link_Order_By>>;
+  where?: InputMaybe<User_Project_Link_Bool_Exp>;
 };
 
 /** aggregated selection of "projects" */
@@ -2316,30 +2397,30 @@ export type Projects_Aggregate_Fields = {
 
 /** aggregate fields of "projects" */
 export type Projects_Aggregate_FieldsCountArgs = {
-  columns?: Maybe<Array<Projects_Select_Column>>;
-  distinct?: Maybe<Scalars['Boolean']>;
+  columns?: InputMaybe<Array<Projects_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']>;
 };
 
 /** order by aggregate values of table "projects" */
 export type Projects_Aggregate_Order_By = {
-  avg?: Maybe<Projects_Avg_Order_By>;
-  count?: Maybe<Order_By>;
-  max?: Maybe<Projects_Max_Order_By>;
-  min?: Maybe<Projects_Min_Order_By>;
-  stddev?: Maybe<Projects_Stddev_Order_By>;
-  stddev_pop?: Maybe<Projects_Stddev_Pop_Order_By>;
-  stddev_samp?: Maybe<Projects_Stddev_Samp_Order_By>;
-  sum?: Maybe<Projects_Sum_Order_By>;
-  var_pop?: Maybe<Projects_Var_Pop_Order_By>;
-  var_samp?: Maybe<Projects_Var_Samp_Order_By>;
-  variance?: Maybe<Projects_Variance_Order_By>;
+  avg?: InputMaybe<Projects_Avg_Order_By>;
+  count?: InputMaybe<Order_By>;
+  max?: InputMaybe<Projects_Max_Order_By>;
+  min?: InputMaybe<Projects_Min_Order_By>;
+  stddev?: InputMaybe<Projects_Stddev_Order_By>;
+  stddev_pop?: InputMaybe<Projects_Stddev_Pop_Order_By>;
+  stddev_samp?: InputMaybe<Projects_Stddev_Samp_Order_By>;
+  sum?: InputMaybe<Projects_Sum_Order_By>;
+  var_pop?: InputMaybe<Projects_Var_Pop_Order_By>;
+  var_samp?: InputMaybe<Projects_Var_Samp_Order_By>;
+  variance?: InputMaybe<Projects_Variance_Order_By>;
 };
 
 /** input type for inserting array relation for remote table "projects" */
 export type Projects_Arr_Rel_Insert_Input = {
   data: Array<Projects_Insert_Input>;
   /** on conflict condition */
-  on_conflict?: Maybe<Projects_On_Conflict>;
+  on_conflict?: InputMaybe<Projects_On_Conflict>;
 };
 
 /** aggregate avg on columns */
@@ -2351,23 +2432,23 @@ export type Projects_Avg_Fields = {
 
 /** order by avg() on columns of table "projects" */
 export type Projects_Avg_Order_By = {
-  company_id?: Maybe<Order_By>;
-  id?: Maybe<Order_By>;
+  company_id?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
 };
 
 /** Boolean expression to filter rows from the table "projects". All fields are combined with a logical 'AND'. */
 export type Projects_Bool_Exp = {
-  _and?: Maybe<Array<Projects_Bool_Exp>>;
-  _not?: Maybe<Projects_Bool_Exp>;
-  _or?: Maybe<Array<Projects_Bool_Exp>>;
-  branches?: Maybe<Branches_Bool_Exp>;
-  company?: Maybe<Companies_Bool_Exp>;
-  company_id?: Maybe<Int_Comparison_Exp>;
-  id?: Maybe<Int_Comparison_Exp>;
-  name?: Maybe<String_Comparison_Exp>;
-  statuses?: Maybe<Translation_Statuses_Bool_Exp>;
-  user_links?: Maybe<User_Project_Link_Bool_Exp>;
-  uuid?: Maybe<Uuid_Comparison_Exp>;
+  _and?: InputMaybe<Array<Projects_Bool_Exp>>;
+  _not?: InputMaybe<Projects_Bool_Exp>;
+  _or?: InputMaybe<Array<Projects_Bool_Exp>>;
+  branches?: InputMaybe<Branches_Bool_Exp>;
+  company?: InputMaybe<Companies_Bool_Exp>;
+  company_id?: InputMaybe<Int_Comparison_Exp>;
+  id?: InputMaybe<Int_Comparison_Exp>;
+  name?: InputMaybe<String_Comparison_Exp>;
+  statuses?: InputMaybe<Translation_Statuses_Bool_Exp>;
+  user_links?: InputMaybe<User_Project_Link_Bool_Exp>;
+  uuid?: InputMaybe<Uuid_Comparison_Exp>;
 };
 
 /** unique or primary key constraints on table "projects" */
@@ -2380,20 +2461,20 @@ export enum Projects_Constraint {
 
 /** input type for incrementing numeric columns in table "projects" */
 export type Projects_Inc_Input = {
-  company_id?: Maybe<Scalars['Int']>;
-  id?: Maybe<Scalars['Int']>;
+  company_id?: InputMaybe<Scalars['Int']>;
+  id?: InputMaybe<Scalars['Int']>;
 };
 
 /** input type for inserting data into table "projects" */
 export type Projects_Insert_Input = {
-  branches?: Maybe<Branches_Arr_Rel_Insert_Input>;
-  company?: Maybe<Companies_Obj_Rel_Insert_Input>;
-  company_id?: Maybe<Scalars['Int']>;
-  id?: Maybe<Scalars['Int']>;
-  name?: Maybe<Scalars['String']>;
-  statuses?: Maybe<Translation_Statuses_Arr_Rel_Insert_Input>;
-  user_links?: Maybe<User_Project_Link_Arr_Rel_Insert_Input>;
-  uuid?: Maybe<Scalars['uuid']>;
+  branches?: InputMaybe<Branches_Arr_Rel_Insert_Input>;
+  company?: InputMaybe<Companies_Obj_Rel_Insert_Input>;
+  company_id?: InputMaybe<Scalars['Int']>;
+  id?: InputMaybe<Scalars['Int']>;
+  name?: InputMaybe<Scalars['String']>;
+  statuses?: InputMaybe<Translation_Statuses_Arr_Rel_Insert_Input>;
+  user_links?: InputMaybe<User_Project_Link_Arr_Rel_Insert_Input>;
+  uuid?: InputMaybe<Scalars['uuid']>;
 };
 
 /** aggregate max on columns */
@@ -2407,10 +2488,10 @@ export type Projects_Max_Fields = {
 
 /** order by max() on columns of table "projects" */
 export type Projects_Max_Order_By = {
-  company_id?: Maybe<Order_By>;
-  id?: Maybe<Order_By>;
-  name?: Maybe<Order_By>;
-  uuid?: Maybe<Order_By>;
+  company_id?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  name?: InputMaybe<Order_By>;
+  uuid?: InputMaybe<Order_By>;
 };
 
 /** aggregate min on columns */
@@ -2424,10 +2505,10 @@ export type Projects_Min_Fields = {
 
 /** order by min() on columns of table "projects" */
 export type Projects_Min_Order_By = {
-  company_id?: Maybe<Order_By>;
-  id?: Maybe<Order_By>;
-  name?: Maybe<Order_By>;
-  uuid?: Maybe<Order_By>;
+  company_id?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  name?: InputMaybe<Order_By>;
+  uuid?: InputMaybe<Order_By>;
 };
 
 /** response of any mutation on the table "projects" */
@@ -2443,26 +2524,26 @@ export type Projects_Mutation_Response = {
 export type Projects_Obj_Rel_Insert_Input = {
   data: Projects_Insert_Input;
   /** on conflict condition */
-  on_conflict?: Maybe<Projects_On_Conflict>;
+  on_conflict?: InputMaybe<Projects_On_Conflict>;
 };
 
 /** on conflict condition type for table "projects" */
 export type Projects_On_Conflict = {
   constraint: Projects_Constraint;
   update_columns?: Array<Projects_Update_Column>;
-  where?: Maybe<Projects_Bool_Exp>;
+  where?: InputMaybe<Projects_Bool_Exp>;
 };
 
 /** Ordering options when selecting data from "projects". */
 export type Projects_Order_By = {
-  branches_aggregate?: Maybe<Branches_Aggregate_Order_By>;
-  company?: Maybe<Companies_Order_By>;
-  company_id?: Maybe<Order_By>;
-  id?: Maybe<Order_By>;
-  name?: Maybe<Order_By>;
-  statuses_aggregate?: Maybe<Translation_Statuses_Aggregate_Order_By>;
-  user_links_aggregate?: Maybe<User_Project_Link_Aggregate_Order_By>;
-  uuid?: Maybe<Order_By>;
+  branches_aggregate?: InputMaybe<Branches_Aggregate_Order_By>;
+  company?: InputMaybe<Companies_Order_By>;
+  company_id?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  name?: InputMaybe<Order_By>;
+  statuses_aggregate?: InputMaybe<Translation_Statuses_Aggregate_Order_By>;
+  user_links_aggregate?: InputMaybe<User_Project_Link_Aggregate_Order_By>;
+  uuid?: InputMaybe<Order_By>;
 };
 
 /** primary key columns input for table: projects */
@@ -2484,10 +2565,10 @@ export enum Projects_Select_Column {
 
 /** input type for updating data in table "projects" */
 export type Projects_Set_Input = {
-  company_id?: Maybe<Scalars['Int']>;
-  id?: Maybe<Scalars['Int']>;
-  name?: Maybe<Scalars['String']>;
-  uuid?: Maybe<Scalars['uuid']>;
+  company_id?: InputMaybe<Scalars['Int']>;
+  id?: InputMaybe<Scalars['Int']>;
+  name?: InputMaybe<Scalars['String']>;
+  uuid?: InputMaybe<Scalars['uuid']>;
 };
 
 /** aggregate stddev on columns */
@@ -2499,8 +2580,8 @@ export type Projects_Stddev_Fields = {
 
 /** order by stddev() on columns of table "projects" */
 export type Projects_Stddev_Order_By = {
-  company_id?: Maybe<Order_By>;
-  id?: Maybe<Order_By>;
+  company_id?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
 };
 
 /** aggregate stddev_pop on columns */
@@ -2512,8 +2593,8 @@ export type Projects_Stddev_Pop_Fields = {
 
 /** order by stddev_pop() on columns of table "projects" */
 export type Projects_Stddev_Pop_Order_By = {
-  company_id?: Maybe<Order_By>;
-  id?: Maybe<Order_By>;
+  company_id?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
 };
 
 /** aggregate stddev_samp on columns */
@@ -2525,8 +2606,8 @@ export type Projects_Stddev_Samp_Fields = {
 
 /** order by stddev_samp() on columns of table "projects" */
 export type Projects_Stddev_Samp_Order_By = {
-  company_id?: Maybe<Order_By>;
-  id?: Maybe<Order_By>;
+  company_id?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
 };
 
 /** aggregate sum on columns */
@@ -2538,8 +2619,8 @@ export type Projects_Sum_Fields = {
 
 /** order by sum() on columns of table "projects" */
 export type Projects_Sum_Order_By = {
-  company_id?: Maybe<Order_By>;
-  id?: Maybe<Order_By>;
+  company_id?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
 };
 
 /** update columns of table "projects" */
@@ -2563,8 +2644,8 @@ export type Projects_Var_Pop_Fields = {
 
 /** order by var_pop() on columns of table "projects" */
 export type Projects_Var_Pop_Order_By = {
-  company_id?: Maybe<Order_By>;
-  id?: Maybe<Order_By>;
+  company_id?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
 };
 
 /** aggregate var_samp on columns */
@@ -2576,8 +2657,8 @@ export type Projects_Var_Samp_Fields = {
 
 /** order by var_samp() on columns of table "projects" */
 export type Projects_Var_Samp_Order_By = {
-  company_id?: Maybe<Order_By>;
-  id?: Maybe<Order_By>;
+  company_id?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
 };
 
 /** aggregate variance on columns */
@@ -2589,8 +2670,8 @@ export type Projects_Variance_Fields = {
 
 /** order by variance() on columns of table "projects" */
 export type Projects_Variance_Order_By = {
-  company_id?: Maybe<Order_By>;
-  id?: Maybe<Order_By>;
+  company_id?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
 };
 
 export type Query_Root = {
@@ -2637,6 +2718,12 @@ export type Query_Root = {
   terms_aggregate: Terms_Aggregate;
   /** fetch data from the table: "terms" using primary key columns */
   terms_by_pk?: Maybe<Terms>;
+  /** fetch data from the table: "translation_events" */
+  translation_events: Array<Translation_Events>;
+  /** fetch aggregated fields from the table: "translation_events" */
+  translation_events_aggregate: Translation_Events_Aggregate;
+  /** fetch data from the table: "translation_events" using primary key columns */
+  translation_events_by_pk?: Maybe<Translation_Events>;
   /** fetch data from the table: "translation_statuses" */
   translation_statuses: Array<Translation_Statuses>;
   /** fetch aggregated fields from the table: "translation_statuses" */
@@ -2665,20 +2752,20 @@ export type Query_Root = {
 
 
 export type Query_RootBranch_LanguagesArgs = {
-  distinct_on?: Maybe<Array<Branch_Languages_Select_Column>>;
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<Branch_Languages_Order_By>>;
-  where?: Maybe<Branch_Languages_Bool_Exp>;
+  distinct_on?: InputMaybe<Array<Branch_Languages_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Branch_Languages_Order_By>>;
+  where?: InputMaybe<Branch_Languages_Bool_Exp>;
 };
 
 
 export type Query_RootBranch_Languages_AggregateArgs = {
-  distinct_on?: Maybe<Array<Branch_Languages_Select_Column>>;
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<Branch_Languages_Order_By>>;
-  where?: Maybe<Branch_Languages_Bool_Exp>;
+  distinct_on?: InputMaybe<Array<Branch_Languages_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Branch_Languages_Order_By>>;
+  where?: InputMaybe<Branch_Languages_Bool_Exp>;
 };
 
 
@@ -2688,20 +2775,20 @@ export type Query_RootBranch_Languages_By_PkArgs = {
 
 
 export type Query_RootBranchesArgs = {
-  distinct_on?: Maybe<Array<Branches_Select_Column>>;
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<Branches_Order_By>>;
-  where?: Maybe<Branches_Bool_Exp>;
+  distinct_on?: InputMaybe<Array<Branches_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Branches_Order_By>>;
+  where?: InputMaybe<Branches_Bool_Exp>;
 };
 
 
 export type Query_RootBranches_AggregateArgs = {
-  distinct_on?: Maybe<Array<Branches_Select_Column>>;
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<Branches_Order_By>>;
-  where?: Maybe<Branches_Bool_Exp>;
+  distinct_on?: InputMaybe<Array<Branches_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Branches_Order_By>>;
+  where?: InputMaybe<Branches_Bool_Exp>;
 };
 
 
@@ -2711,20 +2798,20 @@ export type Query_RootBranches_By_PkArgs = {
 
 
 export type Query_RootCompaniesArgs = {
-  distinct_on?: Maybe<Array<Companies_Select_Column>>;
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<Companies_Order_By>>;
-  where?: Maybe<Companies_Bool_Exp>;
+  distinct_on?: InputMaybe<Array<Companies_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Companies_Order_By>>;
+  where?: InputMaybe<Companies_Bool_Exp>;
 };
 
 
 export type Query_RootCompanies_AggregateArgs = {
-  distinct_on?: Maybe<Array<Companies_Select_Column>>;
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<Companies_Order_By>>;
-  where?: Maybe<Companies_Bool_Exp>;
+  distinct_on?: InputMaybe<Array<Companies_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Companies_Order_By>>;
+  where?: InputMaybe<Companies_Bool_Exp>;
 };
 
 
@@ -2734,20 +2821,20 @@ export type Query_RootCompanies_By_PkArgs = {
 
 
 export type Query_RootCompany_User_LinkArgs = {
-  distinct_on?: Maybe<Array<Company_User_Link_Select_Column>>;
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<Company_User_Link_Order_By>>;
-  where?: Maybe<Company_User_Link_Bool_Exp>;
+  distinct_on?: InputMaybe<Array<Company_User_Link_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Company_User_Link_Order_By>>;
+  where?: InputMaybe<Company_User_Link_Bool_Exp>;
 };
 
 
 export type Query_RootCompany_User_Link_AggregateArgs = {
-  distinct_on?: Maybe<Array<Company_User_Link_Select_Column>>;
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<Company_User_Link_Order_By>>;
-  where?: Maybe<Company_User_Link_Bool_Exp>;
+  distinct_on?: InputMaybe<Array<Company_User_Link_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Company_User_Link_Order_By>>;
+  where?: InputMaybe<Company_User_Link_Bool_Exp>;
 };
 
 
@@ -2757,20 +2844,20 @@ export type Query_RootCompany_User_Link_By_PkArgs = {
 
 
 export type Query_RootLanguagesArgs = {
-  distinct_on?: Maybe<Array<Languages_Select_Column>>;
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<Languages_Order_By>>;
-  where?: Maybe<Languages_Bool_Exp>;
+  distinct_on?: InputMaybe<Array<Languages_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Languages_Order_By>>;
+  where?: InputMaybe<Languages_Bool_Exp>;
 };
 
 
 export type Query_RootLanguages_AggregateArgs = {
-  distinct_on?: Maybe<Array<Languages_Select_Column>>;
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<Languages_Order_By>>;
-  where?: Maybe<Languages_Bool_Exp>;
+  distinct_on?: InputMaybe<Array<Languages_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Languages_Order_By>>;
+  where?: InputMaybe<Languages_Bool_Exp>;
 };
 
 
@@ -2780,20 +2867,20 @@ export type Query_RootLanguages_By_PkArgs = {
 
 
 export type Query_RootProjectsArgs = {
-  distinct_on?: Maybe<Array<Projects_Select_Column>>;
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<Projects_Order_By>>;
-  where?: Maybe<Projects_Bool_Exp>;
+  distinct_on?: InputMaybe<Array<Projects_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Projects_Order_By>>;
+  where?: InputMaybe<Projects_Bool_Exp>;
 };
 
 
 export type Query_RootProjects_AggregateArgs = {
-  distinct_on?: Maybe<Array<Projects_Select_Column>>;
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<Projects_Order_By>>;
-  where?: Maybe<Projects_Bool_Exp>;
+  distinct_on?: InputMaybe<Array<Projects_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Projects_Order_By>>;
+  where?: InputMaybe<Projects_Bool_Exp>;
 };
 
 
@@ -2803,20 +2890,20 @@ export type Query_RootProjects_By_PkArgs = {
 
 
 export type Query_RootTermsArgs = {
-  distinct_on?: Maybe<Array<Terms_Select_Column>>;
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<Terms_Order_By>>;
-  where?: Maybe<Terms_Bool_Exp>;
+  distinct_on?: InputMaybe<Array<Terms_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Terms_Order_By>>;
+  where?: InputMaybe<Terms_Bool_Exp>;
 };
 
 
 export type Query_RootTerms_AggregateArgs = {
-  distinct_on?: Maybe<Array<Terms_Select_Column>>;
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<Terms_Order_By>>;
-  where?: Maybe<Terms_Bool_Exp>;
+  distinct_on?: InputMaybe<Array<Terms_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Terms_Order_By>>;
+  where?: InputMaybe<Terms_Bool_Exp>;
 };
 
 
@@ -2825,21 +2912,44 @@ export type Query_RootTerms_By_PkArgs = {
 };
 
 
+export type Query_RootTranslation_EventsArgs = {
+  distinct_on?: InputMaybe<Array<Translation_Events_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Translation_Events_Order_By>>;
+  where?: InputMaybe<Translation_Events_Bool_Exp>;
+};
+
+
+export type Query_RootTranslation_Events_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Translation_Events_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Translation_Events_Order_By>>;
+  where?: InputMaybe<Translation_Events_Bool_Exp>;
+};
+
+
+export type Query_RootTranslation_Events_By_PkArgs = {
+  id: Scalars['Int'];
+};
+
+
 export type Query_RootTranslation_StatusesArgs = {
-  distinct_on?: Maybe<Array<Translation_Statuses_Select_Column>>;
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<Translation_Statuses_Order_By>>;
-  where?: Maybe<Translation_Statuses_Bool_Exp>;
+  distinct_on?: InputMaybe<Array<Translation_Statuses_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Translation_Statuses_Order_By>>;
+  where?: InputMaybe<Translation_Statuses_Bool_Exp>;
 };
 
 
 export type Query_RootTranslation_Statuses_AggregateArgs = {
-  distinct_on?: Maybe<Array<Translation_Statuses_Select_Column>>;
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<Translation_Statuses_Order_By>>;
-  where?: Maybe<Translation_Statuses_Bool_Exp>;
+  distinct_on?: InputMaybe<Array<Translation_Statuses_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Translation_Statuses_Order_By>>;
+  where?: InputMaybe<Translation_Statuses_Bool_Exp>;
 };
 
 
@@ -2849,20 +2959,20 @@ export type Query_RootTranslation_Statuses_By_PkArgs = {
 
 
 export type Query_RootTranslationsArgs = {
-  distinct_on?: Maybe<Array<Translations_Select_Column>>;
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<Translations_Order_By>>;
-  where?: Maybe<Translations_Bool_Exp>;
+  distinct_on?: InputMaybe<Array<Translations_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Translations_Order_By>>;
+  where?: InputMaybe<Translations_Bool_Exp>;
 };
 
 
 export type Query_RootTranslations_AggregateArgs = {
-  distinct_on?: Maybe<Array<Translations_Select_Column>>;
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<Translations_Order_By>>;
-  where?: Maybe<Translations_Bool_Exp>;
+  distinct_on?: InputMaybe<Array<Translations_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Translations_Order_By>>;
+  where?: InputMaybe<Translations_Bool_Exp>;
 };
 
 
@@ -2872,20 +2982,20 @@ export type Query_RootTranslations_By_PkArgs = {
 
 
 export type Query_RootUser_Project_LinkArgs = {
-  distinct_on?: Maybe<Array<User_Project_Link_Select_Column>>;
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<User_Project_Link_Order_By>>;
-  where?: Maybe<User_Project_Link_Bool_Exp>;
+  distinct_on?: InputMaybe<Array<User_Project_Link_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<User_Project_Link_Order_By>>;
+  where?: InputMaybe<User_Project_Link_Bool_Exp>;
 };
 
 
 export type Query_RootUser_Project_Link_AggregateArgs = {
-  distinct_on?: Maybe<Array<User_Project_Link_Select_Column>>;
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<User_Project_Link_Order_By>>;
-  where?: Maybe<User_Project_Link_Bool_Exp>;
+  distinct_on?: InputMaybe<Array<User_Project_Link_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<User_Project_Link_Order_By>>;
+  where?: InputMaybe<User_Project_Link_Bool_Exp>;
 };
 
 
@@ -2895,20 +3005,20 @@ export type Query_RootUser_Project_Link_By_PkArgs = {
 
 
 export type Query_RootUsersArgs = {
-  distinct_on?: Maybe<Array<Users_Select_Column>>;
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<Users_Order_By>>;
-  where?: Maybe<Users_Bool_Exp>;
+  distinct_on?: InputMaybe<Array<Users_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Users_Order_By>>;
+  where?: InputMaybe<Users_Bool_Exp>;
 };
 
 
 export type Query_RootUsers_AggregateArgs = {
-  distinct_on?: Maybe<Array<Users_Select_Column>>;
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<Users_Order_By>>;
-  where?: Maybe<Users_Bool_Exp>;
+  distinct_on?: InputMaybe<Array<Users_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Users_Order_By>>;
+  where?: InputMaybe<Users_Bool_Exp>;
 };
 
 
@@ -2960,6 +3070,12 @@ export type Subscription_Root = {
   terms_aggregate: Terms_Aggregate;
   /** fetch data from the table: "terms" using primary key columns */
   terms_by_pk?: Maybe<Terms>;
+  /** fetch data from the table: "translation_events" */
+  translation_events: Array<Translation_Events>;
+  /** fetch aggregated fields from the table: "translation_events" */
+  translation_events_aggregate: Translation_Events_Aggregate;
+  /** fetch data from the table: "translation_events" using primary key columns */
+  translation_events_by_pk?: Maybe<Translation_Events>;
   /** fetch data from the table: "translation_statuses" */
   translation_statuses: Array<Translation_Statuses>;
   /** fetch aggregated fields from the table: "translation_statuses" */
@@ -2988,20 +3104,20 @@ export type Subscription_Root = {
 
 
 export type Subscription_RootBranch_LanguagesArgs = {
-  distinct_on?: Maybe<Array<Branch_Languages_Select_Column>>;
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<Branch_Languages_Order_By>>;
-  where?: Maybe<Branch_Languages_Bool_Exp>;
+  distinct_on?: InputMaybe<Array<Branch_Languages_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Branch_Languages_Order_By>>;
+  where?: InputMaybe<Branch_Languages_Bool_Exp>;
 };
 
 
 export type Subscription_RootBranch_Languages_AggregateArgs = {
-  distinct_on?: Maybe<Array<Branch_Languages_Select_Column>>;
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<Branch_Languages_Order_By>>;
-  where?: Maybe<Branch_Languages_Bool_Exp>;
+  distinct_on?: InputMaybe<Array<Branch_Languages_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Branch_Languages_Order_By>>;
+  where?: InputMaybe<Branch_Languages_Bool_Exp>;
 };
 
 
@@ -3011,20 +3127,20 @@ export type Subscription_RootBranch_Languages_By_PkArgs = {
 
 
 export type Subscription_RootBranchesArgs = {
-  distinct_on?: Maybe<Array<Branches_Select_Column>>;
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<Branches_Order_By>>;
-  where?: Maybe<Branches_Bool_Exp>;
+  distinct_on?: InputMaybe<Array<Branches_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Branches_Order_By>>;
+  where?: InputMaybe<Branches_Bool_Exp>;
 };
 
 
 export type Subscription_RootBranches_AggregateArgs = {
-  distinct_on?: Maybe<Array<Branches_Select_Column>>;
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<Branches_Order_By>>;
-  where?: Maybe<Branches_Bool_Exp>;
+  distinct_on?: InputMaybe<Array<Branches_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Branches_Order_By>>;
+  where?: InputMaybe<Branches_Bool_Exp>;
 };
 
 
@@ -3034,20 +3150,20 @@ export type Subscription_RootBranches_By_PkArgs = {
 
 
 export type Subscription_RootCompaniesArgs = {
-  distinct_on?: Maybe<Array<Companies_Select_Column>>;
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<Companies_Order_By>>;
-  where?: Maybe<Companies_Bool_Exp>;
+  distinct_on?: InputMaybe<Array<Companies_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Companies_Order_By>>;
+  where?: InputMaybe<Companies_Bool_Exp>;
 };
 
 
 export type Subscription_RootCompanies_AggregateArgs = {
-  distinct_on?: Maybe<Array<Companies_Select_Column>>;
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<Companies_Order_By>>;
-  where?: Maybe<Companies_Bool_Exp>;
+  distinct_on?: InputMaybe<Array<Companies_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Companies_Order_By>>;
+  where?: InputMaybe<Companies_Bool_Exp>;
 };
 
 
@@ -3057,20 +3173,20 @@ export type Subscription_RootCompanies_By_PkArgs = {
 
 
 export type Subscription_RootCompany_User_LinkArgs = {
-  distinct_on?: Maybe<Array<Company_User_Link_Select_Column>>;
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<Company_User_Link_Order_By>>;
-  where?: Maybe<Company_User_Link_Bool_Exp>;
+  distinct_on?: InputMaybe<Array<Company_User_Link_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Company_User_Link_Order_By>>;
+  where?: InputMaybe<Company_User_Link_Bool_Exp>;
 };
 
 
 export type Subscription_RootCompany_User_Link_AggregateArgs = {
-  distinct_on?: Maybe<Array<Company_User_Link_Select_Column>>;
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<Company_User_Link_Order_By>>;
-  where?: Maybe<Company_User_Link_Bool_Exp>;
+  distinct_on?: InputMaybe<Array<Company_User_Link_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Company_User_Link_Order_By>>;
+  where?: InputMaybe<Company_User_Link_Bool_Exp>;
 };
 
 
@@ -3080,20 +3196,20 @@ export type Subscription_RootCompany_User_Link_By_PkArgs = {
 
 
 export type Subscription_RootLanguagesArgs = {
-  distinct_on?: Maybe<Array<Languages_Select_Column>>;
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<Languages_Order_By>>;
-  where?: Maybe<Languages_Bool_Exp>;
+  distinct_on?: InputMaybe<Array<Languages_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Languages_Order_By>>;
+  where?: InputMaybe<Languages_Bool_Exp>;
 };
 
 
 export type Subscription_RootLanguages_AggregateArgs = {
-  distinct_on?: Maybe<Array<Languages_Select_Column>>;
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<Languages_Order_By>>;
-  where?: Maybe<Languages_Bool_Exp>;
+  distinct_on?: InputMaybe<Array<Languages_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Languages_Order_By>>;
+  where?: InputMaybe<Languages_Bool_Exp>;
 };
 
 
@@ -3103,20 +3219,20 @@ export type Subscription_RootLanguages_By_PkArgs = {
 
 
 export type Subscription_RootProjectsArgs = {
-  distinct_on?: Maybe<Array<Projects_Select_Column>>;
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<Projects_Order_By>>;
-  where?: Maybe<Projects_Bool_Exp>;
+  distinct_on?: InputMaybe<Array<Projects_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Projects_Order_By>>;
+  where?: InputMaybe<Projects_Bool_Exp>;
 };
 
 
 export type Subscription_RootProjects_AggregateArgs = {
-  distinct_on?: Maybe<Array<Projects_Select_Column>>;
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<Projects_Order_By>>;
-  where?: Maybe<Projects_Bool_Exp>;
+  distinct_on?: InputMaybe<Array<Projects_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Projects_Order_By>>;
+  where?: InputMaybe<Projects_Bool_Exp>;
 };
 
 
@@ -3126,20 +3242,20 @@ export type Subscription_RootProjects_By_PkArgs = {
 
 
 export type Subscription_RootTermsArgs = {
-  distinct_on?: Maybe<Array<Terms_Select_Column>>;
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<Terms_Order_By>>;
-  where?: Maybe<Terms_Bool_Exp>;
+  distinct_on?: InputMaybe<Array<Terms_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Terms_Order_By>>;
+  where?: InputMaybe<Terms_Bool_Exp>;
 };
 
 
 export type Subscription_RootTerms_AggregateArgs = {
-  distinct_on?: Maybe<Array<Terms_Select_Column>>;
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<Terms_Order_By>>;
-  where?: Maybe<Terms_Bool_Exp>;
+  distinct_on?: InputMaybe<Array<Terms_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Terms_Order_By>>;
+  where?: InputMaybe<Terms_Bool_Exp>;
 };
 
 
@@ -3148,21 +3264,44 @@ export type Subscription_RootTerms_By_PkArgs = {
 };
 
 
+export type Subscription_RootTranslation_EventsArgs = {
+  distinct_on?: InputMaybe<Array<Translation_Events_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Translation_Events_Order_By>>;
+  where?: InputMaybe<Translation_Events_Bool_Exp>;
+};
+
+
+export type Subscription_RootTranslation_Events_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Translation_Events_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Translation_Events_Order_By>>;
+  where?: InputMaybe<Translation_Events_Bool_Exp>;
+};
+
+
+export type Subscription_RootTranslation_Events_By_PkArgs = {
+  id: Scalars['Int'];
+};
+
+
 export type Subscription_RootTranslation_StatusesArgs = {
-  distinct_on?: Maybe<Array<Translation_Statuses_Select_Column>>;
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<Translation_Statuses_Order_By>>;
-  where?: Maybe<Translation_Statuses_Bool_Exp>;
+  distinct_on?: InputMaybe<Array<Translation_Statuses_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Translation_Statuses_Order_By>>;
+  where?: InputMaybe<Translation_Statuses_Bool_Exp>;
 };
 
 
 export type Subscription_RootTranslation_Statuses_AggregateArgs = {
-  distinct_on?: Maybe<Array<Translation_Statuses_Select_Column>>;
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<Translation_Statuses_Order_By>>;
-  where?: Maybe<Translation_Statuses_Bool_Exp>;
+  distinct_on?: InputMaybe<Array<Translation_Statuses_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Translation_Statuses_Order_By>>;
+  where?: InputMaybe<Translation_Statuses_Bool_Exp>;
 };
 
 
@@ -3172,20 +3311,20 @@ export type Subscription_RootTranslation_Statuses_By_PkArgs = {
 
 
 export type Subscription_RootTranslationsArgs = {
-  distinct_on?: Maybe<Array<Translations_Select_Column>>;
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<Translations_Order_By>>;
-  where?: Maybe<Translations_Bool_Exp>;
+  distinct_on?: InputMaybe<Array<Translations_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Translations_Order_By>>;
+  where?: InputMaybe<Translations_Bool_Exp>;
 };
 
 
 export type Subscription_RootTranslations_AggregateArgs = {
-  distinct_on?: Maybe<Array<Translations_Select_Column>>;
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<Translations_Order_By>>;
-  where?: Maybe<Translations_Bool_Exp>;
+  distinct_on?: InputMaybe<Array<Translations_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Translations_Order_By>>;
+  where?: InputMaybe<Translations_Bool_Exp>;
 };
 
 
@@ -3195,20 +3334,20 @@ export type Subscription_RootTranslations_By_PkArgs = {
 
 
 export type Subscription_RootUser_Project_LinkArgs = {
-  distinct_on?: Maybe<Array<User_Project_Link_Select_Column>>;
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<User_Project_Link_Order_By>>;
-  where?: Maybe<User_Project_Link_Bool_Exp>;
+  distinct_on?: InputMaybe<Array<User_Project_Link_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<User_Project_Link_Order_By>>;
+  where?: InputMaybe<User_Project_Link_Bool_Exp>;
 };
 
 
 export type Subscription_RootUser_Project_Link_AggregateArgs = {
-  distinct_on?: Maybe<Array<User_Project_Link_Select_Column>>;
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<User_Project_Link_Order_By>>;
-  where?: Maybe<User_Project_Link_Bool_Exp>;
+  distinct_on?: InputMaybe<Array<User_Project_Link_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<User_Project_Link_Order_By>>;
+  where?: InputMaybe<User_Project_Link_Bool_Exp>;
 };
 
 
@@ -3218,20 +3357,20 @@ export type Subscription_RootUser_Project_Link_By_PkArgs = {
 
 
 export type Subscription_RootUsersArgs = {
-  distinct_on?: Maybe<Array<Users_Select_Column>>;
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<Users_Order_By>>;
-  where?: Maybe<Users_Bool_Exp>;
+  distinct_on?: InputMaybe<Array<Users_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Users_Order_By>>;
+  where?: InputMaybe<Users_Bool_Exp>;
 };
 
 
 export type Subscription_RootUsers_AggregateArgs = {
-  distinct_on?: Maybe<Array<Users_Select_Column>>;
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<Users_Order_By>>;
-  where?: Maybe<Users_Bool_Exp>;
+  distinct_on?: InputMaybe<Array<Users_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Users_Order_By>>;
+  where?: InputMaybe<Users_Bool_Exp>;
 };
 
 
@@ -3258,21 +3397,21 @@ export type Terms = {
 
 /** columns and relationships of "terms" */
 export type TermsTranslationsArgs = {
-  distinct_on?: Maybe<Array<Translations_Select_Column>>;
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<Translations_Order_By>>;
-  where?: Maybe<Translations_Bool_Exp>;
+  distinct_on?: InputMaybe<Array<Translations_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Translations_Order_By>>;
+  where?: InputMaybe<Translations_Bool_Exp>;
 };
 
 
 /** columns and relationships of "terms" */
 export type TermsTranslations_AggregateArgs = {
-  distinct_on?: Maybe<Array<Translations_Select_Column>>;
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<Translations_Order_By>>;
-  where?: Maybe<Translations_Bool_Exp>;
+  distinct_on?: InputMaybe<Array<Translations_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Translations_Order_By>>;
+  where?: InputMaybe<Translations_Bool_Exp>;
 };
 
 /** aggregated selection of "terms" */
@@ -3301,30 +3440,30 @@ export type Terms_Aggregate_Fields = {
 
 /** aggregate fields of "terms" */
 export type Terms_Aggregate_FieldsCountArgs = {
-  columns?: Maybe<Array<Terms_Select_Column>>;
-  distinct?: Maybe<Scalars['Boolean']>;
+  columns?: InputMaybe<Array<Terms_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']>;
 };
 
 /** order by aggregate values of table "terms" */
 export type Terms_Aggregate_Order_By = {
-  avg?: Maybe<Terms_Avg_Order_By>;
-  count?: Maybe<Order_By>;
-  max?: Maybe<Terms_Max_Order_By>;
-  min?: Maybe<Terms_Min_Order_By>;
-  stddev?: Maybe<Terms_Stddev_Order_By>;
-  stddev_pop?: Maybe<Terms_Stddev_Pop_Order_By>;
-  stddev_samp?: Maybe<Terms_Stddev_Samp_Order_By>;
-  sum?: Maybe<Terms_Sum_Order_By>;
-  var_pop?: Maybe<Terms_Var_Pop_Order_By>;
-  var_samp?: Maybe<Terms_Var_Samp_Order_By>;
-  variance?: Maybe<Terms_Variance_Order_By>;
+  avg?: InputMaybe<Terms_Avg_Order_By>;
+  count?: InputMaybe<Order_By>;
+  max?: InputMaybe<Terms_Max_Order_By>;
+  min?: InputMaybe<Terms_Min_Order_By>;
+  stddev?: InputMaybe<Terms_Stddev_Order_By>;
+  stddev_pop?: InputMaybe<Terms_Stddev_Pop_Order_By>;
+  stddev_samp?: InputMaybe<Terms_Stddev_Samp_Order_By>;
+  sum?: InputMaybe<Terms_Sum_Order_By>;
+  var_pop?: InputMaybe<Terms_Var_Pop_Order_By>;
+  var_samp?: InputMaybe<Terms_Var_Samp_Order_By>;
+  variance?: InputMaybe<Terms_Variance_Order_By>;
 };
 
 /** input type for inserting array relation for remote table "terms" */
 export type Terms_Arr_Rel_Insert_Input = {
   data: Array<Terms_Insert_Input>;
   /** on conflict condition */
-  on_conflict?: Maybe<Terms_On_Conflict>;
+  on_conflict?: InputMaybe<Terms_On_Conflict>;
 };
 
 /** aggregate avg on columns */
@@ -3336,22 +3475,22 @@ export type Terms_Avg_Fields = {
 
 /** order by avg() on columns of table "terms" */
 export type Terms_Avg_Order_By = {
-  branch_id?: Maybe<Order_By>;
-  id?: Maybe<Order_By>;
+  branch_id?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
 };
 
 /** Boolean expression to filter rows from the table "terms". All fields are combined with a logical 'AND'. */
 export type Terms_Bool_Exp = {
-  _and?: Maybe<Array<Terms_Bool_Exp>>;
-  _not?: Maybe<Terms_Bool_Exp>;
-  _or?: Maybe<Array<Terms_Bool_Exp>>;
-  branch?: Maybe<Branches_Bool_Exp>;
-  branch_id?: Maybe<Int_Comparison_Exp>;
-  description?: Maybe<String_Comparison_Exp>;
-  id?: Maybe<Int_Comparison_Exp>;
-  key?: Maybe<String_Comparison_Exp>;
-  translations?: Maybe<Translations_Bool_Exp>;
-  uuid?: Maybe<Uuid_Comparison_Exp>;
+  _and?: InputMaybe<Array<Terms_Bool_Exp>>;
+  _not?: InputMaybe<Terms_Bool_Exp>;
+  _or?: InputMaybe<Array<Terms_Bool_Exp>>;
+  branch?: InputMaybe<Branches_Bool_Exp>;
+  branch_id?: InputMaybe<Int_Comparison_Exp>;
+  description?: InputMaybe<String_Comparison_Exp>;
+  id?: InputMaybe<Int_Comparison_Exp>;
+  key?: InputMaybe<String_Comparison_Exp>;
+  translations?: InputMaybe<Translations_Bool_Exp>;
+  uuid?: InputMaybe<Uuid_Comparison_Exp>;
 };
 
 /** unique or primary key constraints on table "terms" */
@@ -3364,19 +3503,19 @@ export enum Terms_Constraint {
 
 /** input type for incrementing numeric columns in table "terms" */
 export type Terms_Inc_Input = {
-  branch_id?: Maybe<Scalars['Int']>;
-  id?: Maybe<Scalars['Int']>;
+  branch_id?: InputMaybe<Scalars['Int']>;
+  id?: InputMaybe<Scalars['Int']>;
 };
 
 /** input type for inserting data into table "terms" */
 export type Terms_Insert_Input = {
-  branch?: Maybe<Branches_Obj_Rel_Insert_Input>;
-  branch_id?: Maybe<Scalars['Int']>;
-  description?: Maybe<Scalars['String']>;
-  id?: Maybe<Scalars['Int']>;
-  key?: Maybe<Scalars['String']>;
-  translations?: Maybe<Translations_Arr_Rel_Insert_Input>;
-  uuid?: Maybe<Scalars['uuid']>;
+  branch?: InputMaybe<Branches_Obj_Rel_Insert_Input>;
+  branch_id?: InputMaybe<Scalars['Int']>;
+  description?: InputMaybe<Scalars['String']>;
+  id?: InputMaybe<Scalars['Int']>;
+  key?: InputMaybe<Scalars['String']>;
+  translations?: InputMaybe<Translations_Arr_Rel_Insert_Input>;
+  uuid?: InputMaybe<Scalars['uuid']>;
 };
 
 /** aggregate max on columns */
@@ -3391,11 +3530,11 @@ export type Terms_Max_Fields = {
 
 /** order by max() on columns of table "terms" */
 export type Terms_Max_Order_By = {
-  branch_id?: Maybe<Order_By>;
-  description?: Maybe<Order_By>;
-  id?: Maybe<Order_By>;
-  key?: Maybe<Order_By>;
-  uuid?: Maybe<Order_By>;
+  branch_id?: InputMaybe<Order_By>;
+  description?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  key?: InputMaybe<Order_By>;
+  uuid?: InputMaybe<Order_By>;
 };
 
 /** aggregate min on columns */
@@ -3410,11 +3549,11 @@ export type Terms_Min_Fields = {
 
 /** order by min() on columns of table "terms" */
 export type Terms_Min_Order_By = {
-  branch_id?: Maybe<Order_By>;
-  description?: Maybe<Order_By>;
-  id?: Maybe<Order_By>;
-  key?: Maybe<Order_By>;
-  uuid?: Maybe<Order_By>;
+  branch_id?: InputMaybe<Order_By>;
+  description?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  key?: InputMaybe<Order_By>;
+  uuid?: InputMaybe<Order_By>;
 };
 
 /** response of any mutation on the table "terms" */
@@ -3430,25 +3569,25 @@ export type Terms_Mutation_Response = {
 export type Terms_Obj_Rel_Insert_Input = {
   data: Terms_Insert_Input;
   /** on conflict condition */
-  on_conflict?: Maybe<Terms_On_Conflict>;
+  on_conflict?: InputMaybe<Terms_On_Conflict>;
 };
 
 /** on conflict condition type for table "terms" */
 export type Terms_On_Conflict = {
   constraint: Terms_Constraint;
   update_columns?: Array<Terms_Update_Column>;
-  where?: Maybe<Terms_Bool_Exp>;
+  where?: InputMaybe<Terms_Bool_Exp>;
 };
 
 /** Ordering options when selecting data from "terms". */
 export type Terms_Order_By = {
-  branch?: Maybe<Branches_Order_By>;
-  branch_id?: Maybe<Order_By>;
-  description?: Maybe<Order_By>;
-  id?: Maybe<Order_By>;
-  key?: Maybe<Order_By>;
-  translations_aggregate?: Maybe<Translations_Aggregate_Order_By>;
-  uuid?: Maybe<Order_By>;
+  branch?: InputMaybe<Branches_Order_By>;
+  branch_id?: InputMaybe<Order_By>;
+  description?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  key?: InputMaybe<Order_By>;
+  translations_aggregate?: InputMaybe<Translations_Aggregate_Order_By>;
+  uuid?: InputMaybe<Order_By>;
 };
 
 /** primary key columns input for table: terms */
@@ -3472,11 +3611,11 @@ export enum Terms_Select_Column {
 
 /** input type for updating data in table "terms" */
 export type Terms_Set_Input = {
-  branch_id?: Maybe<Scalars['Int']>;
-  description?: Maybe<Scalars['String']>;
-  id?: Maybe<Scalars['Int']>;
-  key?: Maybe<Scalars['String']>;
-  uuid?: Maybe<Scalars['uuid']>;
+  branch_id?: InputMaybe<Scalars['Int']>;
+  description?: InputMaybe<Scalars['String']>;
+  id?: InputMaybe<Scalars['Int']>;
+  key?: InputMaybe<Scalars['String']>;
+  uuid?: InputMaybe<Scalars['uuid']>;
 };
 
 /** aggregate stddev on columns */
@@ -3488,8 +3627,8 @@ export type Terms_Stddev_Fields = {
 
 /** order by stddev() on columns of table "terms" */
 export type Terms_Stddev_Order_By = {
-  branch_id?: Maybe<Order_By>;
-  id?: Maybe<Order_By>;
+  branch_id?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
 };
 
 /** aggregate stddev_pop on columns */
@@ -3501,8 +3640,8 @@ export type Terms_Stddev_Pop_Fields = {
 
 /** order by stddev_pop() on columns of table "terms" */
 export type Terms_Stddev_Pop_Order_By = {
-  branch_id?: Maybe<Order_By>;
-  id?: Maybe<Order_By>;
+  branch_id?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
 };
 
 /** aggregate stddev_samp on columns */
@@ -3514,8 +3653,8 @@ export type Terms_Stddev_Samp_Fields = {
 
 /** order by stddev_samp() on columns of table "terms" */
 export type Terms_Stddev_Samp_Order_By = {
-  branch_id?: Maybe<Order_By>;
-  id?: Maybe<Order_By>;
+  branch_id?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
 };
 
 /** aggregate sum on columns */
@@ -3527,8 +3666,8 @@ export type Terms_Sum_Fields = {
 
 /** order by sum() on columns of table "terms" */
 export type Terms_Sum_Order_By = {
-  branch_id?: Maybe<Order_By>;
-  id?: Maybe<Order_By>;
+  branch_id?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
 };
 
 /** update columns of table "terms" */
@@ -3554,8 +3693,8 @@ export type Terms_Var_Pop_Fields = {
 
 /** order by var_pop() on columns of table "terms" */
 export type Terms_Var_Pop_Order_By = {
-  branch_id?: Maybe<Order_By>;
-  id?: Maybe<Order_By>;
+  branch_id?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
 };
 
 /** aggregate var_samp on columns */
@@ -3567,8 +3706,8 @@ export type Terms_Var_Samp_Fields = {
 
 /** order by var_samp() on columns of table "terms" */
 export type Terms_Var_Samp_Order_By = {
-  branch_id?: Maybe<Order_By>;
-  id?: Maybe<Order_By>;
+  branch_id?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
 };
 
 /** aggregate variance on columns */
@@ -3580,8 +3719,315 @@ export type Terms_Variance_Fields = {
 
 /** order by variance() on columns of table "terms" */
 export type Terms_Variance_Order_By = {
-  branch_id?: Maybe<Order_By>;
-  id?: Maybe<Order_By>;
+  branch_id?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+};
+
+/** Boolean expression to compare columns of type "timestamptz". All fields are combined with logical 'AND'. */
+export type Timestamptz_Comparison_Exp = {
+  _eq?: InputMaybe<Scalars['timestamptz']>;
+  _gt?: InputMaybe<Scalars['timestamptz']>;
+  _gte?: InputMaybe<Scalars['timestamptz']>;
+  _in?: InputMaybe<Array<Scalars['timestamptz']>>;
+  _is_null?: InputMaybe<Scalars['Boolean']>;
+  _lt?: InputMaybe<Scalars['timestamptz']>;
+  _lte?: InputMaybe<Scalars['timestamptz']>;
+  _neq?: InputMaybe<Scalars['timestamptz']>;
+  _nin?: InputMaybe<Array<Scalars['timestamptz']>>;
+};
+
+/** columns and relationships of "translation_events" */
+export type Translation_Events = {
+  __typename?: 'translation_events';
+  branch_id?: Maybe<Scalars['Int']>;
+  date: Scalars['timestamptz'];
+  id: Scalars['Int'];
+  language_id?: Maybe<Scalars['Int']>;
+  /** possible values: add_branch, merge_branch, delete_branch, add_term, delete_term, update_term, add_translation, update_translation, delete_translation */
+  operation: Scalars['String'];
+  project_id: Scalars['Int'];
+  term_id?: Maybe<Scalars['Int']>;
+  uuid: Scalars['uuid'];
+  value?: Maybe<Scalars['String']>;
+};
+
+/** aggregated selection of "translation_events" */
+export type Translation_Events_Aggregate = {
+  __typename?: 'translation_events_aggregate';
+  aggregate?: Maybe<Translation_Events_Aggregate_Fields>;
+  nodes: Array<Translation_Events>;
+};
+
+/** aggregate fields of "translation_events" */
+export type Translation_Events_Aggregate_Fields = {
+  __typename?: 'translation_events_aggregate_fields';
+  avg?: Maybe<Translation_Events_Avg_Fields>;
+  count: Scalars['Int'];
+  max?: Maybe<Translation_Events_Max_Fields>;
+  min?: Maybe<Translation_Events_Min_Fields>;
+  stddev?: Maybe<Translation_Events_Stddev_Fields>;
+  stddev_pop?: Maybe<Translation_Events_Stddev_Pop_Fields>;
+  stddev_samp?: Maybe<Translation_Events_Stddev_Samp_Fields>;
+  sum?: Maybe<Translation_Events_Sum_Fields>;
+  var_pop?: Maybe<Translation_Events_Var_Pop_Fields>;
+  var_samp?: Maybe<Translation_Events_Var_Samp_Fields>;
+  variance?: Maybe<Translation_Events_Variance_Fields>;
+};
+
+
+/** aggregate fields of "translation_events" */
+export type Translation_Events_Aggregate_FieldsCountArgs = {
+  columns?: InputMaybe<Array<Translation_Events_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']>;
+};
+
+/** aggregate avg on columns */
+export type Translation_Events_Avg_Fields = {
+  __typename?: 'translation_events_avg_fields';
+  branch_id?: Maybe<Scalars['Float']>;
+  id?: Maybe<Scalars['Float']>;
+  language_id?: Maybe<Scalars['Float']>;
+  project_id?: Maybe<Scalars['Float']>;
+  term_id?: Maybe<Scalars['Float']>;
+};
+
+/** Boolean expression to filter rows from the table "translation_events". All fields are combined with a logical 'AND'. */
+export type Translation_Events_Bool_Exp = {
+  _and?: InputMaybe<Array<Translation_Events_Bool_Exp>>;
+  _not?: InputMaybe<Translation_Events_Bool_Exp>;
+  _or?: InputMaybe<Array<Translation_Events_Bool_Exp>>;
+  branch_id?: InputMaybe<Int_Comparison_Exp>;
+  date?: InputMaybe<Timestamptz_Comparison_Exp>;
+  id?: InputMaybe<Int_Comparison_Exp>;
+  language_id?: InputMaybe<Int_Comparison_Exp>;
+  operation?: InputMaybe<String_Comparison_Exp>;
+  project_id?: InputMaybe<Int_Comparison_Exp>;
+  term_id?: InputMaybe<Int_Comparison_Exp>;
+  uuid?: InputMaybe<Uuid_Comparison_Exp>;
+  value?: InputMaybe<String_Comparison_Exp>;
+};
+
+/** unique or primary key constraints on table "translation_events" */
+export enum Translation_Events_Constraint {
+  /** unique or primary key constraint */
+  TranslationEventsPkey = 'translation_events_pkey',
+  /** unique or primary key constraint */
+  TranslationEventsUuidKey = 'translation_events_uuid_key'
+}
+
+/** input type for incrementing numeric columns in table "translation_events" */
+export type Translation_Events_Inc_Input = {
+  branch_id?: InputMaybe<Scalars['Int']>;
+  id?: InputMaybe<Scalars['Int']>;
+  language_id?: InputMaybe<Scalars['Int']>;
+  project_id?: InputMaybe<Scalars['Int']>;
+  term_id?: InputMaybe<Scalars['Int']>;
+};
+
+/** input type for inserting data into table "translation_events" */
+export type Translation_Events_Insert_Input = {
+  branch_id?: InputMaybe<Scalars['Int']>;
+  date?: InputMaybe<Scalars['timestamptz']>;
+  id?: InputMaybe<Scalars['Int']>;
+  language_id?: InputMaybe<Scalars['Int']>;
+  /** possible values: add_branch, merge_branch, delete_branch, add_term, delete_term, update_term, add_translation, update_translation, delete_translation */
+  operation?: InputMaybe<Scalars['String']>;
+  project_id?: InputMaybe<Scalars['Int']>;
+  term_id?: InputMaybe<Scalars['Int']>;
+  uuid?: InputMaybe<Scalars['uuid']>;
+  value?: InputMaybe<Scalars['String']>;
+};
+
+/** aggregate max on columns */
+export type Translation_Events_Max_Fields = {
+  __typename?: 'translation_events_max_fields';
+  branch_id?: Maybe<Scalars['Int']>;
+  date?: Maybe<Scalars['timestamptz']>;
+  id?: Maybe<Scalars['Int']>;
+  language_id?: Maybe<Scalars['Int']>;
+  /** possible values: add_branch, merge_branch, delete_branch, add_term, delete_term, update_term, add_translation, update_translation, delete_translation */
+  operation?: Maybe<Scalars['String']>;
+  project_id?: Maybe<Scalars['Int']>;
+  term_id?: Maybe<Scalars['Int']>;
+  uuid?: Maybe<Scalars['uuid']>;
+  value?: Maybe<Scalars['String']>;
+};
+
+/** aggregate min on columns */
+export type Translation_Events_Min_Fields = {
+  __typename?: 'translation_events_min_fields';
+  branch_id?: Maybe<Scalars['Int']>;
+  date?: Maybe<Scalars['timestamptz']>;
+  id?: Maybe<Scalars['Int']>;
+  language_id?: Maybe<Scalars['Int']>;
+  /** possible values: add_branch, merge_branch, delete_branch, add_term, delete_term, update_term, add_translation, update_translation, delete_translation */
+  operation?: Maybe<Scalars['String']>;
+  project_id?: Maybe<Scalars['Int']>;
+  term_id?: Maybe<Scalars['Int']>;
+  uuid?: Maybe<Scalars['uuid']>;
+  value?: Maybe<Scalars['String']>;
+};
+
+/** response of any mutation on the table "translation_events" */
+export type Translation_Events_Mutation_Response = {
+  __typename?: 'translation_events_mutation_response';
+  /** number of rows affected by the mutation */
+  affected_rows: Scalars['Int'];
+  /** data from the rows affected by the mutation */
+  returning: Array<Translation_Events>;
+};
+
+/** on conflict condition type for table "translation_events" */
+export type Translation_Events_On_Conflict = {
+  constraint: Translation_Events_Constraint;
+  update_columns?: Array<Translation_Events_Update_Column>;
+  where?: InputMaybe<Translation_Events_Bool_Exp>;
+};
+
+/** Ordering options when selecting data from "translation_events". */
+export type Translation_Events_Order_By = {
+  branch_id?: InputMaybe<Order_By>;
+  date?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  language_id?: InputMaybe<Order_By>;
+  operation?: InputMaybe<Order_By>;
+  project_id?: InputMaybe<Order_By>;
+  term_id?: InputMaybe<Order_By>;
+  uuid?: InputMaybe<Order_By>;
+  value?: InputMaybe<Order_By>;
+};
+
+/** primary key columns input for table: translation_events */
+export type Translation_Events_Pk_Columns_Input = {
+  id: Scalars['Int'];
+};
+
+/** select columns of table "translation_events" */
+export enum Translation_Events_Select_Column {
+  /** column name */
+  BranchId = 'branch_id',
+  /** column name */
+  Date = 'date',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  LanguageId = 'language_id',
+  /** column name */
+  Operation = 'operation',
+  /** column name */
+  ProjectId = 'project_id',
+  /** column name */
+  TermId = 'term_id',
+  /** column name */
+  Uuid = 'uuid',
+  /** column name */
+  Value = 'value'
+}
+
+/** input type for updating data in table "translation_events" */
+export type Translation_Events_Set_Input = {
+  branch_id?: InputMaybe<Scalars['Int']>;
+  date?: InputMaybe<Scalars['timestamptz']>;
+  id?: InputMaybe<Scalars['Int']>;
+  language_id?: InputMaybe<Scalars['Int']>;
+  /** possible values: add_branch, merge_branch, delete_branch, add_term, delete_term, update_term, add_translation, update_translation, delete_translation */
+  operation?: InputMaybe<Scalars['String']>;
+  project_id?: InputMaybe<Scalars['Int']>;
+  term_id?: InputMaybe<Scalars['Int']>;
+  uuid?: InputMaybe<Scalars['uuid']>;
+  value?: InputMaybe<Scalars['String']>;
+};
+
+/** aggregate stddev on columns */
+export type Translation_Events_Stddev_Fields = {
+  __typename?: 'translation_events_stddev_fields';
+  branch_id?: Maybe<Scalars['Float']>;
+  id?: Maybe<Scalars['Float']>;
+  language_id?: Maybe<Scalars['Float']>;
+  project_id?: Maybe<Scalars['Float']>;
+  term_id?: Maybe<Scalars['Float']>;
+};
+
+/** aggregate stddev_pop on columns */
+export type Translation_Events_Stddev_Pop_Fields = {
+  __typename?: 'translation_events_stddev_pop_fields';
+  branch_id?: Maybe<Scalars['Float']>;
+  id?: Maybe<Scalars['Float']>;
+  language_id?: Maybe<Scalars['Float']>;
+  project_id?: Maybe<Scalars['Float']>;
+  term_id?: Maybe<Scalars['Float']>;
+};
+
+/** aggregate stddev_samp on columns */
+export type Translation_Events_Stddev_Samp_Fields = {
+  __typename?: 'translation_events_stddev_samp_fields';
+  branch_id?: Maybe<Scalars['Float']>;
+  id?: Maybe<Scalars['Float']>;
+  language_id?: Maybe<Scalars['Float']>;
+  project_id?: Maybe<Scalars['Float']>;
+  term_id?: Maybe<Scalars['Float']>;
+};
+
+/** aggregate sum on columns */
+export type Translation_Events_Sum_Fields = {
+  __typename?: 'translation_events_sum_fields';
+  branch_id?: Maybe<Scalars['Int']>;
+  id?: Maybe<Scalars['Int']>;
+  language_id?: Maybe<Scalars['Int']>;
+  project_id?: Maybe<Scalars['Int']>;
+  term_id?: Maybe<Scalars['Int']>;
+};
+
+/** update columns of table "translation_events" */
+export enum Translation_Events_Update_Column {
+  /** column name */
+  BranchId = 'branch_id',
+  /** column name */
+  Date = 'date',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  LanguageId = 'language_id',
+  /** column name */
+  Operation = 'operation',
+  /** column name */
+  ProjectId = 'project_id',
+  /** column name */
+  TermId = 'term_id',
+  /** column name */
+  Uuid = 'uuid',
+  /** column name */
+  Value = 'value'
+}
+
+/** aggregate var_pop on columns */
+export type Translation_Events_Var_Pop_Fields = {
+  __typename?: 'translation_events_var_pop_fields';
+  branch_id?: Maybe<Scalars['Float']>;
+  id?: Maybe<Scalars['Float']>;
+  language_id?: Maybe<Scalars['Float']>;
+  project_id?: Maybe<Scalars['Float']>;
+  term_id?: Maybe<Scalars['Float']>;
+};
+
+/** aggregate var_samp on columns */
+export type Translation_Events_Var_Samp_Fields = {
+  __typename?: 'translation_events_var_samp_fields';
+  branch_id?: Maybe<Scalars['Float']>;
+  id?: Maybe<Scalars['Float']>;
+  language_id?: Maybe<Scalars['Float']>;
+  project_id?: Maybe<Scalars['Float']>;
+  term_id?: Maybe<Scalars['Float']>;
+};
+
+/** aggregate variance on columns */
+export type Translation_Events_Variance_Fields = {
+  __typename?: 'translation_events_variance_fields';
+  branch_id?: Maybe<Scalars['Float']>;
+  id?: Maybe<Scalars['Float']>;
+  language_id?: Maybe<Scalars['Float']>;
+  project_id?: Maybe<Scalars['Float']>;
+  term_id?: Maybe<Scalars['Float']>;
 };
 
 /** columns and relationships of "translation_statuses" */
@@ -3602,21 +4048,21 @@ export type Translation_Statuses = {
 
 /** columns and relationships of "translation_statuses" */
 export type Translation_StatusesTranslationsArgs = {
-  distinct_on?: Maybe<Array<Translations_Select_Column>>;
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<Translations_Order_By>>;
-  where?: Maybe<Translations_Bool_Exp>;
+  distinct_on?: InputMaybe<Array<Translations_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Translations_Order_By>>;
+  where?: InputMaybe<Translations_Bool_Exp>;
 };
 
 
 /** columns and relationships of "translation_statuses" */
 export type Translation_StatusesTranslations_AggregateArgs = {
-  distinct_on?: Maybe<Array<Translations_Select_Column>>;
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<Translations_Order_By>>;
-  where?: Maybe<Translations_Bool_Exp>;
+  distinct_on?: InputMaybe<Array<Translations_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Translations_Order_By>>;
+  where?: InputMaybe<Translations_Bool_Exp>;
 };
 
 /** aggregated selection of "translation_statuses" */
@@ -3645,30 +4091,30 @@ export type Translation_Statuses_Aggregate_Fields = {
 
 /** aggregate fields of "translation_statuses" */
 export type Translation_Statuses_Aggregate_FieldsCountArgs = {
-  columns?: Maybe<Array<Translation_Statuses_Select_Column>>;
-  distinct?: Maybe<Scalars['Boolean']>;
+  columns?: InputMaybe<Array<Translation_Statuses_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']>;
 };
 
 /** order by aggregate values of table "translation_statuses" */
 export type Translation_Statuses_Aggregate_Order_By = {
-  avg?: Maybe<Translation_Statuses_Avg_Order_By>;
-  count?: Maybe<Order_By>;
-  max?: Maybe<Translation_Statuses_Max_Order_By>;
-  min?: Maybe<Translation_Statuses_Min_Order_By>;
-  stddev?: Maybe<Translation_Statuses_Stddev_Order_By>;
-  stddev_pop?: Maybe<Translation_Statuses_Stddev_Pop_Order_By>;
-  stddev_samp?: Maybe<Translation_Statuses_Stddev_Samp_Order_By>;
-  sum?: Maybe<Translation_Statuses_Sum_Order_By>;
-  var_pop?: Maybe<Translation_Statuses_Var_Pop_Order_By>;
-  var_samp?: Maybe<Translation_Statuses_Var_Samp_Order_By>;
-  variance?: Maybe<Translation_Statuses_Variance_Order_By>;
+  avg?: InputMaybe<Translation_Statuses_Avg_Order_By>;
+  count?: InputMaybe<Order_By>;
+  max?: InputMaybe<Translation_Statuses_Max_Order_By>;
+  min?: InputMaybe<Translation_Statuses_Min_Order_By>;
+  stddev?: InputMaybe<Translation_Statuses_Stddev_Order_By>;
+  stddev_pop?: InputMaybe<Translation_Statuses_Stddev_Pop_Order_By>;
+  stddev_samp?: InputMaybe<Translation_Statuses_Stddev_Samp_Order_By>;
+  sum?: InputMaybe<Translation_Statuses_Sum_Order_By>;
+  var_pop?: InputMaybe<Translation_Statuses_Var_Pop_Order_By>;
+  var_samp?: InputMaybe<Translation_Statuses_Var_Samp_Order_By>;
+  variance?: InputMaybe<Translation_Statuses_Variance_Order_By>;
 };
 
 /** input type for inserting array relation for remote table "translation_statuses" */
 export type Translation_Statuses_Arr_Rel_Insert_Input = {
   data: Array<Translation_Statuses_Insert_Input>;
   /** on conflict condition */
-  on_conflict?: Maybe<Translation_Statuses_On_Conflict>;
+  on_conflict?: InputMaybe<Translation_Statuses_On_Conflict>;
 };
 
 /** aggregate avg on columns */
@@ -3680,21 +4126,21 @@ export type Translation_Statuses_Avg_Fields = {
 
 /** order by avg() on columns of table "translation_statuses" */
 export type Translation_Statuses_Avg_Order_By = {
-  id?: Maybe<Order_By>;
-  project_id?: Maybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  project_id?: InputMaybe<Order_By>;
 };
 
 /** Boolean expression to filter rows from the table "translation_statuses". All fields are combined with a logical 'AND'. */
 export type Translation_Statuses_Bool_Exp = {
-  _and?: Maybe<Array<Translation_Statuses_Bool_Exp>>;
-  _not?: Maybe<Translation_Statuses_Bool_Exp>;
-  _or?: Maybe<Array<Translation_Statuses_Bool_Exp>>;
-  id?: Maybe<Int_Comparison_Exp>;
-  name?: Maybe<String_Comparison_Exp>;
-  project?: Maybe<Projects_Bool_Exp>;
-  project_id?: Maybe<Int_Comparison_Exp>;
-  translations?: Maybe<Translations_Bool_Exp>;
-  uuid?: Maybe<Uuid_Comparison_Exp>;
+  _and?: InputMaybe<Array<Translation_Statuses_Bool_Exp>>;
+  _not?: InputMaybe<Translation_Statuses_Bool_Exp>;
+  _or?: InputMaybe<Array<Translation_Statuses_Bool_Exp>>;
+  id?: InputMaybe<Int_Comparison_Exp>;
+  name?: InputMaybe<String_Comparison_Exp>;
+  project?: InputMaybe<Projects_Bool_Exp>;
+  project_id?: InputMaybe<Int_Comparison_Exp>;
+  translations?: InputMaybe<Translations_Bool_Exp>;
+  uuid?: InputMaybe<Uuid_Comparison_Exp>;
 };
 
 /** unique or primary key constraints on table "translation_statuses" */
@@ -3707,18 +4153,18 @@ export enum Translation_Statuses_Constraint {
 
 /** input type for incrementing numeric columns in table "translation_statuses" */
 export type Translation_Statuses_Inc_Input = {
-  id?: Maybe<Scalars['Int']>;
-  project_id?: Maybe<Scalars['Int']>;
+  id?: InputMaybe<Scalars['Int']>;
+  project_id?: InputMaybe<Scalars['Int']>;
 };
 
 /** input type for inserting data into table "translation_statuses" */
 export type Translation_Statuses_Insert_Input = {
-  id?: Maybe<Scalars['Int']>;
-  name?: Maybe<Scalars['String']>;
-  project?: Maybe<Projects_Obj_Rel_Insert_Input>;
-  project_id?: Maybe<Scalars['Int']>;
-  translations?: Maybe<Translations_Arr_Rel_Insert_Input>;
-  uuid?: Maybe<Scalars['uuid']>;
+  id?: InputMaybe<Scalars['Int']>;
+  name?: InputMaybe<Scalars['String']>;
+  project?: InputMaybe<Projects_Obj_Rel_Insert_Input>;
+  project_id?: InputMaybe<Scalars['Int']>;
+  translations?: InputMaybe<Translations_Arr_Rel_Insert_Input>;
+  uuid?: InputMaybe<Scalars['uuid']>;
 };
 
 /** aggregate max on columns */
@@ -3732,10 +4178,10 @@ export type Translation_Statuses_Max_Fields = {
 
 /** order by max() on columns of table "translation_statuses" */
 export type Translation_Statuses_Max_Order_By = {
-  id?: Maybe<Order_By>;
-  name?: Maybe<Order_By>;
-  project_id?: Maybe<Order_By>;
-  uuid?: Maybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  name?: InputMaybe<Order_By>;
+  project_id?: InputMaybe<Order_By>;
+  uuid?: InputMaybe<Order_By>;
 };
 
 /** aggregate min on columns */
@@ -3749,10 +4195,10 @@ export type Translation_Statuses_Min_Fields = {
 
 /** order by min() on columns of table "translation_statuses" */
 export type Translation_Statuses_Min_Order_By = {
-  id?: Maybe<Order_By>;
-  name?: Maybe<Order_By>;
-  project_id?: Maybe<Order_By>;
-  uuid?: Maybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  name?: InputMaybe<Order_By>;
+  project_id?: InputMaybe<Order_By>;
+  uuid?: InputMaybe<Order_By>;
 };
 
 /** response of any mutation on the table "translation_statuses" */
@@ -3768,24 +4214,24 @@ export type Translation_Statuses_Mutation_Response = {
 export type Translation_Statuses_Obj_Rel_Insert_Input = {
   data: Translation_Statuses_Insert_Input;
   /** on conflict condition */
-  on_conflict?: Maybe<Translation_Statuses_On_Conflict>;
+  on_conflict?: InputMaybe<Translation_Statuses_On_Conflict>;
 };
 
 /** on conflict condition type for table "translation_statuses" */
 export type Translation_Statuses_On_Conflict = {
   constraint: Translation_Statuses_Constraint;
   update_columns?: Array<Translation_Statuses_Update_Column>;
-  where?: Maybe<Translation_Statuses_Bool_Exp>;
+  where?: InputMaybe<Translation_Statuses_Bool_Exp>;
 };
 
 /** Ordering options when selecting data from "translation_statuses". */
 export type Translation_Statuses_Order_By = {
-  id?: Maybe<Order_By>;
-  name?: Maybe<Order_By>;
-  project?: Maybe<Projects_Order_By>;
-  project_id?: Maybe<Order_By>;
-  translations_aggregate?: Maybe<Translations_Aggregate_Order_By>;
-  uuid?: Maybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  name?: InputMaybe<Order_By>;
+  project?: InputMaybe<Projects_Order_By>;
+  project_id?: InputMaybe<Order_By>;
+  translations_aggregate?: InputMaybe<Translations_Aggregate_Order_By>;
+  uuid?: InputMaybe<Order_By>;
 };
 
 /** primary key columns input for table: translation_statuses */
@@ -3807,10 +4253,10 @@ export enum Translation_Statuses_Select_Column {
 
 /** input type for updating data in table "translation_statuses" */
 export type Translation_Statuses_Set_Input = {
-  id?: Maybe<Scalars['Int']>;
-  name?: Maybe<Scalars['String']>;
-  project_id?: Maybe<Scalars['Int']>;
-  uuid?: Maybe<Scalars['uuid']>;
+  id?: InputMaybe<Scalars['Int']>;
+  name?: InputMaybe<Scalars['String']>;
+  project_id?: InputMaybe<Scalars['Int']>;
+  uuid?: InputMaybe<Scalars['uuid']>;
 };
 
 /** aggregate stddev on columns */
@@ -3822,8 +4268,8 @@ export type Translation_Statuses_Stddev_Fields = {
 
 /** order by stddev() on columns of table "translation_statuses" */
 export type Translation_Statuses_Stddev_Order_By = {
-  id?: Maybe<Order_By>;
-  project_id?: Maybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  project_id?: InputMaybe<Order_By>;
 };
 
 /** aggregate stddev_pop on columns */
@@ -3835,8 +4281,8 @@ export type Translation_Statuses_Stddev_Pop_Fields = {
 
 /** order by stddev_pop() on columns of table "translation_statuses" */
 export type Translation_Statuses_Stddev_Pop_Order_By = {
-  id?: Maybe<Order_By>;
-  project_id?: Maybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  project_id?: InputMaybe<Order_By>;
 };
 
 /** aggregate stddev_samp on columns */
@@ -3848,8 +4294,8 @@ export type Translation_Statuses_Stddev_Samp_Fields = {
 
 /** order by stddev_samp() on columns of table "translation_statuses" */
 export type Translation_Statuses_Stddev_Samp_Order_By = {
-  id?: Maybe<Order_By>;
-  project_id?: Maybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  project_id?: InputMaybe<Order_By>;
 };
 
 /** aggregate sum on columns */
@@ -3861,8 +4307,8 @@ export type Translation_Statuses_Sum_Fields = {
 
 /** order by sum() on columns of table "translation_statuses" */
 export type Translation_Statuses_Sum_Order_By = {
-  id?: Maybe<Order_By>;
-  project_id?: Maybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  project_id?: InputMaybe<Order_By>;
 };
 
 /** update columns of table "translation_statuses" */
@@ -3886,8 +4332,8 @@ export type Translation_Statuses_Var_Pop_Fields = {
 
 /** order by var_pop() on columns of table "translation_statuses" */
 export type Translation_Statuses_Var_Pop_Order_By = {
-  id?: Maybe<Order_By>;
-  project_id?: Maybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  project_id?: InputMaybe<Order_By>;
 };
 
 /** aggregate var_samp on columns */
@@ -3899,8 +4345,8 @@ export type Translation_Statuses_Var_Samp_Fields = {
 
 /** order by var_samp() on columns of table "translation_statuses" */
 export type Translation_Statuses_Var_Samp_Order_By = {
-  id?: Maybe<Order_By>;
-  project_id?: Maybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  project_id?: InputMaybe<Order_By>;
 };
 
 /** aggregate variance on columns */
@@ -3912,8 +4358,8 @@ export type Translation_Statuses_Variance_Fields = {
 
 /** order by variance() on columns of table "translation_statuses" */
 export type Translation_Statuses_Variance_Order_By = {
-  id?: Maybe<Order_By>;
-  project_id?: Maybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  project_id?: InputMaybe<Order_By>;
 };
 
 /** columns and relationships of "translations" */
@@ -3959,30 +4405,30 @@ export type Translations_Aggregate_Fields = {
 
 /** aggregate fields of "translations" */
 export type Translations_Aggregate_FieldsCountArgs = {
-  columns?: Maybe<Array<Translations_Select_Column>>;
-  distinct?: Maybe<Scalars['Boolean']>;
+  columns?: InputMaybe<Array<Translations_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']>;
 };
 
 /** order by aggregate values of table "translations" */
 export type Translations_Aggregate_Order_By = {
-  avg?: Maybe<Translations_Avg_Order_By>;
-  count?: Maybe<Order_By>;
-  max?: Maybe<Translations_Max_Order_By>;
-  min?: Maybe<Translations_Min_Order_By>;
-  stddev?: Maybe<Translations_Stddev_Order_By>;
-  stddev_pop?: Maybe<Translations_Stddev_Pop_Order_By>;
-  stddev_samp?: Maybe<Translations_Stddev_Samp_Order_By>;
-  sum?: Maybe<Translations_Sum_Order_By>;
-  var_pop?: Maybe<Translations_Var_Pop_Order_By>;
-  var_samp?: Maybe<Translations_Var_Samp_Order_By>;
-  variance?: Maybe<Translations_Variance_Order_By>;
+  avg?: InputMaybe<Translations_Avg_Order_By>;
+  count?: InputMaybe<Order_By>;
+  max?: InputMaybe<Translations_Max_Order_By>;
+  min?: InputMaybe<Translations_Min_Order_By>;
+  stddev?: InputMaybe<Translations_Stddev_Order_By>;
+  stddev_pop?: InputMaybe<Translations_Stddev_Pop_Order_By>;
+  stddev_samp?: InputMaybe<Translations_Stddev_Samp_Order_By>;
+  sum?: InputMaybe<Translations_Sum_Order_By>;
+  var_pop?: InputMaybe<Translations_Var_Pop_Order_By>;
+  var_samp?: InputMaybe<Translations_Var_Samp_Order_By>;
+  variance?: InputMaybe<Translations_Variance_Order_By>;
 };
 
 /** input type for inserting array relation for remote table "translations" */
 export type Translations_Arr_Rel_Insert_Input = {
   data: Array<Translations_Insert_Input>;
   /** on conflict condition */
-  on_conflict?: Maybe<Translations_On_Conflict>;
+  on_conflict?: InputMaybe<Translations_On_Conflict>;
 };
 
 /** aggregate avg on columns */
@@ -3996,26 +4442,26 @@ export type Translations_Avg_Fields = {
 
 /** order by avg() on columns of table "translations" */
 export type Translations_Avg_Order_By = {
-  branch_language_id?: Maybe<Order_By>;
-  id?: Maybe<Order_By>;
-  status_id?: Maybe<Order_By>;
-  term_id?: Maybe<Order_By>;
+  branch_language_id?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  status_id?: InputMaybe<Order_By>;
+  term_id?: InputMaybe<Order_By>;
 };
 
 /** Boolean expression to filter rows from the table "translations". All fields are combined with a logical 'AND'. */
 export type Translations_Bool_Exp = {
-  _and?: Maybe<Array<Translations_Bool_Exp>>;
-  _not?: Maybe<Translations_Bool_Exp>;
-  _or?: Maybe<Array<Translations_Bool_Exp>>;
-  branch_language_id?: Maybe<Int_Comparison_Exp>;
-  id?: Maybe<Int_Comparison_Exp>;
-  project_language?: Maybe<Branch_Languages_Bool_Exp>;
-  status?: Maybe<Translation_Statuses_Bool_Exp>;
-  status_id?: Maybe<Int_Comparison_Exp>;
-  term?: Maybe<Terms_Bool_Exp>;
-  term_id?: Maybe<Int_Comparison_Exp>;
-  translation_value?: Maybe<String_Comparison_Exp>;
-  uuid?: Maybe<Uuid_Comparison_Exp>;
+  _and?: InputMaybe<Array<Translations_Bool_Exp>>;
+  _not?: InputMaybe<Translations_Bool_Exp>;
+  _or?: InputMaybe<Array<Translations_Bool_Exp>>;
+  branch_language_id?: InputMaybe<Int_Comparison_Exp>;
+  id?: InputMaybe<Int_Comparison_Exp>;
+  project_language?: InputMaybe<Branch_Languages_Bool_Exp>;
+  status?: InputMaybe<Translation_Statuses_Bool_Exp>;
+  status_id?: InputMaybe<Int_Comparison_Exp>;
+  term?: InputMaybe<Terms_Bool_Exp>;
+  term_id?: InputMaybe<Int_Comparison_Exp>;
+  translation_value?: InputMaybe<String_Comparison_Exp>;
+  uuid?: InputMaybe<Uuid_Comparison_Exp>;
 };
 
 /** unique or primary key constraints on table "translations" */
@@ -4028,23 +4474,23 @@ export enum Translations_Constraint {
 
 /** input type for incrementing numeric columns in table "translations" */
 export type Translations_Inc_Input = {
-  branch_language_id?: Maybe<Scalars['Int']>;
-  id?: Maybe<Scalars['Int']>;
-  status_id?: Maybe<Scalars['Int']>;
-  term_id?: Maybe<Scalars['Int']>;
+  branch_language_id?: InputMaybe<Scalars['Int']>;
+  id?: InputMaybe<Scalars['Int']>;
+  status_id?: InputMaybe<Scalars['Int']>;
+  term_id?: InputMaybe<Scalars['Int']>;
 };
 
 /** input type for inserting data into table "translations" */
 export type Translations_Insert_Input = {
-  branch_language_id?: Maybe<Scalars['Int']>;
-  id?: Maybe<Scalars['Int']>;
-  project_language?: Maybe<Branch_Languages_Obj_Rel_Insert_Input>;
-  status?: Maybe<Translation_Statuses_Obj_Rel_Insert_Input>;
-  status_id?: Maybe<Scalars['Int']>;
-  term?: Maybe<Terms_Obj_Rel_Insert_Input>;
-  term_id?: Maybe<Scalars['Int']>;
-  translation_value?: Maybe<Scalars['String']>;
-  uuid?: Maybe<Scalars['uuid']>;
+  branch_language_id?: InputMaybe<Scalars['Int']>;
+  id?: InputMaybe<Scalars['Int']>;
+  project_language?: InputMaybe<Branch_Languages_Obj_Rel_Insert_Input>;
+  status?: InputMaybe<Translation_Statuses_Obj_Rel_Insert_Input>;
+  status_id?: InputMaybe<Scalars['Int']>;
+  term?: InputMaybe<Terms_Obj_Rel_Insert_Input>;
+  term_id?: InputMaybe<Scalars['Int']>;
+  translation_value?: InputMaybe<Scalars['String']>;
+  uuid?: InputMaybe<Scalars['uuid']>;
 };
 
 /** aggregate max on columns */
@@ -4060,12 +4506,12 @@ export type Translations_Max_Fields = {
 
 /** order by max() on columns of table "translations" */
 export type Translations_Max_Order_By = {
-  branch_language_id?: Maybe<Order_By>;
-  id?: Maybe<Order_By>;
-  status_id?: Maybe<Order_By>;
-  term_id?: Maybe<Order_By>;
-  translation_value?: Maybe<Order_By>;
-  uuid?: Maybe<Order_By>;
+  branch_language_id?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  status_id?: InputMaybe<Order_By>;
+  term_id?: InputMaybe<Order_By>;
+  translation_value?: InputMaybe<Order_By>;
+  uuid?: InputMaybe<Order_By>;
 };
 
 /** aggregate min on columns */
@@ -4081,12 +4527,12 @@ export type Translations_Min_Fields = {
 
 /** order by min() on columns of table "translations" */
 export type Translations_Min_Order_By = {
-  branch_language_id?: Maybe<Order_By>;
-  id?: Maybe<Order_By>;
-  status_id?: Maybe<Order_By>;
-  term_id?: Maybe<Order_By>;
-  translation_value?: Maybe<Order_By>;
-  uuid?: Maybe<Order_By>;
+  branch_language_id?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  status_id?: InputMaybe<Order_By>;
+  term_id?: InputMaybe<Order_By>;
+  translation_value?: InputMaybe<Order_By>;
+  uuid?: InputMaybe<Order_By>;
 };
 
 /** response of any mutation on the table "translations" */
@@ -4102,20 +4548,20 @@ export type Translations_Mutation_Response = {
 export type Translations_On_Conflict = {
   constraint: Translations_Constraint;
   update_columns?: Array<Translations_Update_Column>;
-  where?: Maybe<Translations_Bool_Exp>;
+  where?: InputMaybe<Translations_Bool_Exp>;
 };
 
 /** Ordering options when selecting data from "translations". */
 export type Translations_Order_By = {
-  branch_language_id?: Maybe<Order_By>;
-  id?: Maybe<Order_By>;
-  project_language?: Maybe<Branch_Languages_Order_By>;
-  status?: Maybe<Translation_Statuses_Order_By>;
-  status_id?: Maybe<Order_By>;
-  term?: Maybe<Terms_Order_By>;
-  term_id?: Maybe<Order_By>;
-  translation_value?: Maybe<Order_By>;
-  uuid?: Maybe<Order_By>;
+  branch_language_id?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  project_language?: InputMaybe<Branch_Languages_Order_By>;
+  status?: InputMaybe<Translation_Statuses_Order_By>;
+  status_id?: InputMaybe<Order_By>;
+  term?: InputMaybe<Terms_Order_By>;
+  term_id?: InputMaybe<Order_By>;
+  translation_value?: InputMaybe<Order_By>;
+  uuid?: InputMaybe<Order_By>;
 };
 
 /** primary key columns input for table: translations */
@@ -4141,12 +4587,12 @@ export enum Translations_Select_Column {
 
 /** input type for updating data in table "translations" */
 export type Translations_Set_Input = {
-  branch_language_id?: Maybe<Scalars['Int']>;
-  id?: Maybe<Scalars['Int']>;
-  status_id?: Maybe<Scalars['Int']>;
-  term_id?: Maybe<Scalars['Int']>;
-  translation_value?: Maybe<Scalars['String']>;
-  uuid?: Maybe<Scalars['uuid']>;
+  branch_language_id?: InputMaybe<Scalars['Int']>;
+  id?: InputMaybe<Scalars['Int']>;
+  status_id?: InputMaybe<Scalars['Int']>;
+  term_id?: InputMaybe<Scalars['Int']>;
+  translation_value?: InputMaybe<Scalars['String']>;
+  uuid?: InputMaybe<Scalars['uuid']>;
 };
 
 /** aggregate stddev on columns */
@@ -4160,10 +4606,10 @@ export type Translations_Stddev_Fields = {
 
 /** order by stddev() on columns of table "translations" */
 export type Translations_Stddev_Order_By = {
-  branch_language_id?: Maybe<Order_By>;
-  id?: Maybe<Order_By>;
-  status_id?: Maybe<Order_By>;
-  term_id?: Maybe<Order_By>;
+  branch_language_id?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  status_id?: InputMaybe<Order_By>;
+  term_id?: InputMaybe<Order_By>;
 };
 
 /** aggregate stddev_pop on columns */
@@ -4177,10 +4623,10 @@ export type Translations_Stddev_Pop_Fields = {
 
 /** order by stddev_pop() on columns of table "translations" */
 export type Translations_Stddev_Pop_Order_By = {
-  branch_language_id?: Maybe<Order_By>;
-  id?: Maybe<Order_By>;
-  status_id?: Maybe<Order_By>;
-  term_id?: Maybe<Order_By>;
+  branch_language_id?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  status_id?: InputMaybe<Order_By>;
+  term_id?: InputMaybe<Order_By>;
 };
 
 /** aggregate stddev_samp on columns */
@@ -4194,10 +4640,10 @@ export type Translations_Stddev_Samp_Fields = {
 
 /** order by stddev_samp() on columns of table "translations" */
 export type Translations_Stddev_Samp_Order_By = {
-  branch_language_id?: Maybe<Order_By>;
-  id?: Maybe<Order_By>;
-  status_id?: Maybe<Order_By>;
-  term_id?: Maybe<Order_By>;
+  branch_language_id?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  status_id?: InputMaybe<Order_By>;
+  term_id?: InputMaybe<Order_By>;
 };
 
 /** aggregate sum on columns */
@@ -4211,10 +4657,10 @@ export type Translations_Sum_Fields = {
 
 /** order by sum() on columns of table "translations" */
 export type Translations_Sum_Order_By = {
-  branch_language_id?: Maybe<Order_By>;
-  id?: Maybe<Order_By>;
-  status_id?: Maybe<Order_By>;
-  term_id?: Maybe<Order_By>;
+  branch_language_id?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  status_id?: InputMaybe<Order_By>;
+  term_id?: InputMaybe<Order_By>;
 };
 
 /** update columns of table "translations" */
@@ -4244,10 +4690,10 @@ export type Translations_Var_Pop_Fields = {
 
 /** order by var_pop() on columns of table "translations" */
 export type Translations_Var_Pop_Order_By = {
-  branch_language_id?: Maybe<Order_By>;
-  id?: Maybe<Order_By>;
-  status_id?: Maybe<Order_By>;
-  term_id?: Maybe<Order_By>;
+  branch_language_id?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  status_id?: InputMaybe<Order_By>;
+  term_id?: InputMaybe<Order_By>;
 };
 
 /** aggregate var_samp on columns */
@@ -4261,10 +4707,10 @@ export type Translations_Var_Samp_Fields = {
 
 /** order by var_samp() on columns of table "translations" */
 export type Translations_Var_Samp_Order_By = {
-  branch_language_id?: Maybe<Order_By>;
-  id?: Maybe<Order_By>;
-  status_id?: Maybe<Order_By>;
-  term_id?: Maybe<Order_By>;
+  branch_language_id?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  status_id?: InputMaybe<Order_By>;
+  term_id?: InputMaybe<Order_By>;
 };
 
 /** aggregate variance on columns */
@@ -4278,10 +4724,10 @@ export type Translations_Variance_Fields = {
 
 /** order by variance() on columns of table "translations" */
 export type Translations_Variance_Order_By = {
-  branch_language_id?: Maybe<Order_By>;
-  id?: Maybe<Order_By>;
-  status_id?: Maybe<Order_By>;
-  term_id?: Maybe<Order_By>;
+  branch_language_id?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  status_id?: InputMaybe<Order_By>;
+  term_id?: InputMaybe<Order_By>;
 };
 
 /** columns and relationships of "user_project_link" */
@@ -4323,30 +4769,30 @@ export type User_Project_Link_Aggregate_Fields = {
 
 /** aggregate fields of "user_project_link" */
 export type User_Project_Link_Aggregate_FieldsCountArgs = {
-  columns?: Maybe<Array<User_Project_Link_Select_Column>>;
-  distinct?: Maybe<Scalars['Boolean']>;
+  columns?: InputMaybe<Array<User_Project_Link_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']>;
 };
 
 /** order by aggregate values of table "user_project_link" */
 export type User_Project_Link_Aggregate_Order_By = {
-  avg?: Maybe<User_Project_Link_Avg_Order_By>;
-  count?: Maybe<Order_By>;
-  max?: Maybe<User_Project_Link_Max_Order_By>;
-  min?: Maybe<User_Project_Link_Min_Order_By>;
-  stddev?: Maybe<User_Project_Link_Stddev_Order_By>;
-  stddev_pop?: Maybe<User_Project_Link_Stddev_Pop_Order_By>;
-  stddev_samp?: Maybe<User_Project_Link_Stddev_Samp_Order_By>;
-  sum?: Maybe<User_Project_Link_Sum_Order_By>;
-  var_pop?: Maybe<User_Project_Link_Var_Pop_Order_By>;
-  var_samp?: Maybe<User_Project_Link_Var_Samp_Order_By>;
-  variance?: Maybe<User_Project_Link_Variance_Order_By>;
+  avg?: InputMaybe<User_Project_Link_Avg_Order_By>;
+  count?: InputMaybe<Order_By>;
+  max?: InputMaybe<User_Project_Link_Max_Order_By>;
+  min?: InputMaybe<User_Project_Link_Min_Order_By>;
+  stddev?: InputMaybe<User_Project_Link_Stddev_Order_By>;
+  stddev_pop?: InputMaybe<User_Project_Link_Stddev_Pop_Order_By>;
+  stddev_samp?: InputMaybe<User_Project_Link_Stddev_Samp_Order_By>;
+  sum?: InputMaybe<User_Project_Link_Sum_Order_By>;
+  var_pop?: InputMaybe<User_Project_Link_Var_Pop_Order_By>;
+  var_samp?: InputMaybe<User_Project_Link_Var_Samp_Order_By>;
+  variance?: InputMaybe<User_Project_Link_Variance_Order_By>;
 };
 
 /** input type for inserting array relation for remote table "user_project_link" */
 export type User_Project_Link_Arr_Rel_Insert_Input = {
   data: Array<User_Project_Link_Insert_Input>;
   /** on conflict condition */
-  on_conflict?: Maybe<User_Project_Link_On_Conflict>;
+  on_conflict?: InputMaybe<User_Project_Link_On_Conflict>;
 };
 
 /** aggregate avg on columns */
@@ -4359,22 +4805,22 @@ export type User_Project_Link_Avg_Fields = {
 
 /** order by avg() on columns of table "user_project_link" */
 export type User_Project_Link_Avg_Order_By = {
-  id?: Maybe<Order_By>;
-  project_id?: Maybe<Order_By>;
-  user_id?: Maybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  project_id?: InputMaybe<Order_By>;
+  user_id?: InputMaybe<Order_By>;
 };
 
 /** Boolean expression to filter rows from the table "user_project_link". All fields are combined with a logical 'AND'. */
 export type User_Project_Link_Bool_Exp = {
-  _and?: Maybe<Array<User_Project_Link_Bool_Exp>>;
-  _not?: Maybe<User_Project_Link_Bool_Exp>;
-  _or?: Maybe<Array<User_Project_Link_Bool_Exp>>;
-  id?: Maybe<Int_Comparison_Exp>;
-  project?: Maybe<Projects_Bool_Exp>;
-  project_id?: Maybe<Int_Comparison_Exp>;
-  user?: Maybe<Users_Bool_Exp>;
-  user_id?: Maybe<Int_Comparison_Exp>;
-  uuid?: Maybe<Uuid_Comparison_Exp>;
+  _and?: InputMaybe<Array<User_Project_Link_Bool_Exp>>;
+  _not?: InputMaybe<User_Project_Link_Bool_Exp>;
+  _or?: InputMaybe<Array<User_Project_Link_Bool_Exp>>;
+  id?: InputMaybe<Int_Comparison_Exp>;
+  project?: InputMaybe<Projects_Bool_Exp>;
+  project_id?: InputMaybe<Int_Comparison_Exp>;
+  user?: InputMaybe<Users_Bool_Exp>;
+  user_id?: InputMaybe<Int_Comparison_Exp>;
+  uuid?: InputMaybe<Uuid_Comparison_Exp>;
 };
 
 /** unique or primary key constraints on table "user_project_link" */
@@ -4387,19 +4833,19 @@ export enum User_Project_Link_Constraint {
 
 /** input type for incrementing numeric columns in table "user_project_link" */
 export type User_Project_Link_Inc_Input = {
-  id?: Maybe<Scalars['Int']>;
-  project_id?: Maybe<Scalars['Int']>;
-  user_id?: Maybe<Scalars['Int']>;
+  id?: InputMaybe<Scalars['Int']>;
+  project_id?: InputMaybe<Scalars['Int']>;
+  user_id?: InputMaybe<Scalars['Int']>;
 };
 
 /** input type for inserting data into table "user_project_link" */
 export type User_Project_Link_Insert_Input = {
-  id?: Maybe<Scalars['Int']>;
-  project?: Maybe<Projects_Obj_Rel_Insert_Input>;
-  project_id?: Maybe<Scalars['Int']>;
-  user?: Maybe<Users_Obj_Rel_Insert_Input>;
-  user_id?: Maybe<Scalars['Int']>;
-  uuid?: Maybe<Scalars['uuid']>;
+  id?: InputMaybe<Scalars['Int']>;
+  project?: InputMaybe<Projects_Obj_Rel_Insert_Input>;
+  project_id?: InputMaybe<Scalars['Int']>;
+  user?: InputMaybe<Users_Obj_Rel_Insert_Input>;
+  user_id?: InputMaybe<Scalars['Int']>;
+  uuid?: InputMaybe<Scalars['uuid']>;
 };
 
 /** aggregate max on columns */
@@ -4413,10 +4859,10 @@ export type User_Project_Link_Max_Fields = {
 
 /** order by max() on columns of table "user_project_link" */
 export type User_Project_Link_Max_Order_By = {
-  id?: Maybe<Order_By>;
-  project_id?: Maybe<Order_By>;
-  user_id?: Maybe<Order_By>;
-  uuid?: Maybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  project_id?: InputMaybe<Order_By>;
+  user_id?: InputMaybe<Order_By>;
+  uuid?: InputMaybe<Order_By>;
 };
 
 /** aggregate min on columns */
@@ -4430,10 +4876,10 @@ export type User_Project_Link_Min_Fields = {
 
 /** order by min() on columns of table "user_project_link" */
 export type User_Project_Link_Min_Order_By = {
-  id?: Maybe<Order_By>;
-  project_id?: Maybe<Order_By>;
-  user_id?: Maybe<Order_By>;
-  uuid?: Maybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  project_id?: InputMaybe<Order_By>;
+  user_id?: InputMaybe<Order_By>;
+  uuid?: InputMaybe<Order_By>;
 };
 
 /** response of any mutation on the table "user_project_link" */
@@ -4449,17 +4895,17 @@ export type User_Project_Link_Mutation_Response = {
 export type User_Project_Link_On_Conflict = {
   constraint: User_Project_Link_Constraint;
   update_columns?: Array<User_Project_Link_Update_Column>;
-  where?: Maybe<User_Project_Link_Bool_Exp>;
+  where?: InputMaybe<User_Project_Link_Bool_Exp>;
 };
 
 /** Ordering options when selecting data from "user_project_link". */
 export type User_Project_Link_Order_By = {
-  id?: Maybe<Order_By>;
-  project?: Maybe<Projects_Order_By>;
-  project_id?: Maybe<Order_By>;
-  user?: Maybe<Users_Order_By>;
-  user_id?: Maybe<Order_By>;
-  uuid?: Maybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  project?: InputMaybe<Projects_Order_By>;
+  project_id?: InputMaybe<Order_By>;
+  user?: InputMaybe<Users_Order_By>;
+  user_id?: InputMaybe<Order_By>;
+  uuid?: InputMaybe<Order_By>;
 };
 
 /** primary key columns input for table: user_project_link */
@@ -4481,10 +4927,10 @@ export enum User_Project_Link_Select_Column {
 
 /** input type for updating data in table "user_project_link" */
 export type User_Project_Link_Set_Input = {
-  id?: Maybe<Scalars['Int']>;
-  project_id?: Maybe<Scalars['Int']>;
-  user_id?: Maybe<Scalars['Int']>;
-  uuid?: Maybe<Scalars['uuid']>;
+  id?: InputMaybe<Scalars['Int']>;
+  project_id?: InputMaybe<Scalars['Int']>;
+  user_id?: InputMaybe<Scalars['Int']>;
+  uuid?: InputMaybe<Scalars['uuid']>;
 };
 
 /** aggregate stddev on columns */
@@ -4497,9 +4943,9 @@ export type User_Project_Link_Stddev_Fields = {
 
 /** order by stddev() on columns of table "user_project_link" */
 export type User_Project_Link_Stddev_Order_By = {
-  id?: Maybe<Order_By>;
-  project_id?: Maybe<Order_By>;
-  user_id?: Maybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  project_id?: InputMaybe<Order_By>;
+  user_id?: InputMaybe<Order_By>;
 };
 
 /** aggregate stddev_pop on columns */
@@ -4512,9 +4958,9 @@ export type User_Project_Link_Stddev_Pop_Fields = {
 
 /** order by stddev_pop() on columns of table "user_project_link" */
 export type User_Project_Link_Stddev_Pop_Order_By = {
-  id?: Maybe<Order_By>;
-  project_id?: Maybe<Order_By>;
-  user_id?: Maybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  project_id?: InputMaybe<Order_By>;
+  user_id?: InputMaybe<Order_By>;
 };
 
 /** aggregate stddev_samp on columns */
@@ -4527,9 +4973,9 @@ export type User_Project_Link_Stddev_Samp_Fields = {
 
 /** order by stddev_samp() on columns of table "user_project_link" */
 export type User_Project_Link_Stddev_Samp_Order_By = {
-  id?: Maybe<Order_By>;
-  project_id?: Maybe<Order_By>;
-  user_id?: Maybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  project_id?: InputMaybe<Order_By>;
+  user_id?: InputMaybe<Order_By>;
 };
 
 /** aggregate sum on columns */
@@ -4542,9 +4988,9 @@ export type User_Project_Link_Sum_Fields = {
 
 /** order by sum() on columns of table "user_project_link" */
 export type User_Project_Link_Sum_Order_By = {
-  id?: Maybe<Order_By>;
-  project_id?: Maybe<Order_By>;
-  user_id?: Maybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  project_id?: InputMaybe<Order_By>;
+  user_id?: InputMaybe<Order_By>;
 };
 
 /** update columns of table "user_project_link" */
@@ -4569,9 +5015,9 @@ export type User_Project_Link_Var_Pop_Fields = {
 
 /** order by var_pop() on columns of table "user_project_link" */
 export type User_Project_Link_Var_Pop_Order_By = {
-  id?: Maybe<Order_By>;
-  project_id?: Maybe<Order_By>;
-  user_id?: Maybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  project_id?: InputMaybe<Order_By>;
+  user_id?: InputMaybe<Order_By>;
 };
 
 /** aggregate var_samp on columns */
@@ -4584,9 +5030,9 @@ export type User_Project_Link_Var_Samp_Fields = {
 
 /** order by var_samp() on columns of table "user_project_link" */
 export type User_Project_Link_Var_Samp_Order_By = {
-  id?: Maybe<Order_By>;
-  project_id?: Maybe<Order_By>;
-  user_id?: Maybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  project_id?: InputMaybe<Order_By>;
+  user_id?: InputMaybe<Order_By>;
 };
 
 /** aggregate variance on columns */
@@ -4599,9 +5045,9 @@ export type User_Project_Link_Variance_Fields = {
 
 /** order by variance() on columns of table "user_project_link" */
 export type User_Project_Link_Variance_Order_By = {
-  id?: Maybe<Order_By>;
-  project_id?: Maybe<Order_By>;
-  user_id?: Maybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  project_id?: InputMaybe<Order_By>;
+  user_id?: InputMaybe<Order_By>;
 };
 
 /** columns and relationships of "users" */
@@ -4626,41 +5072,41 @@ export type Users = {
 
 /** columns and relationships of "users" */
 export type UsersCompany_LinksArgs = {
-  distinct_on?: Maybe<Array<Company_User_Link_Select_Column>>;
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<Company_User_Link_Order_By>>;
-  where?: Maybe<Company_User_Link_Bool_Exp>;
+  distinct_on?: InputMaybe<Array<Company_User_Link_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Company_User_Link_Order_By>>;
+  where?: InputMaybe<Company_User_Link_Bool_Exp>;
 };
 
 
 /** columns and relationships of "users" */
 export type UsersCompany_Links_AggregateArgs = {
-  distinct_on?: Maybe<Array<Company_User_Link_Select_Column>>;
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<Company_User_Link_Order_By>>;
-  where?: Maybe<Company_User_Link_Bool_Exp>;
+  distinct_on?: InputMaybe<Array<Company_User_Link_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Company_User_Link_Order_By>>;
+  where?: InputMaybe<Company_User_Link_Bool_Exp>;
 };
 
 
 /** columns and relationships of "users" */
 export type UsersProject_LinksArgs = {
-  distinct_on?: Maybe<Array<User_Project_Link_Select_Column>>;
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<User_Project_Link_Order_By>>;
-  where?: Maybe<User_Project_Link_Bool_Exp>;
+  distinct_on?: InputMaybe<Array<User_Project_Link_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<User_Project_Link_Order_By>>;
+  where?: InputMaybe<User_Project_Link_Bool_Exp>;
 };
 
 
 /** columns and relationships of "users" */
 export type UsersProject_Links_AggregateArgs = {
-  distinct_on?: Maybe<Array<User_Project_Link_Select_Column>>;
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<User_Project_Link_Order_By>>;
-  where?: Maybe<User_Project_Link_Bool_Exp>;
+  distinct_on?: InputMaybe<Array<User_Project_Link_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<User_Project_Link_Order_By>>;
+  where?: InputMaybe<User_Project_Link_Bool_Exp>;
 };
 
 /** aggregated selection of "users" */
@@ -4689,8 +5135,8 @@ export type Users_Aggregate_Fields = {
 
 /** aggregate fields of "users" */
 export type Users_Aggregate_FieldsCountArgs = {
-  columns?: Maybe<Array<Users_Select_Column>>;
-  distinct?: Maybe<Scalars['Boolean']>;
+  columns?: InputMaybe<Array<Users_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']>;
 };
 
 /** aggregate avg on columns */
@@ -4701,17 +5147,17 @@ export type Users_Avg_Fields = {
 
 /** Boolean expression to filter rows from the table "users". All fields are combined with a logical 'AND'. */
 export type Users_Bool_Exp = {
-  _and?: Maybe<Array<Users_Bool_Exp>>;
-  _not?: Maybe<Users_Bool_Exp>;
-  _or?: Maybe<Array<Users_Bool_Exp>>;
-  company_links?: Maybe<Company_User_Link_Bool_Exp>;
-  email?: Maybe<String_Comparison_Exp>;
-  first_name?: Maybe<String_Comparison_Exp>;
-  id?: Maybe<Int_Comparison_Exp>;
-  last_name?: Maybe<String_Comparison_Exp>;
-  password?: Maybe<String_Comparison_Exp>;
-  project_links?: Maybe<User_Project_Link_Bool_Exp>;
-  uuid?: Maybe<Uuid_Comparison_Exp>;
+  _and?: InputMaybe<Array<Users_Bool_Exp>>;
+  _not?: InputMaybe<Users_Bool_Exp>;
+  _or?: InputMaybe<Array<Users_Bool_Exp>>;
+  company_links?: InputMaybe<Company_User_Link_Bool_Exp>;
+  email?: InputMaybe<String_Comparison_Exp>;
+  first_name?: InputMaybe<String_Comparison_Exp>;
+  id?: InputMaybe<Int_Comparison_Exp>;
+  last_name?: InputMaybe<String_Comparison_Exp>;
+  password?: InputMaybe<String_Comparison_Exp>;
+  project_links?: InputMaybe<User_Project_Link_Bool_Exp>;
+  uuid?: InputMaybe<Uuid_Comparison_Exp>;
 };
 
 /** unique or primary key constraints on table "users" */
@@ -4724,19 +5170,19 @@ export enum Users_Constraint {
 
 /** input type for incrementing numeric columns in table "users" */
 export type Users_Inc_Input = {
-  id?: Maybe<Scalars['Int']>;
+  id?: InputMaybe<Scalars['Int']>;
 };
 
 /** input type for inserting data into table "users" */
 export type Users_Insert_Input = {
-  company_links?: Maybe<Company_User_Link_Arr_Rel_Insert_Input>;
-  email?: Maybe<Scalars['String']>;
-  first_name?: Maybe<Scalars['String']>;
-  id?: Maybe<Scalars['Int']>;
-  last_name?: Maybe<Scalars['String']>;
-  password?: Maybe<Scalars['String']>;
-  project_links?: Maybe<User_Project_Link_Arr_Rel_Insert_Input>;
-  uuid?: Maybe<Scalars['uuid']>;
+  company_links?: InputMaybe<Company_User_Link_Arr_Rel_Insert_Input>;
+  email?: InputMaybe<Scalars['String']>;
+  first_name?: InputMaybe<Scalars['String']>;
+  id?: InputMaybe<Scalars['Int']>;
+  last_name?: InputMaybe<Scalars['String']>;
+  password?: InputMaybe<Scalars['String']>;
+  project_links?: InputMaybe<User_Project_Link_Arr_Rel_Insert_Input>;
+  uuid?: InputMaybe<Scalars['uuid']>;
 };
 
 /** aggregate max on columns */
@@ -4774,26 +5220,26 @@ export type Users_Mutation_Response = {
 export type Users_Obj_Rel_Insert_Input = {
   data: Users_Insert_Input;
   /** on conflict condition */
-  on_conflict?: Maybe<Users_On_Conflict>;
+  on_conflict?: InputMaybe<Users_On_Conflict>;
 };
 
 /** on conflict condition type for table "users" */
 export type Users_On_Conflict = {
   constraint: Users_Constraint;
   update_columns?: Array<Users_Update_Column>;
-  where?: Maybe<Users_Bool_Exp>;
+  where?: InputMaybe<Users_Bool_Exp>;
 };
 
 /** Ordering options when selecting data from "users". */
 export type Users_Order_By = {
-  company_links_aggregate?: Maybe<Company_User_Link_Aggregate_Order_By>;
-  email?: Maybe<Order_By>;
-  first_name?: Maybe<Order_By>;
-  id?: Maybe<Order_By>;
-  last_name?: Maybe<Order_By>;
-  password?: Maybe<Order_By>;
-  project_links_aggregate?: Maybe<User_Project_Link_Aggregate_Order_By>;
-  uuid?: Maybe<Order_By>;
+  company_links_aggregate?: InputMaybe<Company_User_Link_Aggregate_Order_By>;
+  email?: InputMaybe<Order_By>;
+  first_name?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  last_name?: InputMaybe<Order_By>;
+  password?: InputMaybe<Order_By>;
+  project_links_aggregate?: InputMaybe<User_Project_Link_Aggregate_Order_By>;
+  uuid?: InputMaybe<Order_By>;
 };
 
 /** primary key columns input for table: users */
@@ -4819,12 +5265,12 @@ export enum Users_Select_Column {
 
 /** input type for updating data in table "users" */
 export type Users_Set_Input = {
-  email?: Maybe<Scalars['String']>;
-  first_name?: Maybe<Scalars['String']>;
-  id?: Maybe<Scalars['Int']>;
-  last_name?: Maybe<Scalars['String']>;
-  password?: Maybe<Scalars['String']>;
-  uuid?: Maybe<Scalars['uuid']>;
+  email?: InputMaybe<Scalars['String']>;
+  first_name?: InputMaybe<Scalars['String']>;
+  id?: InputMaybe<Scalars['Int']>;
+  last_name?: InputMaybe<Scalars['String']>;
+  password?: InputMaybe<Scalars['String']>;
+  uuid?: InputMaybe<Scalars['uuid']>;
 };
 
 /** aggregate stddev on columns */
@@ -4887,509 +5333,49 @@ export type Users_Variance_Fields = {
 
 /** Boolean expression to compare columns of type "uuid". All fields are combined with logical 'AND'. */
 export type Uuid_Comparison_Exp = {
-  _eq?: Maybe<Scalars['uuid']>;
-  _gt?: Maybe<Scalars['uuid']>;
-  _gte?: Maybe<Scalars['uuid']>;
-  _in?: Maybe<Array<Scalars['uuid']>>;
-  _is_null?: Maybe<Scalars['Boolean']>;
-  _lt?: Maybe<Scalars['uuid']>;
-  _lte?: Maybe<Scalars['uuid']>;
-  _neq?: Maybe<Scalars['uuid']>;
-  _nin?: Maybe<Array<Scalars['uuid']>>;
+  _eq?: InputMaybe<Scalars['uuid']>;
+  _gt?: InputMaybe<Scalars['uuid']>;
+  _gte?: InputMaybe<Scalars['uuid']>;
+  _in?: InputMaybe<Array<Scalars['uuid']>>;
+  _is_null?: InputMaybe<Scalars['Boolean']>;
+  _lt?: InputMaybe<Scalars['uuid']>;
+  _lte?: InputMaybe<Scalars['uuid']>;
+  _neq?: InputMaybe<Scalars['uuid']>;
+  _nin?: InputMaybe<Array<Scalars['uuid']>>;
 };
 
 export type AddBranchMutationVariables = Exact<{
-  branchName?: Maybe<Scalars['String']>;
-  projectId?: Maybe<Scalars['Int']>;
+  branchName?: InputMaybe<Scalars['String']>;
+  projectId?: InputMaybe<Scalars['Int']>;
+  fromBranchId?: InputMaybe<Scalars['Int']>;
 }>;
 
 
 export type AddBranchMutation = { __typename?: 'mutation_root', insert_branches?: { __typename?: 'branches_mutation_response', returning: Array<{ __typename?: 'branches', uuid: any }> } | null | undefined };
 
-export type AddCompanyMutationVariables = Exact<{
-  companyName?: Maybe<Scalars['String']>;
-}>;
 
-
-export type AddCompanyMutation = { __typename?: 'mutation_root', insert_companies?: { __typename?: 'companies_mutation_response', returning: Array<{ __typename?: 'companies', uuid: any }> } | null | undefined };
-
-export type AddProjectMutationVariables = Exact<{
-  projectName?: Maybe<Scalars['String']>;
-  companyId?: Maybe<Scalars['Int']>;
-}>;
-
-
-export type AddProjectMutation = { __typename?: 'mutation_root', insert_projects?: { __typename?: 'projects_mutation_response', returning: Array<{ __typename?: 'projects', uuid: any }> } | null | undefined };
-
-export type AddProjectLanguageLinksMutationVariables = Exact<{
-  branchLanguages: Array<Branch_Languages_Insert_Input> | Branch_Languages_Insert_Input;
-}>;
-
-
-export type AddProjectLanguageLinksMutation = { __typename?: 'mutation_root', insert_branch_languages?: { __typename?: 'branch_languages_mutation_response', returning: Array<{ __typename?: 'branch_languages', uuid: any }> } | null | undefined };
-
-export type GetBranchQueryVariables = Exact<{
-  branchUuid?: Maybe<Scalars['uuid']>;
-}>;
-
-
-export type GetBranchQuery = { __typename?: 'query_root', branches: Array<{ __typename?: 'branches', id: number, uuid: any, name: string, branch_languages: Array<{ __typename?: 'branch_languages', uuid: any, language: { __typename?: 'languages', iso_code: string, name: string, uuid: any } }>, project: { __typename?: 'projects', id: number, uuid: any, name: string, company: { __typename?: 'companies', id: number, uuid: any, name: string } } }> };
-
-export type GetCompaniesAndProjectsQueryVariables = Exact<{
-  userUuid?: Maybe<Scalars['uuid']>;
-}>;
-
-
-export type GetCompaniesAndProjectsQuery = { __typename?: 'query_root', companies: Array<{ __typename?: 'companies', name: string, uuid: any, id: number, projects: Array<{ __typename?: 'projects', name: string, uuid: any, id: number, branches: Array<{ __typename?: 'branches', id: number, uuid: any, name: string, branch_languages: Array<{ __typename?: 'branch_languages', uuid: any, language: { __typename?: 'languages', iso_code: string, uuid: any, id: number } }> }> }> }> };
-
-export type GetCompanyQueryVariables = Exact<{
-  companyUuid?: Maybe<Scalars['uuid']>;
-}>;
-
-
-export type GetCompanyQuery = { __typename?: 'query_root', companies: Array<{ __typename?: 'companies', name: string, uuid: any, projects: Array<{ __typename?: 'projects', name: string, uuid: any }>, user_links: Array<{ __typename?: 'company_user_link', user: { __typename?: 'users', uuid: any, first_name: string, last_name: string, email: string } }> }> };
-
-export type GetLanguagesQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type GetLanguagesQuery = { __typename?: 'query_root', languages: Array<{ __typename?: 'languages', name: string, iso_code: string, id: number, uuid: any }> };
-
-export type GetProjectQueryVariables = Exact<{
-  projectUuid?: Maybe<Scalars['uuid']>;
-}>;
-
-
-export type GetProjectQuery = { __typename?: 'query_root', projects: Array<{ __typename?: 'projects', name: string, statuses: Array<{ __typename?: 'translation_statuses', uuid: any, name: string }>, branches: Array<{ __typename?: 'branches', id: number, uuid: any, name: string, branch_languages: Array<{ __typename?: 'branch_languages', uuid: any, language: { __typename?: 'languages', iso_code: string, name: string, uuid: any } }> }>, user_links: Array<{ __typename?: 'user_project_link', uuid: any, user: { __typename?: 'users', first_name: string, last_name: string, email: string, uuid: any } }>, company: { __typename?: 'companies', name: string, uuid: any } }> };
-
-export type GetTranslationsQueryVariables = Exact<{
-  branchUuid?: Maybe<Scalars['uuid']>;
-  offset?: Maybe<Scalars['Int']>;
-}>;
-
-
-export type GetTranslationsQuery = { __typename?: 'query_root', terms: Array<{ __typename?: 'terms', key: string, description?: string | null | undefined, uuid: any, id: number, translations: Array<{ __typename?: 'translations', translation_value?: string | null | undefined, uuid: any, id: number, status?: { __typename?: 'translation_statuses', name: string, uuid: any, id: number } | null | undefined, project_language: { __typename?: 'branch_languages', language: { __typename?: 'languages', iso_code: string, id: number, uuid: any } } }> }>, terms_aggregate: { __typename?: 'terms_aggregate', aggregate?: { __typename?: 'terms_aggregate_fields', count: number } | null | undefined } };
-
-export type GetTranslationsByLanguageCodesQueryVariables = Exact<{
-  branchUuid?: Maybe<Scalars['uuid']>;
-  languageCodes?: Maybe<Array<Scalars['String']> | Scalars['String']>;
-  offset?: Maybe<Scalars['Int']>;
-}>;
-
-
-export type GetTranslationsByLanguageCodesQuery = { __typename?: 'query_root', terms: Array<{ __typename?: 'terms', key: string, description?: string | null | undefined, uuid: any, id: number, translations: Array<{ __typename?: 'translations', translation_value?: string | null | undefined, uuid: any, id: number, status?: { __typename?: 'translation_statuses', name: string, uuid: any, id: number } | null | undefined, project_language: { __typename?: 'branch_languages', language: { __typename?: 'languages', iso_code: string, id: number, uuid: any } } }> }>, terms_aggregate: { __typename?: 'terms_aggregate', aggregate?: { __typename?: 'terms_aggregate_fields', count: number } | null | undefined } };
-
-export type UpdateTranslationValueMutationVariables = Exact<{
-  branchUuid?: Maybe<Scalars['uuid']>;
-  languageCode?: Maybe<Scalars['String']>;
-  translationKey?: Maybe<Scalars['String']>;
-  translationValue?: Maybe<Scalars['String']>;
-}>;
-
-
-export type UpdateTranslationValueMutation = { __typename?: 'mutation_root', update_translations?: { __typename?: 'translations_mutation_response', affected_rows: number } | null | undefined };
-
-
-export const AddBranchDocument = `
-    mutation addBranch($branchName: String, $projectId: Int) {
-  insert_branches(objects: {name: $branchName, project_id: $projectId}) {
-    returning {
-      uuid
-    }
-  }
-}
-    `;
-export const useAddBranchMutation = <
-      TError = unknown,
-      TContext = unknown
-    >(
-      dataSource: { endpoint: string, fetchParams?: RequestInit },
-      options?: UseMutationOptions<AddBranchMutation, TError, AddBranchMutationVariables, TContext>
-    ) =>
-    useMutation<AddBranchMutation, TError, AddBranchMutationVariables, TContext>(
-      (variables?: AddBranchMutationVariables) => fetcher<AddBranchMutation, AddBranchMutationVariables>(dataSource.endpoint, dataSource.fetchParams || {}, AddBranchDocument, variables)(),
-      options
-    );
-export const AddCompanyDocument = `
-    mutation addCompany($companyName: String) {
-  insert_companies(objects: {name: $companyName}) {
-    returning {
-      uuid
-    }
-  }
-}
-    `;
-export const useAddCompanyMutation = <
-      TError = unknown,
-      TContext = unknown
-    >(
-      dataSource: { endpoint: string, fetchParams?: RequestInit },
-      options?: UseMutationOptions<AddCompanyMutation, TError, AddCompanyMutationVariables, TContext>
-    ) =>
-    useMutation<AddCompanyMutation, TError, AddCompanyMutationVariables, TContext>(
-      (variables?: AddCompanyMutationVariables) => fetcher<AddCompanyMutation, AddCompanyMutationVariables>(dataSource.endpoint, dataSource.fetchParams || {}, AddCompanyDocument, variables)(),
-      options
-    );
-export const AddProjectDocument = `
-    mutation addProject($projectName: String, $companyId: Int) {
-  insert_projects(objects: {name: $projectName, company_id: $companyId}) {
-    returning {
-      uuid
-    }
-  }
-}
-    `;
-export const useAddProjectMutation = <
-      TError = unknown,
-      TContext = unknown
-    >(
-      dataSource: { endpoint: string, fetchParams?: RequestInit },
-      options?: UseMutationOptions<AddProjectMutation, TError, AddProjectMutationVariables, TContext>
-    ) =>
-    useMutation<AddProjectMutation, TError, AddProjectMutationVariables, TContext>(
-      (variables?: AddProjectMutationVariables) => fetcher<AddProjectMutation, AddProjectMutationVariables>(dataSource.endpoint, dataSource.fetchParams || {}, AddProjectDocument, variables)(),
-      options
-    );
-export const AddProjectLanguageLinksDocument = `
-    mutation addProjectLanguageLinks($branchLanguages: [branch_languages_insert_input!]!) {
-  insert_branch_languages(objects: $branchLanguages) {
-    returning {
-      uuid
-    }
-  }
-}
-    `;
-export const useAddProjectLanguageLinksMutation = <
-      TError = unknown,
-      TContext = unknown
-    >(
-      dataSource: { endpoint: string, fetchParams?: RequestInit },
-      options?: UseMutationOptions<AddProjectLanguageLinksMutation, TError, AddProjectLanguageLinksMutationVariables, TContext>
-    ) =>
-    useMutation<AddProjectLanguageLinksMutation, TError, AddProjectLanguageLinksMutationVariables, TContext>(
-      (variables?: AddProjectLanguageLinksMutationVariables) => fetcher<AddProjectLanguageLinksMutation, AddProjectLanguageLinksMutationVariables>(dataSource.endpoint, dataSource.fetchParams || {}, AddProjectLanguageLinksDocument, variables)(),
-      options
-    );
-export const GetBranchDocument = `
-    query getBranch($branchUuid: uuid) {
-  branches(where: {uuid: {_eq: $branchUuid}}) {
-    id
-    uuid
-    name
-    branch_languages {
-      language {
-        iso_code
-        name
-        uuid
-      }
-      uuid
-    }
-    project {
-      id
-      uuid
-      name
-      company {
-        id
-        uuid
-        name
-      }
-    }
-  }
-}
-    `;
-export const useGetBranchQuery = <
-      TData = GetBranchQuery,
-      TError = unknown
-    >(
-      dataSource: { endpoint: string, fetchParams?: RequestInit },
-      variables?: GetBranchQueryVariables,
-      options?: UseQueryOptions<GetBranchQuery, TError, TData>
-    ) =>
-    useQuery<GetBranchQuery, TError, TData>(
-      variables === undefined ? ['getBranch'] : ['getBranch', variables],
-      fetcher<GetBranchQuery, GetBranchQueryVariables>(dataSource.endpoint, dataSource.fetchParams || {}, GetBranchDocument, variables),
-      options
-    );
-useGetBranchQuery.getKey = (variables?: GetBranchQueryVariables) => variables === undefined ? ['getBranch'] : ['getBranch', variables];
-
-export const GetCompaniesAndProjectsDocument = `
-    query getCompaniesAndProjects($userUuid: uuid) {
-  companies(where: {projects: {user_links: {user: {uuid: {_eq: $userUuid}}}}}) {
-    name
-    uuid
-    id
-    projects {
-      name
-      uuid
-      id
-      branches {
-        id
-        uuid
-        name
-        branch_languages {
-          uuid
-          language {
-            iso_code
-            uuid
-            id
-          }
-        }
-      }
-      name
-      uuid
-      id
-    }
-  }
-}
-    `;
-export const useGetCompaniesAndProjectsQuery = <
-      TData = GetCompaniesAndProjectsQuery,
-      TError = unknown
-    >(
-      dataSource: { endpoint: string, fetchParams?: RequestInit },
-      variables?: GetCompaniesAndProjectsQueryVariables,
-      options?: UseQueryOptions<GetCompaniesAndProjectsQuery, TError, TData>
-    ) =>
-    useQuery<GetCompaniesAndProjectsQuery, TError, TData>(
-      variables === undefined ? ['getCompaniesAndProjects'] : ['getCompaniesAndProjects', variables],
-      fetcher<GetCompaniesAndProjectsQuery, GetCompaniesAndProjectsQueryVariables>(dataSource.endpoint, dataSource.fetchParams || {}, GetCompaniesAndProjectsDocument, variables),
-      options
-    );
-useGetCompaniesAndProjectsQuery.getKey = (variables?: GetCompaniesAndProjectsQueryVariables) => variables === undefined ? ['getCompaniesAndProjects'] : ['getCompaniesAndProjects', variables];
-
-export const GetCompanyDocument = `
-    query getCompany($companyUuid: uuid) {
-  companies(where: {uuid: {_eq: $companyUuid}}) {
-    name
-    uuid
-    projects {
-      name
-      uuid
-    }
-    user_links {
-      user {
-        uuid
-        first_name
-        last_name
-        email
-      }
-    }
-  }
-}
-    `;
-export const useGetCompanyQuery = <
-      TData = GetCompanyQuery,
-      TError = unknown
-    >(
-      dataSource: { endpoint: string, fetchParams?: RequestInit },
-      variables?: GetCompanyQueryVariables,
-      options?: UseQueryOptions<GetCompanyQuery, TError, TData>
-    ) =>
-    useQuery<GetCompanyQuery, TError, TData>(
-      variables === undefined ? ['getCompany'] : ['getCompany', variables],
-      fetcher<GetCompanyQuery, GetCompanyQueryVariables>(dataSource.endpoint, dataSource.fetchParams || {}, GetCompanyDocument, variables),
-      options
-    );
-useGetCompanyQuery.getKey = (variables?: GetCompanyQueryVariables) => variables === undefined ? ['getCompany'] : ['getCompany', variables];
-
-export const GetLanguagesDocument = `
-    query getLanguages {
-  languages {
-    name
-    iso_code
-    id
-    uuid
-  }
-}
-    `;
-export const useGetLanguagesQuery = <
-      TData = GetLanguagesQuery,
-      TError = unknown
-    >(
-      dataSource: { endpoint: string, fetchParams?: RequestInit },
-      variables?: GetLanguagesQueryVariables,
-      options?: UseQueryOptions<GetLanguagesQuery, TError, TData>
-    ) =>
-    useQuery<GetLanguagesQuery, TError, TData>(
-      variables === undefined ? ['getLanguages'] : ['getLanguages', variables],
-      fetcher<GetLanguagesQuery, GetLanguagesQueryVariables>(dataSource.endpoint, dataSource.fetchParams || {}, GetLanguagesDocument, variables),
-      options
-    );
-useGetLanguagesQuery.getKey = (variables?: GetLanguagesQueryVariables) => variables === undefined ? ['getLanguages'] : ['getLanguages', variables];
-
-export const GetProjectDocument = `
-    query getProject($projectUuid: uuid) {
-  projects(where: {uuid: {_eq: $projectUuid}}) {
-    name
-    statuses {
-      uuid
-      name
-    }
-    branches {
-      id
-      uuid
-      name
-      branch_languages {
-        language {
-          iso_code
-          name
-          uuid
-        }
-        uuid
-      }
-    }
-    user_links {
-      user {
-        first_name
-        last_name
-        email
-        uuid
-      }
-      uuid
-    }
-    company {
-      name
-      uuid
-    }
-  }
-}
-    `;
-export const useGetProjectQuery = <
-      TData = GetProjectQuery,
-      TError = unknown
-    >(
-      dataSource: { endpoint: string, fetchParams?: RequestInit },
-      variables?: GetProjectQueryVariables,
-      options?: UseQueryOptions<GetProjectQuery, TError, TData>
-    ) =>
-    useQuery<GetProjectQuery, TError, TData>(
-      variables === undefined ? ['getProject'] : ['getProject', variables],
-      fetcher<GetProjectQuery, GetProjectQueryVariables>(dataSource.endpoint, dataSource.fetchParams || {}, GetProjectDocument, variables),
-      options
-    );
-useGetProjectQuery.getKey = (variables?: GetProjectQueryVariables) => variables === undefined ? ['getProject'] : ['getProject', variables];
-
-export const GetTranslationsDocument = `
-    query getTranslations($branchUuid: uuid, $offset: Int) {
-  terms(where: {branch: {uuid: {_eq: $branchUuid}}}, limit: 100, offset: $offset) {
-    key
-    description
-    translations {
-      translation_value
-      status {
-        name
-        uuid
-        id
-      }
-      uuid
-      id
-      project_language {
-        language {
-          iso_code
-          id
-          uuid
-        }
-      }
-    }
-    uuid
-    id
-  }
-  terms_aggregate(
-    where: {branch: {uuid: {_eq: $branchUuid}}}
-    limit: 100
-    offset: $offset
+export const AddBranchDocument = gql`
+    mutation addBranch($branchName: String, $projectId: Int, $fromBranchId: Int) {
+  insert_branches(
+    objects: {name: $branchName, project_id: $projectId, parent_branch_id: $fromBranchId}
   ) {
-    aggregate {
-      count
-    }
-  }
-}
-    `;
-export const useGetTranslationsQuery = <
-      TData = GetTranslationsQuery,
-      TError = unknown
-    >(
-      dataSource: { endpoint: string, fetchParams?: RequestInit },
-      variables?: GetTranslationsQueryVariables,
-      options?: UseQueryOptions<GetTranslationsQuery, TError, TData>
-    ) =>
-    useQuery<GetTranslationsQuery, TError, TData>(
-      variables === undefined ? ['getTranslations'] : ['getTranslations', variables],
-      fetcher<GetTranslationsQuery, GetTranslationsQueryVariables>(dataSource.endpoint, dataSource.fetchParams || {}, GetTranslationsDocument, variables),
-      options
-    );
-useGetTranslationsQuery.getKey = (variables?: GetTranslationsQueryVariables) => variables === undefined ? ['getTranslations'] : ['getTranslations', variables];
-
-export const GetTranslationsByLanguageCodesDocument = `
-    query getTranslationsByLanguageCodes($branchUuid: uuid, $languageCodes: [String!], $offset: Int) {
-  terms(where: {branch: {uuid: {_eq: $branchUuid}}}, limit: 100, offset: $offset) {
-    key
-    description
-    translations(
-      where: {project_language: {language: {iso_code: {_in: $languageCodes}}}}
-    ) {
-      translation_value
-      status {
-        name
-        uuid
-        id
-      }
+    returning {
       uuid
-      id
-      project_language {
-        language {
-          iso_code
-          id
-          uuid
-        }
-      }
-    }
-    uuid
-    id
-  }
-  terms_aggregate(
-    where: {branch: {uuid: {_eq: $branchUuid}}}
-    limit: 100
-    offset: $offset
-  ) {
-    aggregate {
-      count
     }
   }
 }
     `;
-export const useGetTranslationsByLanguageCodesQuery = <
-      TData = GetTranslationsByLanguageCodesQuery,
-      TError = unknown
-    >(
-      dataSource: { endpoint: string, fetchParams?: RequestInit },
-      variables?: GetTranslationsByLanguageCodesQueryVariables,
-      options?: UseQueryOptions<GetTranslationsByLanguageCodesQuery, TError, TData>
-    ) =>
-    useQuery<GetTranslationsByLanguageCodesQuery, TError, TData>(
-      variables === undefined ? ['getTranslationsByLanguageCodes'] : ['getTranslationsByLanguageCodes', variables],
-      fetcher<GetTranslationsByLanguageCodesQuery, GetTranslationsByLanguageCodesQueryVariables>(dataSource.endpoint, dataSource.fetchParams || {}, GetTranslationsByLanguageCodesDocument, variables),
-      options
-    );
-useGetTranslationsByLanguageCodesQuery.getKey = (variables?: GetTranslationsByLanguageCodesQueryVariables) => variables === undefined ? ['getTranslationsByLanguageCodes'] : ['getTranslationsByLanguageCodes', variables];
 
-export const UpdateTranslationValueDocument = `
-    mutation updateTranslationValue($branchUuid: uuid, $languageCode: String, $translationKey: String, $translationValue: String) {
-  update_translations(
-    where: {project_language: {language: {iso_code: {_eq: $languageCode}}, branch: {uuid: {_eq: $branchUuid}}}, term: {key: {_eq: $translationKey}}}
-    _set: {translation_value: $translationValue}
-  ) {
-    affected_rows
-  }
+export type SdkFunctionWrapper = <T>(action: (requestHeaders?:Record<string, string>) => Promise<T>, operationName: string) => Promise<T>;
+
+
+const defaultWrapper: SdkFunctionWrapper = (action, _operationName) => action();
+
+export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = defaultWrapper) {
+  return {
+    addBranch(variables?: AddBranchMutationVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<AddBranchMutation> {
+      return withWrapper((wrappedRequestHeaders) => client.request<AddBranchMutation>(AddBranchDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'addBranch');
+    }
+  };
 }
-    `;
-export const useUpdateTranslationValueMutation = <
-      TError = unknown,
-      TContext = unknown
-    >(
-      dataSource: { endpoint: string, fetchParams?: RequestInit },
-      options?: UseMutationOptions<UpdateTranslationValueMutation, TError, UpdateTranslationValueMutationVariables, TContext>
-    ) =>
-    useMutation<UpdateTranslationValueMutation, TError, UpdateTranslationValueMutationVariables, TContext>(
-      (variables?: UpdateTranslationValueMutationVariables) => fetcher<UpdateTranslationValueMutation, UpdateTranslationValueMutationVariables>(dataSource.endpoint, dataSource.fetchParams || {}, UpdateTranslationValueDocument, variables)(),
-      options
-    );
+export type Sdk = ReturnType<typeof getSdk>;

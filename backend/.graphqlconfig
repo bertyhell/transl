@@ -1,0 +1,12 @@
+{
+  "name": "Transl GraphQL Schema",
+  "schemaPath": "schema.graphql",
+  "extensions": {
+    "endpoints": {
+      "Default GraphQL Endpoint": {
+        "url": "http://localhost:8080/v1/graphql",
+        "introspect": false
+      }
+    }
+  }
+}

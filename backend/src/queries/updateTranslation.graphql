@@ -1,5 +1,0 @@
-mutation updateTranslationValue($branchUuid: uuid, $languageCode: String, $translationKey: String, $translationValue: String) {
-    update_translations(where: {project_language: {language: {iso_code: {_eq: $languageCode}}, branch: {uuid: {_eq: $branchUuid}}}, term: {key: {_eq: $translationKey}}}, _set: {translation_value: $translationValue}) {
-        affected_rows
-    }
-}

@@ -1,10 +1,4 @@
 export interface NewTranslationEventBody {
-  payload: Payload;
-  headers: Header[];
-  version: string;
-}
-
-export interface Payload {
   event: Event;
   created_at: string;
   id: string;
@@ -49,6 +43,7 @@ export interface TranslationEvent {
   date: string;
   id: number;
   language_id: any;
+  project_id: number;
 }
 
 export interface TraceContext {

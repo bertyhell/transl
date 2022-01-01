@@ -1,11 +1,11 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { TranslationEventController } from './translation-event/translation-event.controller';
+import { TranslationEventModule } from './modules/translation-event/translation-event.module';
 
 @Module({
-  imports: [],
-  controllers: [AppController, TranslationEventController],
+  imports: [TranslationEventModule],
+  controllers: [AppController],
   providers: [AppService],
 })
 export class AppModule {}

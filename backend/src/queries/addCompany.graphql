@@ -1,7 +1,0 @@
-mutation addCompany($companyName: String) {
-    insert_companies(objects: {name: $companyName}) {
-        returning {
-            uuid
-        }
-    }
-}

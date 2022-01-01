@@ -200,6 +200,7 @@ export function Sidebar({ className }: Props) {
         onClose={() => setIsAddProjectModalOpen(false)}
       />
       <AddBranchModal
+        initialBranch={selectedBranch}
         initialCompany={selectedCompany}
         initialProject={selectedProject}
         isOpen={isAddBranchModalOpen}

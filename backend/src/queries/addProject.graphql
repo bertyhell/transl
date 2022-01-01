@@ -1,7 +1,0 @@
-mutation addProject($projectName: String, $companyId: Int) {
-    insert_projects(objects: {name: $projectName, company_id: $companyId}) {
-        returning {
-            uuid
-        }
-    }
-}
