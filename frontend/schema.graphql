@@ -181,8 +181,38 @@ type branches {
         "filter the rows returned"
         where: branch_languages_bool_exp
     ): branch_languages_aggregate!
+    "An array relationship"
+    child_branches(
+        "distinct select on columns"
+        distinct_on: [branches_select_column!],
+        "limit the number of rows returned"
+        limit: Int,
+        "skip the first n rows. Use only with order_by"
+        offset: Int,
+        "sort the rows by one or more columns"
+        order_by: [branches_order_by!],
+        "filter the rows returned"
+        where: branches_bool_exp
+    ): [branches!]!
+    "An aggregate relationship"
+    child_branches_aggregate(
+        "distinct select on columns"
+        distinct_on: [branches_select_column!],
+        "limit the number of rows returned"
+        limit: Int,
+        "skip the first n rows. Use only with order_by"
+        offset: Int,
+        "sort the rows by one or more columns"
+        order_by: [branches_order_by!],
+        "filter the rows returned"
+        where: branches_bool_exp
+    ): branches_aggregate!
+    date: timestamptz!
     id: Int!
     name: String!
+    "An object relationship"
+    parent_branch: branches
+    parent_branch_id: Int
     "An object relationship"
     project: projects!
     project_id: Int!
@@ -239,21 +269,26 @@ type branches_aggregate_fields {
 "aggregate avg on columns"
 type branches_avg_fields {
     id: Float
+    parent_branch_id: Float
     project_id: Float
 }
 
 "aggregate max on columns"
 type branches_max_fields {
+    date: timestamptz
     id: Int
     name: String
+    parent_branch_id: Int
     project_id: Int
     uuid: uuid
 }
 
 "aggregate min on columns"
 type branches_min_fields {
+    date: timestamptz
     id: Int
     name: String
+    parent_branch_id: Int
     project_id: Int
     uuid: uuid
 }
@@ -269,42 +304,49 @@ type branches_mutation_response {
 "aggregate stddev on columns"
 type branches_stddev_fields {
     id: Float
+    parent_branch_id: Float
     project_id: Float
 }
 
 "aggregate stddev_pop on columns"
 type branches_stddev_pop_fields {
     id: Float
+    parent_branch_id: Float
     project_id: Float
 }
 
 "aggregate stddev_samp on columns"
 type branches_stddev_samp_fields {
     id: Float
+    parent_branch_id: Float
     project_id: Float
 }
 
 "aggregate sum on columns"
 type branches_sum_fields {
     id: Int
+    parent_branch_id: Int
     project_id: Int
 }
 
 "aggregate var_pop on columns"
 type branches_var_pop_fields {
     id: Float
+    parent_branch_id: Float
     project_id: Float
 }
 
 "aggregate var_samp on columns"
 type branches_var_samp_fields {
     id: Float
+    parent_branch_id: Float
     project_id: Float
 }
 
 "aggregate variance on columns"
 type branches_variance_fields {
     id: Float
+    parent_branch_id: Float
     project_id: Float
 }
 
@@ -733,6 +775,13 @@ type mutation_root {
     ): terms_mutation_response
     "delete single row from the table: \"terms\""
     delete_terms_by_pk(id: Int!): terms
+    "delete data from the table: \"translation_events\""
+    delete_translation_events(
+        "filter the rows which have to be deleted"
+        where: translation_events_bool_exp!
+    ): translation_events_mutation_response
+    "delete single row from the table: \"translation_events\""
+    delete_translation_events_by_pk(id: Int!): translation_events
     "delete data from the table: \"translation_statuses\""
     delete_translation_statuses(
         "filter the rows which have to be deleted"
@@ -859,6 +908,20 @@ type mutation_root {
         "on conflict condition"
         on_conflict: terms_on_conflict
     ): terms
+    "insert data into the table: \"translation_events\""
+    insert_translation_events(
+        "the rows to be inserted"
+        objects: [translation_events_insert_input!]!,
+        "on conflict condition"
+        on_conflict: translation_events_on_conflict
+    ): translation_events_mutation_response
+    "insert a single row into the table: \"translation_events\""
+    insert_translation_events_one(
+        "the row to be inserted"
+        object: translation_events_insert_input!,
+        "on conflict condition"
+        on_conflict: translation_events_on_conflict
+    ): translation_events
     "insert data into the table: \"translation_statuses\""
     insert_translation_statuses(
         "the rows to be inserted"
@@ -1034,6 +1097,23 @@ type mutation_root {
         _set: terms_set_input,
         pk_columns: terms_pk_columns_input!
     ): terms
+    "update data of the table: \"translation_events\""
+    update_translation_events(
+        "increments the numeric columns with given value of the filtered values"
+        _inc: translation_events_inc_input,
+        "sets the columns of the filtered rows to the given values"
+        _set: translation_events_set_input,
+        "filter the rows which have to be updated"
+        where: translation_events_bool_exp!
+    ): translation_events_mutation_response
+    "update single row of the table: \"translation_events\""
+    update_translation_events_by_pk(
+        "increments the numeric columns with given value of the filtered values"
+        _inc: translation_events_inc_input,
+        "sets the columns of the filtered rows to the given values"
+        _set: translation_events_set_input,
+        pk_columns: translation_events_pk_columns_input!
+    ): translation_events
     "update data of the table: \"translation_statuses\""
     update_translation_statuses(
         "increments the numeric columns with given value of the filtered values"
@@ -1482,6 +1562,34 @@ type query_root {
     ): terms_aggregate!
     "fetch data from the table: \"terms\" using primary key columns"
     terms_by_pk(id: Int!): terms
+    "fetch data from the table: \"translation_events\""
+    translation_events(
+        "distinct select on columns"
+        distinct_on: [translation_events_select_column!],
+        "limit the number of rows returned"
+        limit: Int,
+        "skip the first n rows. Use only with order_by"
+        offset: Int,
+        "sort the rows by one or more columns"
+        order_by: [translation_events_order_by!],
+        "filter the rows returned"
+        where: translation_events_bool_exp
+    ): [translation_events!]!
+    "fetch aggregated fields from the table: \"translation_events\""
+    translation_events_aggregate(
+        "distinct select on columns"
+        distinct_on: [translation_events_select_column!],
+        "limit the number of rows returned"
+        limit: Int,
+        "skip the first n rows. Use only with order_by"
+        offset: Int,
+        "sort the rows by one or more columns"
+        order_by: [translation_events_order_by!],
+        "filter the rows returned"
+        where: translation_events_bool_exp
+    ): translation_events_aggregate!
+    "fetch data from the table: \"translation_events\" using primary key columns"
+    translation_events_by_pk(id: Int!): translation_events
     "fetch data from the table: \"translation_statuses\""
     translation_statuses(
         "distinct select on columns"
@@ -1793,6 +1901,34 @@ type subscription_root {
     ): terms_aggregate!
     "fetch data from the table: \"terms\" using primary key columns"
     terms_by_pk(id: Int!): terms
+    "fetch data from the table: \"translation_events\""
+    translation_events(
+        "distinct select on columns"
+        distinct_on: [translation_events_select_column!],
+        "limit the number of rows returned"
+        limit: Int,
+        "skip the first n rows. Use only with order_by"
+        offset: Int,
+        "sort the rows by one or more columns"
+        order_by: [translation_events_order_by!],
+        "filter the rows returned"
+        where: translation_events_bool_exp
+    ): [translation_events!]!
+    "fetch aggregated fields from the table: \"translation_events\""
+    translation_events_aggregate(
+        "distinct select on columns"
+        distinct_on: [translation_events_select_column!],
+        "limit the number of rows returned"
+        limit: Int,
+        "skip the first n rows. Use only with order_by"
+        offset: Int,
+        "sort the rows by one or more columns"
+        order_by: [translation_events_order_by!],
+        "filter the rows returned"
+        where: translation_events_bool_exp
+    ): translation_events_aggregate!
+    "fetch data from the table: \"translation_events\" using primary key columns"
+    translation_events_by_pk(id: Int!): translation_events
     "fetch data from the table: \"translation_statuses\""
     translation_statuses(
         "distinct select on columns"
@@ -2037,6 +2173,149 @@ type terms_var_samp_fields {
 type terms_variance_fields {
     branch_id: Float
     id: Float
+}
+
+"columns and relationships of \"translation_events\""
+type translation_events {
+    branch_id: Int
+    date: timestamptz!
+    id: Int!
+    language_id: Int
+    "possible values: add_branch, merge_branch, delete_branch, add_term, delete_term, update_term, add_translation, update_translation, delete_translation"
+    operation: String!
+    project_id: Int!
+    term_id: Int
+    uuid: uuid!
+    value: String
+}
+
+"aggregated selection of \"translation_events\""
+type translation_events_aggregate {
+    aggregate: translation_events_aggregate_fields
+    nodes: [translation_events!]!
+}
+
+"aggregate fields of \"translation_events\""
+type translation_events_aggregate_fields {
+    avg: translation_events_avg_fields
+    count(columns: [translation_events_select_column!], distinct: Boolean): Int!
+    max: translation_events_max_fields
+    min: translation_events_min_fields
+    stddev: translation_events_stddev_fields
+    stddev_pop: translation_events_stddev_pop_fields
+    stddev_samp: translation_events_stddev_samp_fields
+    sum: translation_events_sum_fields
+    var_pop: translation_events_var_pop_fields
+    var_samp: translation_events_var_samp_fields
+    variance: translation_events_variance_fields
+}
+
+"aggregate avg on columns"
+type translation_events_avg_fields {
+    branch_id: Float
+    id: Float
+    language_id: Float
+    project_id: Float
+    term_id: Float
+}
+
+"aggregate max on columns"
+type translation_events_max_fields {
+    branch_id: Int
+    date: timestamptz
+    id: Int
+    language_id: Int
+    "possible values: add_branch, merge_branch, delete_branch, add_term, delete_term, update_term, add_translation, update_translation, delete_translation"
+    operation: String
+    project_id: Int
+    term_id: Int
+    uuid: uuid
+    value: String
+}
+
+"aggregate min on columns"
+type translation_events_min_fields {
+    branch_id: Int
+    date: timestamptz
+    id: Int
+    language_id: Int
+    "possible values: add_branch, merge_branch, delete_branch, add_term, delete_term, update_term, add_translation, update_translation, delete_translation"
+    operation: String
+    project_id: Int
+    term_id: Int
+    uuid: uuid
+    value: String
+}
+
+"response of any mutation on the table \"translation_events\""
+type translation_events_mutation_response {
+    "number of rows affected by the mutation"
+    affected_rows: Int!
+    "data from the rows affected by the mutation"
+    returning: [translation_events!]!
+}
+
+"aggregate stddev on columns"
+type translation_events_stddev_fields {
+    branch_id: Float
+    id: Float
+    language_id: Float
+    project_id: Float
+    term_id: Float
+}
+
+"aggregate stddev_pop on columns"
+type translation_events_stddev_pop_fields {
+    branch_id: Float
+    id: Float
+    language_id: Float
+    project_id: Float
+    term_id: Float
+}
+
+"aggregate stddev_samp on columns"
+type translation_events_stddev_samp_fields {
+    branch_id: Float
+    id: Float
+    language_id: Float
+    project_id: Float
+    term_id: Float
+}
+
+"aggregate sum on columns"
+type translation_events_sum_fields {
+    branch_id: Int
+    id: Int
+    language_id: Int
+    project_id: Int
+    term_id: Int
+}
+
+"aggregate var_pop on columns"
+type translation_events_var_pop_fields {
+    branch_id: Float
+    id: Float
+    language_id: Float
+    project_id: Float
+    term_id: Float
+}
+
+"aggregate var_samp on columns"
+type translation_events_var_samp_fields {
+    branch_id: Float
+    id: Float
+    language_id: Float
+    project_id: Float
+    term_id: Float
+}
+
+"aggregate variance on columns"
+type translation_events_variance_fields {
+    branch_id: Float
+    id: Float
+    language_id: Float
+    project_id: Float
+    term_id: Float
 }
 
 "columns and relationships of \"translation_statuses\""
@@ -2604,9 +2883,13 @@ enum branches_constraint {
 "select columns of table \"branches\""
 enum branches_select_column {
     "column name"
+    date
+    "column name"
     id
     "column name"
     name
+    "column name"
+    parent_branch_id
     "column name"
     project_id
     "column name"
@@ -2616,9 +2899,13 @@ enum branches_select_column {
 "update columns of table \"branches\""
 enum branches_update_column {
     "column name"
+    date
+    "column name"
     id
     "column name"
     name
+    "column name"
+    parent_branch_id
     "column name"
     project_id
     "column name"
@@ -2801,6 +3088,58 @@ enum terms_update_column {
     uuid
 }
 
+"unique or primary key constraints on table \"translation_events\""
+enum translation_events_constraint {
+    "unique or primary key constraint"
+    translation_events_pkey
+    "unique or primary key constraint"
+    translation_events_uuid_key
+}
+
+"select columns of table \"translation_events\""
+enum translation_events_select_column {
+    "column name"
+    branch_id
+    "column name"
+    date
+    "column name"
+    id
+    "column name"
+    language_id
+    "column name"
+    operation
+    "column name"
+    project_id
+    "column name"
+    term_id
+    "column name"
+    uuid
+    "column name"
+    value
+}
+
+"update columns of table \"translation_events\""
+enum translation_events_update_column {
+    "column name"
+    branch_id
+    "column name"
+    date
+    "column name"
+    id
+    "column name"
+    language_id
+    "column name"
+    operation
+    "column name"
+    project_id
+    "column name"
+    term_id
+    "column name"
+    uuid
+    "column name"
+    value
+}
+
 "unique or primary key constraints on table \"translation_statuses\""
 enum translation_statuses_constraint {
     "unique or primary key constraint"
@@ -2944,6 +3283,8 @@ enum users_update_column {
     "column name"
     uuid
 }
+
+scalar timestamptz
 
 scalar uuid
 
@@ -3182,6 +3523,7 @@ input branches_arr_rel_insert_input {
 "order by avg() on columns of table \"branches\""
 input branches_avg_order_by {
     id: order_by
+    parent_branch_id: order_by
     project_id: order_by
 }
 
@@ -3191,8 +3533,12 @@ input branches_bool_exp {
     _not: branches_bool_exp
     _or: [branches_bool_exp!]
     branch_languages: branch_languages_bool_exp
+    child_branches: branches_bool_exp
+    date: timestamptz_comparison_exp
     id: Int_comparison_exp
     name: String_comparison_exp
+    parent_branch: branches_bool_exp
+    parent_branch_id: Int_comparison_exp
     project: projects_bool_exp
     project_id: Int_comparison_exp
     terms: terms_bool_exp
@@ -3202,14 +3548,19 @@ input branches_bool_exp {
 "input type for incrementing numeric columns in table \"branches\""
 input branches_inc_input {
     id: Int
+    parent_branch_id: Int
     project_id: Int
 }
 
 "input type for inserting data into table \"branches\""
 input branches_insert_input {
     branch_languages: branch_languages_arr_rel_insert_input
+    child_branches: branches_arr_rel_insert_input
+    date: timestamptz
     id: Int
     name: String
+    parent_branch: branches_obj_rel_insert_input
+    parent_branch_id: Int
     project: projects_obj_rel_insert_input
     project_id: Int
     terms: terms_arr_rel_insert_input
@@ -3218,16 +3569,20 @@ input branches_insert_input {
 
 "order by max() on columns of table \"branches\""
 input branches_max_order_by {
+    date: order_by
     id: order_by
     name: order_by
+    parent_branch_id: order_by
     project_id: order_by
     uuid: order_by
 }
 
 "order by min() on columns of table \"branches\""
 input branches_min_order_by {
+    date: order_by
     id: order_by
     name: order_by
+    parent_branch_id: order_by
     project_id: order_by
     uuid: order_by
 }
@@ -3249,8 +3604,12 @@ input branches_on_conflict {
 "Ordering options when selecting data from \"branches\"."
 input branches_order_by {
     branch_languages_aggregate: branch_languages_aggregate_order_by
+    child_branches_aggregate: branches_aggregate_order_by
+    date: order_by
     id: order_by
     name: order_by
+    parent_branch: branches_order_by
+    parent_branch_id: order_by
     project: projects_order_by
     project_id: order_by
     terms_aggregate: terms_aggregate_order_by
@@ -3264,8 +3623,10 @@ input branches_pk_columns_input {
 
 "input type for updating data in table \"branches\""
 input branches_set_input {
+    date: timestamptz
     id: Int
     name: String
+    parent_branch_id: Int
     project_id: Int
     uuid: uuid
 }
@@ -3273,42 +3634,49 @@ input branches_set_input {
 "order by stddev() on columns of table \"branches\""
 input branches_stddev_order_by {
     id: order_by
+    parent_branch_id: order_by
     project_id: order_by
 }
 
 "order by stddev_pop() on columns of table \"branches\""
 input branches_stddev_pop_order_by {
     id: order_by
+    parent_branch_id: order_by
     project_id: order_by
 }
 
 "order by stddev_samp() on columns of table \"branches\""
 input branches_stddev_samp_order_by {
     id: order_by
+    parent_branch_id: order_by
     project_id: order_by
 }
 
 "order by sum() on columns of table \"branches\""
 input branches_sum_order_by {
     id: order_by
+    parent_branch_id: order_by
     project_id: order_by
 }
 
 "order by var_pop() on columns of table \"branches\""
 input branches_var_pop_order_by {
     id: order_by
+    parent_branch_id: order_by
     project_id: order_by
 }
 
 "order by var_samp() on columns of table \"branches\""
 input branches_var_samp_order_by {
     id: order_by
+    parent_branch_id: order_by
     project_id: order_by
 }
 
 "order by variance() on columns of table \"branches\""
 input branches_variance_order_by {
     id: order_by
+    parent_branch_id: order_by
     project_id: order_by
 }
 
@@ -3903,6 +4271,97 @@ input terms_var_samp_order_by {
 input terms_variance_order_by {
     branch_id: order_by
     id: order_by
+}
+
+"Boolean expression to compare columns of type \"timestamptz\". All fields are combined with logical 'AND'."
+input timestamptz_comparison_exp {
+    _eq: timestamptz
+    _gt: timestamptz
+    _gte: timestamptz
+    _in: [timestamptz!]
+    _is_null: Boolean
+    _lt: timestamptz
+    _lte: timestamptz
+    _neq: timestamptz
+    _nin: [timestamptz!]
+}
+
+"Boolean expression to filter rows from the table \"translation_events\". All fields are combined with a logical 'AND'."
+input translation_events_bool_exp {
+    _and: [translation_events_bool_exp!]
+    _not: translation_events_bool_exp
+    _or: [translation_events_bool_exp!]
+    branch_id: Int_comparison_exp
+    date: timestamptz_comparison_exp
+    id: Int_comparison_exp
+    language_id: Int_comparison_exp
+    operation: String_comparison_exp
+    project_id: Int_comparison_exp
+    term_id: Int_comparison_exp
+    uuid: uuid_comparison_exp
+    value: String_comparison_exp
+}
+
+"input type for incrementing numeric columns in table \"translation_events\""
+input translation_events_inc_input {
+    branch_id: Int
+    id: Int
+    language_id: Int
+    project_id: Int
+    term_id: Int
+}
+
+"input type for inserting data into table \"translation_events\""
+input translation_events_insert_input {
+    branch_id: Int
+    date: timestamptz
+    id: Int
+    language_id: Int
+    "possible values: add_branch, merge_branch, delete_branch, add_term, delete_term, update_term, add_translation, update_translation, delete_translation"
+    operation: String
+    project_id: Int
+    term_id: Int
+    uuid: uuid
+    value: String
+}
+
+"on conflict condition type for table \"translation_events\""
+input translation_events_on_conflict {
+    constraint: translation_events_constraint!
+    update_columns: [translation_events_update_column!]! = []
+    where: translation_events_bool_exp
+}
+
+"Ordering options when selecting data from \"translation_events\"."
+input translation_events_order_by {
+    branch_id: order_by
+    date: order_by
+    id: order_by
+    language_id: order_by
+    operation: order_by
+    project_id: order_by
+    term_id: order_by
+    uuid: order_by
+    value: order_by
+}
+
+"primary key columns input for table: translation_events"
+input translation_events_pk_columns_input {
+    id: Int!
+}
+
+"input type for updating data in table \"translation_events\""
+input translation_events_set_input {
+    branch_id: Int
+    date: timestamptz
+    id: Int
+    language_id: Int
+    "possible values: add_branch, merge_branch, delete_branch, add_term, delete_term, update_term, add_translation, update_translation, delete_translation"
+    operation: String
+    project_id: Int
+    term_id: Int
+    uuid: uuid
+    value: String
 }
 
 "order by aggregate values of table \"translation_statuses\""

@@ -442,9 +442,15 @@ export type Branches = {
   branch_languages: Array<Branch_Languages>;
   /** An aggregate relationship */
   branch_languages_aggregate: Branch_Languages_Aggregate;
+  /** An array relationship */
+  child_branches: Array<Branches>;
+  /** An aggregate relationship */
+  child_branches_aggregate: Branches_Aggregate;
   date: Scalars['timestamptz'];
   id: Scalars['Int'];
   name: Scalars['String'];
+  /** An object relationship */
+  parent_branch?: Maybe<Branches>;
   parent_branch_id?: Maybe<Scalars['Int']>;
   /** An object relationship */
   project: Projects;
@@ -474,6 +480,26 @@ export type BranchesBranch_Languages_AggregateArgs = {
   offset?: InputMaybe<Scalars['Int']>;
   order_by?: InputMaybe<Array<Branch_Languages_Order_By>>;
   where?: InputMaybe<Branch_Languages_Bool_Exp>;
+};
+
+
+/** columns and relationships of "branches" */
+export type BranchesChild_BranchesArgs = {
+  distinct_on?: InputMaybe<Array<Branches_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Branches_Order_By>>;
+  where?: InputMaybe<Branches_Bool_Exp>;
+};
+
+
+/** columns and relationships of "branches" */
+export type BranchesChild_Branches_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Branches_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Branches_Order_By>>;
+  where?: InputMaybe<Branches_Bool_Exp>;
 };
 
 
@@ -569,9 +595,11 @@ export type Branches_Bool_Exp = {
   _not?: InputMaybe<Branches_Bool_Exp>;
   _or?: InputMaybe<Array<Branches_Bool_Exp>>;
   branch_languages?: InputMaybe<Branch_Languages_Bool_Exp>;
+  child_branches?: InputMaybe<Branches_Bool_Exp>;
   date?: InputMaybe<Timestamptz_Comparison_Exp>;
   id?: InputMaybe<Int_Comparison_Exp>;
   name?: InputMaybe<String_Comparison_Exp>;
+  parent_branch?: InputMaybe<Branches_Bool_Exp>;
   parent_branch_id?: InputMaybe<Int_Comparison_Exp>;
   project?: InputMaybe<Projects_Bool_Exp>;
   project_id?: InputMaybe<Int_Comparison_Exp>;
@@ -597,9 +625,11 @@ export type Branches_Inc_Input = {
 /** input type for inserting data into table "branches" */
 export type Branches_Insert_Input = {
   branch_languages?: InputMaybe<Branch_Languages_Arr_Rel_Insert_Input>;
+  child_branches?: InputMaybe<Branches_Arr_Rel_Insert_Input>;
   date?: InputMaybe<Scalars['timestamptz']>;
   id?: InputMaybe<Scalars['Int']>;
   name?: InputMaybe<Scalars['String']>;
+  parent_branch?: InputMaybe<Branches_Obj_Rel_Insert_Input>;
   parent_branch_id?: InputMaybe<Scalars['Int']>;
   project?: InputMaybe<Projects_Obj_Rel_Insert_Input>;
   project_id?: InputMaybe<Scalars['Int']>;
@@ -675,9 +705,11 @@ export type Branches_On_Conflict = {
 /** Ordering options when selecting data from "branches". */
 export type Branches_Order_By = {
   branch_languages_aggregate?: InputMaybe<Branch_Languages_Aggregate_Order_By>;
+  child_branches_aggregate?: InputMaybe<Branches_Aggregate_Order_By>;
   date?: InputMaybe<Order_By>;
   id?: InputMaybe<Order_By>;
   name?: InputMaybe<Order_By>;
+  parent_branch?: InputMaybe<Branches_Order_By>;
   parent_branch_id?: InputMaybe<Order_By>;
   project?: InputMaybe<Projects_Order_By>;
   project_id?: InputMaybe<Order_By>;
@@ -5393,6 +5425,15 @@ export type AddProjectLanguageLinksMutationVariables = Exact<{
 
 export type AddProjectLanguageLinksMutation = { __typename?: 'mutation_root', insert_branch_languages?: { __typename?: 'branch_languages_mutation_response', returning: Array<{ __typename?: 'branch_languages', uuid: any }> } | null | undefined };
 
+export type AddTermMutationVariables = Exact<{
+  branchId?: InputMaybe<Scalars['Int']>;
+  key?: InputMaybe<Scalars['String']>;
+  projectId?: InputMaybe<Scalars['Int']>;
+}>;
+
+
+export type AddTermMutation = { __typename?: 'mutation_root', insert_translation_events?: { __typename?: 'translation_events_mutation_response', returning: Array<{ __typename?: 'translation_events', uuid: any }> } | null | undefined };
+
 export type GetBranchQueryVariables = Exact<{
   branchUuid?: InputMaybe<Scalars['uuid']>;
 }>;
@@ -5547,6 +5588,29 @@ export const useAddProjectLanguageLinksMutation = <
     useMutation<AddProjectLanguageLinksMutation, TError, AddProjectLanguageLinksMutationVariables, TContext>(
       'addProjectLanguageLinks',
       (variables?: AddProjectLanguageLinksMutationVariables) => fetcher<AddProjectLanguageLinksMutation, AddProjectLanguageLinksMutationVariables>(dataSource.endpoint, dataSource.fetchParams || {}, AddProjectLanguageLinksDocument, variables)(),
+      options
+    );
+export const AddTermDocument = `
+    mutation addTerm($branchId: Int, $key: String, $projectId: Int) {
+  insert_translation_events(
+    objects: {branch_id: $branchId, operation: "add_term", value: $key, project_id: $projectId}
+  ) {
+    returning {
+      uuid
+    }
+  }
+}
+    `;
+export const useAddTermMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(
+      dataSource: { endpoint: string, fetchParams?: RequestInit },
+      options?: UseMutationOptions<AddTermMutation, TError, AddTermMutationVariables, TContext>
+    ) =>
+    useMutation<AddTermMutation, TError, AddTermMutationVariables, TContext>(
+      'addTerm',
+      (variables?: AddTermMutationVariables) => fetcher<AddTermMutation, AddTermMutationVariables>(dataSource.endpoint, dataSource.fetchParams || {}, AddTermDocument, variables)(),
       options
     );
 export const GetBranchDocument = `

@@ -1,6 +1,7 @@
 import React, { FunctionComponent, ReactNode, useState } from 'react';
 import { useParams, useSearchParams } from 'react-router-dom';
 
+import { Button } from '../../components/Button/Button';
 import { Pagination } from '../../components/Pagination/Pagination';
 import { Table } from '../../components/Table/Table';
 import { TextInput } from '../../components/TextInput/TextInput';
@@ -13,6 +14,7 @@ import {
   useUpdateTranslationValueMutation,
 } from '../../queries/config/graphql-generated-types';
 import { Term } from '../../queries/type-aliasses';
+import { AddTermModal } from '../modals/AddTermModal';
 
 export const ITEMS_PER_PAGE = 100;
 
@@ -26,6 +28,7 @@ const ENTRIES_PER_PAGE = 20;
 export const TranslationEditor: FunctionComponent = () => {
   const { branchUuid } = useParams();
   const [searchParams] = useSearchParams();
+  const [isAddTermModalOpen, setIsAddTermModalOpen] = useState(false);
   const [page, setPage] = useState<number>(0);
   const allLanguageCodes =
     searchParams.get('languageCodes') === 'all'
@@ -90,12 +93,14 @@ export const TranslationEditor: FunctionComponent = () => {
     return columns;
   };
 
-  console.log('rerendering', data);
   return (
     <div className='c-key-value-editor'>
       <div className='flex flex-row-reverse'>
         <TextInput className='w-60' icon='Filter' onChange={setFilterString} value={filterString} />
       </div>
+      <br />
+      <Button label={$t('Add Term')} onClick={() => setIsAddTermModalOpen(true)} />
+      <br />
       {data?.terms?.length ? (
         <Table<Term>
           className='my-4'
@@ -116,6 +121,7 @@ export const TranslationEditor: FunctionComponent = () => {
         onPageChange={setPage}
         pageCount={Math.ceil((data?.terms_aggregate?.aggregate?.count || 0) / ENTRIES_PER_PAGE)}
       />
+      <AddTermModal isOpen={isAddTermModalOpen} onClose={() => setIsAddTermModalOpen(false)} />
     </div>
   );
 };

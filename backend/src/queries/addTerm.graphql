@@ -1,0 +1,7 @@
+mutation addTerm($branchId: Int, $key: String) {
+    insert_terms(objects: {branch_id: $branchId, key: $key}) {
+        returning {
+            uuid
+        }
+    }
+}

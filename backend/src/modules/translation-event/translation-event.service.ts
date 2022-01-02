@@ -26,6 +26,11 @@ export class TranslationEventService {
   async addBranch(branchName: string, projectId: number) {
     await this.sdk.addBranch({ branchName, projectId });
   }
+
+  async addTerm(key: string, branchId: number) {
+    await this.sdk.addTerm({ key, branchId });
+  }
+
   async mergeBranch(
     projectId: number,
     fromBranchId: number,

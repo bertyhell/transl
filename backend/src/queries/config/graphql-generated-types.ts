@@ -5385,6 +5385,14 @@ export type AddBranchMutationVariables = Exact<{
 
 export type AddBranchMutation = { __typename?: 'mutation_root', insert_branches?: { __typename?: 'branches_mutation_response', returning: Array<{ __typename?: 'branches', uuid: any }> } | null | undefined };
 
+export type AddTermMutationVariables = Exact<{
+  branchId?: InputMaybe<Scalars['Int']>;
+  key?: InputMaybe<Scalars['String']>;
+}>;
+
+
+export type AddTermMutation = { __typename?: 'mutation_root', insert_terms?: { __typename?: 'terms_mutation_response', returning: Array<{ __typename?: 'terms', uuid: any }> } | null | undefined };
+
 export type GetTranslationsFromBranchQueryVariables = Exact<{
   branchId?: InputMaybe<Scalars['Int']>;
 }>;
@@ -5398,6 +5406,15 @@ export const AddBranchDocument = gql`
   insert_branches(
     objects: {name: $branchName, project_id: $projectId, parent_branch_id: $fromBranchId}
   ) {
+    returning {
+      uuid
+    }
+  }
+}
+    `;
+export const AddTermDocument = gql`
+    mutation addTerm($branchId: Int, $key: String) {
+  insert_terms(objects: {branch_id: $branchId, key: $key}) {
     returning {
       uuid
     }
@@ -5444,6 +5461,9 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
   return {
     addBranch(variables?: AddBranchMutationVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<AddBranchMutation> {
       return withWrapper((wrappedRequestHeaders) => client.request<AddBranchMutation>(AddBranchDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'addBranch');
+    },
+    addTerm(variables?: AddTermMutationVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<AddTermMutation> {
+      return withWrapper((wrappedRequestHeaders) => client.request<AddTermMutation>(AddTermDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'addTerm');
     },
     getTranslationsFromBranch(variables?: GetTranslationsFromBranchQueryVariables, requestHeaders?: Dom.RequestInit["headers"]): Promise<GetTranslationsFromBranchQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<GetTranslationsFromBranchQuery>(GetTranslationsFromBranchDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'getTranslationsFromBranch');

@@ -1,0 +1,7 @@
+mutation addTerm($branchId: Int, $key: String, $projectId: Int) {
+    insert_translation_events(objects: {branch_id: $branchId, operation: "add_term", value: $key, project_id: $projectId}) {
+        returning {
+            uuid
+        }
+    }
+}

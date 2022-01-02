@@ -26,6 +26,11 @@ export class TranslationEventController {
           translationEvent.value,
           translationEvent.project_id,
         );
+      case 'add_term':
+        await this.translationEventService.addTerm(
+          translationEvent.value,
+          translationEvent.branch_id,
+        );
       case 'merge_branch':
         await this.translationEventService.mergeBranch(
           translationEvent.project_id,
