@@ -1,0 +1,10 @@
+table:
+  name: branch_ancestors
+  schema: public
+object_relationships:
+- name: ancestor_branch
+  using:
+    foreign_key_constraint_on: ancestor_branch_id
+- name: branch
+  using:
+    foreign_key_constraint_on: branch_id

@@ -2,9 +2,6 @@ table:
   name: branches
   schema: public
 object_relationships:
-- name: parent_branch
-  using:
-    foreign_key_constraint_on: parent_branch_id
 - name: project
   using:
     foreign_key_constraint_on: project_id
@@ -15,13 +12,6 @@ array_relationships:
       column: branch_id
       table:
         name: branch_languages
-        schema: public
-- name: child_branches
-  using:
-    foreign_key_constraint_on:
-      column: parent_branch_id
-      table:
-        name: branches
         schema: public
 - name: terms
   using:

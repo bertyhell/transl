@@ -1,0 +1,4 @@
+-- Could not auto-generate a down migration.
+-- Please write an appropriate down migration for the SQL below:
+-- alter table "public"."branch_ancestors" add column "ancestor_child_branch_id" integer
+--  null;

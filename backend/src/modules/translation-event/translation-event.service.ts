@@ -35,5 +35,7 @@ export class TranslationEventService {
     projectId: number,
     fromBranchId: number,
     intoBranchId: number,
-  ) {}
+  ) {
+    console.log('merge branch');
+  }
 }

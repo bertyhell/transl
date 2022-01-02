@@ -11,18 +11,5 @@ query getTranslationsFromBranch($branchId: Int) {
                 }
             }
         }
-        parent_branch {
-            terms {
-                id
-                key
-                translations {
-                    id
-                    translation_value
-                    project_language {
-                        language_id
-                    }
-                }
-            }
-        }
     }
 }
