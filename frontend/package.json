@@ -35,7 +35,7 @@
     "react-flagkit": "^2.0.4",
     "react-perfect-scrollbar": "^1.5.8",
     "react-popper": "^2.2.5",
-    "react-query": "^3.28.0",
+    "react-query": "^3.34.7",
     "react-router-dom": "^6.0.0",
     "react-scripts": "5.0.0",
     "react-select": "^5.2.0",

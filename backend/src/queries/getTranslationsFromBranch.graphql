@@ -8,6 +8,10 @@ query getTranslationsFromBranch($branchId: Int) {
                 translation_value
                 project_language {
                     language_id
+                    language {
+                        id
+                        iso_code
+                    }
                 }
             }
         }

@@ -59,7 +59,7 @@ export const AddBranchModal: FunctionComponent<AddBranchModalProps> = ({
       // TODO toast
       return;
     }
-    await addBranch({ from_branch_id: branch.id, project_id: project.id, value: branchName });
+    await addBranch({ branchName: branchName, projectId: project.id });
     handleClose();
   };
 

@@ -5977,13 +5977,12 @@ export type Uuid_Comparison_Exp = {
 };
 
 export type AddBranchMutationVariables = Exact<{
-  project_id?: InputMaybe<Scalars['Int']>;
-  value?: InputMaybe<Scalars['String']>;
-  from_branch_id?: InputMaybe<Scalars['Int']>;
+  branchName?: InputMaybe<Scalars['String']>;
+  projectId?: InputMaybe<Scalars['Int']>;
 }>;
 
 
-export type AddBranchMutation = { __typename?: 'mutation_root', insert_translation_events?: { __typename?: 'translation_events_mutation_response', returning: Array<{ __typename?: 'translation_events', uuid: any }> } | null | undefined };
+export type AddBranchMutation = { __typename?: 'mutation_root', insert_branches?: { __typename?: 'branches_mutation_response', returning: Array<{ __typename?: 'branches', uuid: any }> } | null | undefined };
 
 export type AddCompanyMutationVariables = Exact<{
   companyName?: InputMaybe<Scalars['String']>;
@@ -6010,11 +6009,10 @@ export type AddProjectLanguageLinksMutation = { __typename?: 'mutation_root', in
 export type AddTermMutationVariables = Exact<{
   branchId?: InputMaybe<Scalars['Int']>;
   key?: InputMaybe<Scalars['String']>;
-  projectId?: InputMaybe<Scalars['Int']>;
 }>;
 
 
-export type AddTermMutation = { __typename?: 'mutation_root', insert_translation_events?: { __typename?: 'translation_events_mutation_response', returning: Array<{ __typename?: 'translation_events', uuid: any }> } | null | undefined };
+export type AddTermMutation = { __typename?: 'mutation_root', insert_terms?: { __typename?: 'terms_mutation_response', returning: Array<{ __typename?: 'terms', uuid: any }> } | null | undefined };
 
 export type GetBranchQueryVariables = Exact<{
   branchUuid?: InputMaybe<Scalars['uuid']>;
@@ -6058,21 +6056,10 @@ export type GetTranslationsByLanguageCodesQueryVariables = Exact<{
 
 export type GetTranslationsByLanguageCodesQuery = { __typename?: 'query_root', branch_terms: Array<{ __typename?: 'branch_terms', key?: string | null | undefined, description?: string | null | undefined, uuid?: any | null | undefined, id?: number | null | undefined, translations: Array<{ __typename?: 'translations', translation_value?: string | null | undefined, uuid: any, id: number, status?: { __typename?: 'translation_statuses', name: string, uuid: any, id: number } | null | undefined, project_language: { __typename?: 'branch_languages', language: { __typename?: 'languages', iso_code: string, id: number, uuid: any } } }> }>, branch_terms_aggregate: { __typename?: 'branch_terms_aggregate', aggregate?: { __typename?: 'branch_terms_aggregate_fields', count: number } | null | undefined } };
 
-export type MergeBranchMutationVariables = Exact<{
-  projectId?: InputMaybe<Scalars['Int']>;
-  fromBranchId?: InputMaybe<Scalars['String']>;
-  intoBranchId?: InputMaybe<Scalars['Int']>;
-}>;
-
-
-export type MergeBranchMutation = { __typename?: 'mutation_root', insert_translation_events?: { __typename?: 'translation_events_mutation_response', returning: Array<{ __typename?: 'translation_events', uuid: any }> } | null | undefined };
-
 
 export const AddBranchDocument = `
-    mutation addBranch($project_id: Int, $value: String, $from_branch_id: Int) {
-  insert_translation_events(
-    objects: {project_id: $project_id, value: $value, branch_id: $from_branch_id, operation: "add_branch"}
-  ) {
+    mutation addBranch($branchName: String, $projectId: Int) {
+  insert_branches(objects: {name: $branchName, project_id: $projectId}) {
     returning {
       uuid
     }
@@ -6155,10 +6142,8 @@ export const useAddProjectLanguageLinksMutation = <
       options
     );
 export const AddTermDocument = `
-    mutation addTerm($branchId: Int, $key: String, $projectId: Int) {
-  insert_translation_events(
-    objects: {branch_id: $branchId, operation: "add_term", value: $key, project_id: $projectId}
-  ) {
+    mutation addTerm($branchId: Int, $key: String) {
+  insert_terms(objects: {branch_id: $branchId, key: $key}) {
     returning {
       uuid
     }
@@ -6449,27 +6434,3 @@ export const useGetTranslationsByLanguageCodesQuery = <
 
 useGetTranslationsByLanguageCodesQuery.getKey = (variables?: GetTranslationsByLanguageCodesQueryVariables) => variables === undefined ? ['getTranslationsByLanguageCodes'] : ['getTranslationsByLanguageCodes', variables];
 ;
-
-export const MergeBranchDocument = `
-    mutation mergeBranch($projectId: Int, $fromBranchId: String, $intoBranchId: Int) {
-  insert_translation_events(
-    objects: {project_id: $projectId, value: $fromBranchId, branch_id: $intoBranchId, operation: "merge_branch"}
-  ) {
-    returning {
-      uuid
-    }
-  }
-}
-    `;
-export const useMergeBranchMutation = <
-      TError = unknown,
-      TContext = unknown
-    >(
-      dataSource: { endpoint: string, fetchParams?: RequestInit },
-      options?: UseMutationOptions<MergeBranchMutation, TError, MergeBranchMutationVariables, TContext>
-    ) =>
-    useMutation<MergeBranchMutation, TError, MergeBranchMutationVariables, TContext>(
-      'mergeBranch',
-      (variables?: MergeBranchMutationVariables) => fetcher<MergeBranchMutation, MergeBranchMutationVariables>(dataSource.endpoint, dataSource.fetchParams || {}, MergeBranchDocument, variables)(),
-      options
-    );

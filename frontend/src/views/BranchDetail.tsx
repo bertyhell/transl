@@ -5,7 +5,8 @@ import { Button } from '../components/Button/Button';
 import { Select } from '../components/Select/Select';
 import { $t } from '../helpers/i18n';
 import { DATABASE_CONFIG } from '../queries/config/database.constants';
-import { GetBranchQuery, useGetBranchQuery, useMergeBranchMutation } from '../queries/config/graphql-generated-types';
+import { GetBranchQuery, useGetBranchQuery } from '../queries/config/graphql-generated-types';
+import { useGetMerge } from '../queries/merge-branch';
 import { ImportLanguageFromJsonModal } from './modals/ImportLanguageFromJsonModal';
 
 type BranchItem = GetBranchQuery['branches'][0]['project']['branches'][0];
@@ -17,9 +18,9 @@ export const BranchDetail: FunctionComponent = () => {
     { branchUuid: branchUuid as string },
     { enabled: !!branchUuid },
   );
+  const { mutate: getMergeInfo, isLoading: isMergeInfoLoading } = useGetMerge();
   const [isImportJsonModalOpen, setIsImportJsonModalOpen] = useState<boolean>(false);
   const [selectedMergeBranch, setSelectedMergeBranch] = useState<BranchItem | null>(null);
-  const { mutateAsync: mergeBranch } = useMergeBranchMutation(DATABASE_CONFIG);
   const branch = branchInfo?.branches[0];
 
   if (isLoading) {
@@ -27,7 +28,17 @@ export const BranchDetail: FunctionComponent = () => {
   }
 
   const handleMergeBranch = async () => {
-    await mergeBranch({ fromBranchId: String(branch?.id), intoBranchId: selectedMergeBranch?.id, projectId: branch?.project.id });
+    if (!branch) {
+      return;
+      // todo show toast
+    }
+    if (!selectedMergeBranch) {
+      return;
+      // todo show toast
+    }
+    const mergeInfo = await getMergeInfo({ fromBranchId: branch?.id, intoBranchId: selectedMergeBranch?.id });
+    console.log(mergeInfo);
+    // await mergeBranch({ fromBranchId: String(branch?.id), intoBranchId: selectedMergeBranch?.id, projectId: branch?.project.id });
     // todo show toast
   };
 

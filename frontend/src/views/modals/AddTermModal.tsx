@@ -38,7 +38,7 @@ export const AddTermModal: FunctionComponent<AddTermModalProps> = ({ isOpen, onC
       // todo show error toast
       return;
     }
-    await addTerm({ branchId: branch?.id, key: termKey, projectId: branch?.project?.id });
+    await addTerm({ branchId: branch.id, key: termKey });
     handleClose();
   };
 
