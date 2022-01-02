@@ -14,6 +14,147 @@ directive @cached(
     ttl: Int! = 60
 ) on QUERY
 
+"""
+
+store for each branch all its ancestors
+
+
+columns and relationships of "branch_ancestors"
+"""
+type branch_ancestors {
+    "An object relationship"
+    ancestor_branch: branches!
+    ancestor_branch_id: Int!
+    ancestor_child_branch_id: Int
+    ancestor_level: Int!
+    "An object relationship"
+    branch: branches!
+    branch_id: Int!
+    id: Int!
+    uuid: uuid!
+}
+
+"aggregated selection of \"branch_ancestors\""
+type branch_ancestors_aggregate {
+    aggregate: branch_ancestors_aggregate_fields
+    nodes: [branch_ancestors!]!
+}
+
+"aggregate fields of \"branch_ancestors\""
+type branch_ancestors_aggregate_fields {
+    avg: branch_ancestors_avg_fields
+    count(columns: [branch_ancestors_select_column!], distinct: Boolean): Int!
+    max: branch_ancestors_max_fields
+    min: branch_ancestors_min_fields
+    stddev: branch_ancestors_stddev_fields
+    stddev_pop: branch_ancestors_stddev_pop_fields
+    stddev_samp: branch_ancestors_stddev_samp_fields
+    sum: branch_ancestors_sum_fields
+    var_pop: branch_ancestors_var_pop_fields
+    var_samp: branch_ancestors_var_samp_fields
+    variance: branch_ancestors_variance_fields
+}
+
+"aggregate avg on columns"
+type branch_ancestors_avg_fields {
+    ancestor_branch_id: Float
+    ancestor_child_branch_id: Float
+    ancestor_level: Float
+    branch_id: Float
+    id: Float
+}
+
+"aggregate max on columns"
+type branch_ancestors_max_fields {
+    ancestor_branch_id: Int
+    ancestor_child_branch_id: Int
+    ancestor_level: Int
+    branch_id: Int
+    id: Int
+    uuid: uuid
+}
+
+"aggregate min on columns"
+type branch_ancestors_min_fields {
+    ancestor_branch_id: Int
+    ancestor_child_branch_id: Int
+    ancestor_level: Int
+    branch_id: Int
+    id: Int
+    uuid: uuid
+}
+
+"response of any mutation on the table \"branch_ancestors\""
+type branch_ancestors_mutation_response {
+    "number of rows affected by the mutation"
+    affected_rows: Int!
+    "data from the rows affected by the mutation"
+    returning: [branch_ancestors!]!
+}
+
+"aggregate stddev on columns"
+type branch_ancestors_stddev_fields {
+    ancestor_branch_id: Float
+    ancestor_child_branch_id: Float
+    ancestor_level: Float
+    branch_id: Float
+    id: Float
+}
+
+"aggregate stddev_pop on columns"
+type branch_ancestors_stddev_pop_fields {
+    ancestor_branch_id: Float
+    ancestor_child_branch_id: Float
+    ancestor_level: Float
+    branch_id: Float
+    id: Float
+}
+
+"aggregate stddev_samp on columns"
+type branch_ancestors_stddev_samp_fields {
+    ancestor_branch_id: Float
+    ancestor_child_branch_id: Float
+    ancestor_level: Float
+    branch_id: Float
+    id: Float
+}
+
+"aggregate sum on columns"
+type branch_ancestors_sum_fields {
+    ancestor_branch_id: Int
+    ancestor_child_branch_id: Int
+    ancestor_level: Int
+    branch_id: Int
+    id: Int
+}
+
+"aggregate var_pop on columns"
+type branch_ancestors_var_pop_fields {
+    ancestor_branch_id: Float
+    ancestor_child_branch_id: Float
+    ancestor_level: Float
+    branch_id: Float
+    id: Float
+}
+
+"aggregate var_samp on columns"
+type branch_ancestors_var_samp_fields {
+    ancestor_branch_id: Float
+    ancestor_child_branch_id: Float
+    ancestor_level: Float
+    branch_id: Float
+    id: Float
+}
+
+"aggregate variance on columns"
+type branch_ancestors_variance_fields {
+    ancestor_branch_id: Float
+    ancestor_child_branch_id: Float
+    ancestor_level: Float
+    branch_id: Float
+    id: Float
+}
+
 "columns and relationships of \"branch_languages\""
 type branch_languages {
     "An object relationship"
@@ -153,6 +294,133 @@ type branch_languages_variance_fields {
     language_id: Float
 }
 
+"columns and relationships of \"branch_terms\""
+type branch_terms {
+    "An object relationship"
+    branch: branches
+    branch_id: Int
+    created_at: timestamp
+    description: String
+    id: Int
+    key: String
+    "An array relationship"
+    translations(
+        "distinct select on columns"
+        distinct_on: [translations_select_column!],
+        "limit the number of rows returned"
+        limit: Int,
+        "skip the first n rows. Use only with order_by"
+        offset: Int,
+        "sort the rows by one or more columns"
+        order_by: [translations_order_by!],
+        "filter the rows returned"
+        where: translations_bool_exp
+    ): [translations!]!
+    "An aggregate relationship"
+    translations_aggregate(
+        "distinct select on columns"
+        distinct_on: [translations_select_column!],
+        "limit the number of rows returned"
+        limit: Int,
+        "skip the first n rows. Use only with order_by"
+        offset: Int,
+        "sort the rows by one or more columns"
+        order_by: [translations_order_by!],
+        "filter the rows returned"
+        where: translations_bool_exp
+    ): translations_aggregate!
+    uuid: uuid
+}
+
+"aggregated selection of \"branch_terms\""
+type branch_terms_aggregate {
+    aggregate: branch_terms_aggregate_fields
+    nodes: [branch_terms!]!
+}
+
+"aggregate fields of \"branch_terms\""
+type branch_terms_aggregate_fields {
+    avg: branch_terms_avg_fields
+    count(columns: [branch_terms_select_column!], distinct: Boolean): Int!
+    max: branch_terms_max_fields
+    min: branch_terms_min_fields
+    stddev: branch_terms_stddev_fields
+    stddev_pop: branch_terms_stddev_pop_fields
+    stddev_samp: branch_terms_stddev_samp_fields
+    sum: branch_terms_sum_fields
+    var_pop: branch_terms_var_pop_fields
+    var_samp: branch_terms_var_samp_fields
+    variance: branch_terms_variance_fields
+}
+
+"aggregate avg on columns"
+type branch_terms_avg_fields {
+    branch_id: Float
+    id: Float
+}
+
+"aggregate max on columns"
+type branch_terms_max_fields {
+    branch_id: Int
+    created_at: timestamp
+    description: String
+    id: Int
+    key: String
+    uuid: uuid
+}
+
+"aggregate min on columns"
+type branch_terms_min_fields {
+    branch_id: Int
+    created_at: timestamp
+    description: String
+    id: Int
+    key: String
+    uuid: uuid
+}
+
+"aggregate stddev on columns"
+type branch_terms_stddev_fields {
+    branch_id: Float
+    id: Float
+}
+
+"aggregate stddev_pop on columns"
+type branch_terms_stddev_pop_fields {
+    branch_id: Float
+    id: Float
+}
+
+"aggregate stddev_samp on columns"
+type branch_terms_stddev_samp_fields {
+    branch_id: Float
+    id: Float
+}
+
+"aggregate sum on columns"
+type branch_terms_sum_fields {
+    branch_id: Int
+    id: Int
+}
+
+"aggregate var_pop on columns"
+type branch_terms_var_pop_fields {
+    branch_id: Float
+    id: Float
+}
+
+"aggregate var_samp on columns"
+type branch_terms_var_samp_fields {
+    branch_id: Float
+    id: Float
+}
+
+"aggregate variance on columns"
+type branch_terms_variance_fields {
+    branch_id: Float
+    id: Float
+}
+
 "columns and relationships of \"branches\""
 type branches {
     "An array relationship"
@@ -181,38 +449,9 @@ type branches {
         "filter the rows returned"
         where: branch_languages_bool_exp
     ): branch_languages_aggregate!
-    "An array relationship"
-    child_branches(
-        "distinct select on columns"
-        distinct_on: [branches_select_column!],
-        "limit the number of rows returned"
-        limit: Int,
-        "skip the first n rows. Use only with order_by"
-        offset: Int,
-        "sort the rows by one or more columns"
-        order_by: [branches_order_by!],
-        "filter the rows returned"
-        where: branches_bool_exp
-    ): [branches!]!
-    "An aggregate relationship"
-    child_branches_aggregate(
-        "distinct select on columns"
-        distinct_on: [branches_select_column!],
-        "limit the number of rows returned"
-        limit: Int,
-        "skip the first n rows. Use only with order_by"
-        offset: Int,
-        "sort the rows by one or more columns"
-        order_by: [branches_order_by!],
-        "filter the rows returned"
-        where: branches_bool_exp
-    ): branches_aggregate!
-    date: timestamptz!
+    created_at: timestamp!
     id: Int!
     name: String!
-    "An object relationship"
-    parent_branch: branches
-    parent_branch_id: Int
     "An object relationship"
     project: projects!
     project_id: Int!
@@ -269,26 +508,23 @@ type branches_aggregate_fields {
 "aggregate avg on columns"
 type branches_avg_fields {
     id: Float
-    parent_branch_id: Float
     project_id: Float
 }
 
 "aggregate max on columns"
 type branches_max_fields {
-    date: timestamptz
+    created_at: timestamp
     id: Int
     name: String
-    parent_branch_id: Int
     project_id: Int
     uuid: uuid
 }
 
 "aggregate min on columns"
 type branches_min_fields {
-    date: timestamptz
+    created_at: timestamp
     id: Int
     name: String
-    parent_branch_id: Int
     project_id: Int
     uuid: uuid
 }
@@ -304,49 +540,42 @@ type branches_mutation_response {
 "aggregate stddev on columns"
 type branches_stddev_fields {
     id: Float
-    parent_branch_id: Float
     project_id: Float
 }
 
 "aggregate stddev_pop on columns"
 type branches_stddev_pop_fields {
     id: Float
-    parent_branch_id: Float
     project_id: Float
 }
 
 "aggregate stddev_samp on columns"
 type branches_stddev_samp_fields {
     id: Float
-    parent_branch_id: Float
     project_id: Float
 }
 
 "aggregate sum on columns"
 type branches_sum_fields {
     id: Int
-    parent_branch_id: Int
     project_id: Int
 }
 
 "aggregate var_pop on columns"
 type branches_var_pop_fields {
     id: Float
-    parent_branch_id: Float
     project_id: Float
 }
 
 "aggregate var_samp on columns"
 type branches_var_samp_fields {
     id: Float
-    parent_branch_id: Float
     project_id: Float
 }
 
 "aggregate variance on columns"
 type branches_variance_fields {
     id: Float
-    parent_branch_id: Float
     project_id: Float
 }
 
@@ -726,6 +955,13 @@ type languages_variance_fields {
 
 "mutation root"
 type mutation_root {
+    "delete data from the table: \"branch_ancestors\""
+    delete_branch_ancestors(
+        "filter the rows which have to be deleted"
+        where: branch_ancestors_bool_exp!
+    ): branch_ancestors_mutation_response
+    "delete single row from the table: \"branch_ancestors\""
+    delete_branch_ancestors_by_pk(id: Int!): branch_ancestors
     "delete data from the table: \"branch_languages\""
     delete_branch_languages(
         "filter the rows which have to be deleted"
@@ -810,6 +1046,20 @@ type mutation_root {
     ): users_mutation_response
     "delete single row from the table: \"users\""
     delete_users_by_pk(id: Int!): users
+    "insert data into the table: \"branch_ancestors\""
+    insert_branch_ancestors(
+        "the rows to be inserted"
+        objects: [branch_ancestors_insert_input!]!,
+        "on conflict condition"
+        on_conflict: branch_ancestors_on_conflict
+    ): branch_ancestors_mutation_response
+    "insert a single row into the table: \"branch_ancestors\""
+    insert_branch_ancestors_one(
+        "the row to be inserted"
+        object: branch_ancestors_insert_input!,
+        "on conflict condition"
+        on_conflict: branch_ancestors_on_conflict
+    ): branch_ancestors
     "insert data into the table: \"branch_languages\""
     insert_branch_languages(
         "the rows to be inserted"
@@ -978,6 +1228,23 @@ type mutation_root {
         "on conflict condition"
         on_conflict: users_on_conflict
     ): users
+    "update data of the table: \"branch_ancestors\""
+    update_branch_ancestors(
+        "increments the numeric columns with given value of the filtered values"
+        _inc: branch_ancestors_inc_input,
+        "sets the columns of the filtered rows to the given values"
+        _set: branch_ancestors_set_input,
+        "filter the rows which have to be updated"
+        where: branch_ancestors_bool_exp!
+    ): branch_ancestors_mutation_response
+    "update single row of the table: \"branch_ancestors\""
+    update_branch_ancestors_by_pk(
+        "increments the numeric columns with given value of the filtered values"
+        _inc: branch_ancestors_inc_input,
+        "sets the columns of the filtered rows to the given values"
+        _set: branch_ancestors_set_input,
+        pk_columns: branch_ancestors_pk_columns_input!
+    ): branch_ancestors
     "update data of the table: \"branch_languages\""
     update_branch_languages(
         "increments the numeric columns with given value of the filtered values"
@@ -1366,6 +1633,34 @@ type projects_variance_fields {
 }
 
 type query_root {
+    "fetch data from the table: \"branch_ancestors\""
+    branch_ancestors(
+        "distinct select on columns"
+        distinct_on: [branch_ancestors_select_column!],
+        "limit the number of rows returned"
+        limit: Int,
+        "skip the first n rows. Use only with order_by"
+        offset: Int,
+        "sort the rows by one or more columns"
+        order_by: [branch_ancestors_order_by!],
+        "filter the rows returned"
+        where: branch_ancestors_bool_exp
+    ): [branch_ancestors!]!
+    "fetch aggregated fields from the table: \"branch_ancestors\""
+    branch_ancestors_aggregate(
+        "distinct select on columns"
+        distinct_on: [branch_ancestors_select_column!],
+        "limit the number of rows returned"
+        limit: Int,
+        "skip the first n rows. Use only with order_by"
+        offset: Int,
+        "sort the rows by one or more columns"
+        order_by: [branch_ancestors_order_by!],
+        "filter the rows returned"
+        where: branch_ancestors_bool_exp
+    ): branch_ancestors_aggregate!
+    "fetch data from the table: \"branch_ancestors\" using primary key columns"
+    branch_ancestors_by_pk(id: Int!): branch_ancestors
     "An array relationship"
     branch_languages(
         "distinct select on columns"
@@ -1394,6 +1689,32 @@ type query_root {
     ): branch_languages_aggregate!
     "fetch data from the table: \"branch_languages\" using primary key columns"
     branch_languages_by_pk(id: Int!): branch_languages
+    "fetch data from the table: \"branch_terms\""
+    branch_terms(
+        "distinct select on columns"
+        distinct_on: [branch_terms_select_column!],
+        "limit the number of rows returned"
+        limit: Int,
+        "skip the first n rows. Use only with order_by"
+        offset: Int,
+        "sort the rows by one or more columns"
+        order_by: [branch_terms_order_by!],
+        "filter the rows returned"
+        where: branch_terms_bool_exp
+    ): [branch_terms!]!
+    "fetch aggregated fields from the table: \"branch_terms\""
+    branch_terms_aggregate(
+        "distinct select on columns"
+        distinct_on: [branch_terms_select_column!],
+        "limit the number of rows returned"
+        limit: Int,
+        "skip the first n rows. Use only with order_by"
+        offset: Int,
+        "sort the rows by one or more columns"
+        order_by: [branch_terms_order_by!],
+        "filter the rows returned"
+        where: branch_terms_bool_exp
+    ): branch_terms_aggregate!
     "An array relationship"
     branches(
         "distinct select on columns"
@@ -1705,6 +2026,34 @@ type query_root {
 }
 
 type subscription_root {
+    "fetch data from the table: \"branch_ancestors\""
+    branch_ancestors(
+        "distinct select on columns"
+        distinct_on: [branch_ancestors_select_column!],
+        "limit the number of rows returned"
+        limit: Int,
+        "skip the first n rows. Use only with order_by"
+        offset: Int,
+        "sort the rows by one or more columns"
+        order_by: [branch_ancestors_order_by!],
+        "filter the rows returned"
+        where: branch_ancestors_bool_exp
+    ): [branch_ancestors!]!
+    "fetch aggregated fields from the table: \"branch_ancestors\""
+    branch_ancestors_aggregate(
+        "distinct select on columns"
+        distinct_on: [branch_ancestors_select_column!],
+        "limit the number of rows returned"
+        limit: Int,
+        "skip the first n rows. Use only with order_by"
+        offset: Int,
+        "sort the rows by one or more columns"
+        order_by: [branch_ancestors_order_by!],
+        "filter the rows returned"
+        where: branch_ancestors_bool_exp
+    ): branch_ancestors_aggregate!
+    "fetch data from the table: \"branch_ancestors\" using primary key columns"
+    branch_ancestors_by_pk(id: Int!): branch_ancestors
     "An array relationship"
     branch_languages(
         "distinct select on columns"
@@ -1733,6 +2082,32 @@ type subscription_root {
     ): branch_languages_aggregate!
     "fetch data from the table: \"branch_languages\" using primary key columns"
     branch_languages_by_pk(id: Int!): branch_languages
+    "fetch data from the table: \"branch_terms\""
+    branch_terms(
+        "distinct select on columns"
+        distinct_on: [branch_terms_select_column!],
+        "limit the number of rows returned"
+        limit: Int,
+        "skip the first n rows. Use only with order_by"
+        offset: Int,
+        "sort the rows by one or more columns"
+        order_by: [branch_terms_order_by!],
+        "filter the rows returned"
+        where: branch_terms_bool_exp
+    ): [branch_terms!]!
+    "fetch aggregated fields from the table: \"branch_terms\""
+    branch_terms_aggregate(
+        "distinct select on columns"
+        distinct_on: [branch_terms_select_column!],
+        "limit the number of rows returned"
+        limit: Int,
+        "skip the first n rows. Use only with order_by"
+        offset: Int,
+        "sort the rows by one or more columns"
+        order_by: [branch_terms_order_by!],
+        "filter the rows returned"
+        where: branch_terms_bool_exp
+    ): branch_terms_aggregate!
     "An array relationship"
     branches(
         "distinct select on columns"
@@ -2048,6 +2423,7 @@ type terms {
     "An object relationship"
     branch: branches!
     branch_id: Int!
+    created_at: timestamp!
     description: String
     id: Int!
     key: String!
@@ -2110,6 +2486,7 @@ type terms_avg_fields {
 "aggregate max on columns"
 type terms_max_fields {
     branch_id: Int
+    created_at: timestamp
     description: String
     id: Int
     key: String
@@ -2119,6 +2496,7 @@ type terms_max_fields {
 "aggregate min on columns"
 type terms_min_fields {
     branch_id: Int
+    created_at: timestamp
     description: String
     id: Int
     key: String
@@ -2450,14 +2828,13 @@ type translation_statuses_variance_fields {
 "columns and relationships of \"translations\""
 type translations {
     branch_language_id: Int!
+    created_at: timestamp!
     id: Int!
     "An object relationship"
     project_language: branch_languages!
     "An object relationship"
     status: translation_statuses
     status_id: Int
-    "An object relationship"
-    term: terms!
     term_id: Int!
     translation_value: String
     uuid: uuid!
@@ -2495,6 +2872,7 @@ type translations_avg_fields {
 "aggregate max on columns"
 type translations_max_fields {
     branch_language_id: Int
+    created_at: timestamp
     id: Int
     status_id: Int
     term_id: Int
@@ -2505,6 +2883,7 @@ type translations_max_fields {
 "aggregate min on columns"
 type translations_min_fields {
     branch_language_id: Int
+    created_at: timestamp
     id: Int
     status_id: Int
     term_id: Int
@@ -2840,6 +3219,46 @@ type users_variance_fields {
     id: Float
 }
 
+"unique or primary key constraints on table \"branch_ancestors\""
+enum branch_ancestors_constraint {
+    "unique or primary key constraint"
+    branch_ancestors_pkey
+    "unique or primary key constraint"
+    branch_ancestors_uuid_key
+}
+
+"select columns of table \"branch_ancestors\""
+enum branch_ancestors_select_column {
+    "column name"
+    ancestor_branch_id
+    "column name"
+    ancestor_child_branch_id
+    "column name"
+    ancestor_level
+    "column name"
+    branch_id
+    "column name"
+    id
+    "column name"
+    uuid
+}
+
+"update columns of table \"branch_ancestors\""
+enum branch_ancestors_update_column {
+    "column name"
+    ancestor_branch_id
+    "column name"
+    ancestor_child_branch_id
+    "column name"
+    ancestor_level
+    "column name"
+    branch_id
+    "column name"
+    id
+    "column name"
+    uuid
+}
+
 "unique or primary key constraints on table \"branch_languages\""
 enum branch_languages_constraint {
     "unique or primary key constraint"
@@ -2872,6 +3291,22 @@ enum branch_languages_update_column {
     uuid
 }
 
+"select columns of table \"branch_terms\""
+enum branch_terms_select_column {
+    "column name"
+    branch_id
+    "column name"
+    created_at
+    "column name"
+    description
+    "column name"
+    id
+    "column name"
+    key
+    "column name"
+    uuid
+}
+
 "unique or primary key constraints on table \"branches\""
 enum branches_constraint {
     "unique or primary key constraint"
@@ -2883,13 +3318,11 @@ enum branches_constraint {
 "select columns of table \"branches\""
 enum branches_select_column {
     "column name"
-    date
+    created_at
     "column name"
     id
     "column name"
     name
-    "column name"
-    parent_branch_id
     "column name"
     project_id
     "column name"
@@ -2899,13 +3332,11 @@ enum branches_select_column {
 "update columns of table \"branches\""
 enum branches_update_column {
     "column name"
-    date
+    created_at
     "column name"
     id
     "column name"
     name
-    "column name"
-    parent_branch_id
     "column name"
     project_id
     "column name"
@@ -3065,6 +3496,8 @@ enum terms_select_column {
     "column name"
     branch_id
     "column name"
+    created_at
+    "column name"
     description
     "column name"
     id
@@ -3078,6 +3511,8 @@ enum terms_select_column {
 enum terms_update_column {
     "column name"
     branch_id
+    "column name"
+    created_at
     "column name"
     description
     "column name"
@@ -3185,6 +3620,8 @@ enum translations_select_column {
     "column name"
     branch_language_id
     "column name"
+    created_at
+    "column name"
     id
     "column name"
     status_id
@@ -3200,6 +3637,8 @@ enum translations_select_column {
 enum translations_update_column {
     "column name"
     branch_language_id
+    "column name"
+    created_at
     "column name"
     id
     "column name"
@@ -3284,6 +3723,8 @@ enum users_update_column {
     uuid
 }
 
+scalar timestamp
+
 scalar timestamptz
 
 scalar uuid
@@ -3332,6 +3773,76 @@ input String_comparison_exp {
     _regex: String
     "does the column match the given SQL regular expression"
     _similar: String
+}
+
+"Boolean expression to filter rows from the table \"branch_ancestors\". All fields are combined with a logical 'AND'."
+input branch_ancestors_bool_exp {
+    _and: [branch_ancestors_bool_exp!]
+    _not: branch_ancestors_bool_exp
+    _or: [branch_ancestors_bool_exp!]
+    ancestor_branch: branches_bool_exp
+    ancestor_branch_id: Int_comparison_exp
+    ancestor_child_branch_id: Int_comparison_exp
+    ancestor_level: Int_comparison_exp
+    branch: branches_bool_exp
+    branch_id: Int_comparison_exp
+    id: Int_comparison_exp
+    uuid: uuid_comparison_exp
+}
+
+"input type for incrementing numeric columns in table \"branch_ancestors\""
+input branch_ancestors_inc_input {
+    ancestor_branch_id: Int
+    ancestor_child_branch_id: Int
+    ancestor_level: Int
+    branch_id: Int
+    id: Int
+}
+
+"input type for inserting data into table \"branch_ancestors\""
+input branch_ancestors_insert_input {
+    ancestor_branch: branches_obj_rel_insert_input
+    ancestor_branch_id: Int
+    ancestor_child_branch_id: Int
+    ancestor_level: Int
+    branch: branches_obj_rel_insert_input
+    branch_id: Int
+    id: Int
+    uuid: uuid
+}
+
+"on conflict condition type for table \"branch_ancestors\""
+input branch_ancestors_on_conflict {
+    constraint: branch_ancestors_constraint!
+    update_columns: [branch_ancestors_update_column!]! = []
+    where: branch_ancestors_bool_exp
+}
+
+"Ordering options when selecting data from \"branch_ancestors\"."
+input branch_ancestors_order_by {
+    ancestor_branch: branches_order_by
+    ancestor_branch_id: order_by
+    ancestor_child_branch_id: order_by
+    ancestor_level: order_by
+    branch: branches_order_by
+    branch_id: order_by
+    id: order_by
+    uuid: order_by
+}
+
+"primary key columns input for table: branch_ancestors"
+input branch_ancestors_pk_columns_input {
+    id: Int!
+}
+
+"input type for updating data in table \"branch_ancestors\""
+input branch_ancestors_set_input {
+    ancestor_branch_id: Int
+    ancestor_child_branch_id: Int
+    ancestor_level: Int
+    branch_id: Int
+    id: Int
+    uuid: uuid
 }
 
 "order by aggregate values of table \"branch_languages\""
@@ -3498,6 +4009,33 @@ input branch_languages_variance_order_by {
     language_id: order_by
 }
 
+"Boolean expression to filter rows from the table \"branch_terms\". All fields are combined with a logical 'AND'."
+input branch_terms_bool_exp {
+    _and: [branch_terms_bool_exp!]
+    _not: branch_terms_bool_exp
+    _or: [branch_terms_bool_exp!]
+    branch: branches_bool_exp
+    branch_id: Int_comparison_exp
+    created_at: timestamp_comparison_exp
+    description: String_comparison_exp
+    id: Int_comparison_exp
+    key: String_comparison_exp
+    translations: translations_bool_exp
+    uuid: uuid_comparison_exp
+}
+
+"Ordering options when selecting data from \"branch_terms\"."
+input branch_terms_order_by {
+    branch: branches_order_by
+    branch_id: order_by
+    created_at: order_by
+    description: order_by
+    id: order_by
+    key: order_by
+    translations_aggregate: translations_aggregate_order_by
+    uuid: order_by
+}
+
 "order by aggregate values of table \"branches\""
 input branches_aggregate_order_by {
     avg: branches_avg_order_by
@@ -3523,7 +4061,6 @@ input branches_arr_rel_insert_input {
 "order by avg() on columns of table \"branches\""
 input branches_avg_order_by {
     id: order_by
-    parent_branch_id: order_by
     project_id: order_by
 }
 
@@ -3533,12 +4070,9 @@ input branches_bool_exp {
     _not: branches_bool_exp
     _or: [branches_bool_exp!]
     branch_languages: branch_languages_bool_exp
-    child_branches: branches_bool_exp
-    date: timestamptz_comparison_exp
+    created_at: timestamp_comparison_exp
     id: Int_comparison_exp
     name: String_comparison_exp
-    parent_branch: branches_bool_exp
-    parent_branch_id: Int_comparison_exp
     project: projects_bool_exp
     project_id: Int_comparison_exp
     terms: terms_bool_exp
@@ -3548,19 +4082,15 @@ input branches_bool_exp {
 "input type for incrementing numeric columns in table \"branches\""
 input branches_inc_input {
     id: Int
-    parent_branch_id: Int
     project_id: Int
 }
 
 "input type for inserting data into table \"branches\""
 input branches_insert_input {
     branch_languages: branch_languages_arr_rel_insert_input
-    child_branches: branches_arr_rel_insert_input
-    date: timestamptz
+    created_at: timestamp
     id: Int
     name: String
-    parent_branch: branches_obj_rel_insert_input
-    parent_branch_id: Int
     project: projects_obj_rel_insert_input
     project_id: Int
     terms: terms_arr_rel_insert_input
@@ -3569,20 +4099,18 @@ input branches_insert_input {
 
 "order by max() on columns of table \"branches\""
 input branches_max_order_by {
-    date: order_by
+    created_at: order_by
     id: order_by
     name: order_by
-    parent_branch_id: order_by
     project_id: order_by
     uuid: order_by
 }
 
 "order by min() on columns of table \"branches\""
 input branches_min_order_by {
-    date: order_by
+    created_at: order_by
     id: order_by
     name: order_by
-    parent_branch_id: order_by
     project_id: order_by
     uuid: order_by
 }
@@ -3604,12 +4132,9 @@ input branches_on_conflict {
 "Ordering options when selecting data from \"branches\"."
 input branches_order_by {
     branch_languages_aggregate: branch_languages_aggregate_order_by
-    child_branches_aggregate: branches_aggregate_order_by
-    date: order_by
+    created_at: order_by
     id: order_by
     name: order_by
-    parent_branch: branches_order_by
-    parent_branch_id: order_by
     project: projects_order_by
     project_id: order_by
     terms_aggregate: terms_aggregate_order_by
@@ -3623,10 +4148,9 @@ input branches_pk_columns_input {
 
 "input type for updating data in table \"branches\""
 input branches_set_input {
-    date: timestamptz
+    created_at: timestamp
     id: Int
     name: String
-    parent_branch_id: Int
     project_id: Int
     uuid: uuid
 }
@@ -3634,49 +4158,42 @@ input branches_set_input {
 "order by stddev() on columns of table \"branches\""
 input branches_stddev_order_by {
     id: order_by
-    parent_branch_id: order_by
     project_id: order_by
 }
 
 "order by stddev_pop() on columns of table \"branches\""
 input branches_stddev_pop_order_by {
     id: order_by
-    parent_branch_id: order_by
     project_id: order_by
 }
 
 "order by stddev_samp() on columns of table \"branches\""
 input branches_stddev_samp_order_by {
     id: order_by
-    parent_branch_id: order_by
     project_id: order_by
 }
 
 "order by sum() on columns of table \"branches\""
 input branches_sum_order_by {
     id: order_by
-    parent_branch_id: order_by
     project_id: order_by
 }
 
 "order by var_pop() on columns of table \"branches\""
 input branches_var_pop_order_by {
     id: order_by
-    parent_branch_id: order_by
     project_id: order_by
 }
 
 "order by var_samp() on columns of table \"branches\""
 input branches_var_samp_order_by {
     id: order_by
-    parent_branch_id: order_by
     project_id: order_by
 }
 
 "order by variance() on columns of table \"branches\""
 input branches_variance_order_by {
     id: order_by
-    parent_branch_id: order_by
     project_id: order_by
 }
 
@@ -4150,6 +4667,7 @@ input terms_bool_exp {
     _or: [terms_bool_exp!]
     branch: branches_bool_exp
     branch_id: Int_comparison_exp
+    created_at: timestamp_comparison_exp
     description: String_comparison_exp
     id: Int_comparison_exp
     key: String_comparison_exp
@@ -4167,6 +4685,7 @@ input terms_inc_input {
 input terms_insert_input {
     branch: branches_obj_rel_insert_input
     branch_id: Int
+    created_at: timestamp
     description: String
     id: Int
     key: String
@@ -4177,6 +4696,7 @@ input terms_insert_input {
 "order by max() on columns of table \"terms\""
 input terms_max_order_by {
     branch_id: order_by
+    created_at: order_by
     description: order_by
     id: order_by
     key: order_by
@@ -4186,17 +4706,11 @@ input terms_max_order_by {
 "order by min() on columns of table \"terms\""
 input terms_min_order_by {
     branch_id: order_by
+    created_at: order_by
     description: order_by
     id: order_by
     key: order_by
     uuid: order_by
-}
-
-"input type for inserting object relation for remote table \"terms\""
-input terms_obj_rel_insert_input {
-    data: terms_insert_input!
-    "on conflict condition"
-    on_conflict: terms_on_conflict
 }
 
 "on conflict condition type for table \"terms\""
@@ -4210,6 +4724,7 @@ input terms_on_conflict {
 input terms_order_by {
     branch: branches_order_by
     branch_id: order_by
+    created_at: order_by
     description: order_by
     id: order_by
     key: order_by
@@ -4225,6 +4740,7 @@ input terms_pk_columns_input {
 "input type for updating data in table \"terms\""
 input terms_set_input {
     branch_id: Int
+    created_at: timestamp
     description: String
     id: Int
     key: String
@@ -4271,6 +4787,19 @@ input terms_var_samp_order_by {
 input terms_variance_order_by {
     branch_id: order_by
     id: order_by
+}
+
+"Boolean expression to compare columns of type \"timestamp\". All fields are combined with logical 'AND'."
+input timestamp_comparison_exp {
+    _eq: timestamp
+    _gt: timestamp
+    _gte: timestamp
+    _in: [timestamp!]
+    _is_null: Boolean
+    _lt: timestamp
+    _lte: timestamp
+    _neq: timestamp
+    _nin: [timestamp!]
 }
 
 "Boolean expression to compare columns of type \"timestamptz\". All fields are combined with logical 'AND'."
@@ -4552,11 +5081,11 @@ input translations_bool_exp {
     _not: translations_bool_exp
     _or: [translations_bool_exp!]
     branch_language_id: Int_comparison_exp
+    created_at: timestamp_comparison_exp
     id: Int_comparison_exp
     project_language: branch_languages_bool_exp
     status: translation_statuses_bool_exp
     status_id: Int_comparison_exp
-    term: terms_bool_exp
     term_id: Int_comparison_exp
     translation_value: String_comparison_exp
     uuid: uuid_comparison_exp
@@ -4573,11 +5102,11 @@ input translations_inc_input {
 "input type for inserting data into table \"translations\""
 input translations_insert_input {
     branch_language_id: Int
+    created_at: timestamp
     id: Int
     project_language: branch_languages_obj_rel_insert_input
     status: translation_statuses_obj_rel_insert_input
     status_id: Int
-    term: terms_obj_rel_insert_input
     term_id: Int
     translation_value: String
     uuid: uuid
@@ -4586,6 +5115,7 @@ input translations_insert_input {
 "order by max() on columns of table \"translations\""
 input translations_max_order_by {
     branch_language_id: order_by
+    created_at: order_by
     id: order_by
     status_id: order_by
     term_id: order_by
@@ -4596,6 +5126,7 @@ input translations_max_order_by {
 "order by min() on columns of table \"translations\""
 input translations_min_order_by {
     branch_language_id: order_by
+    created_at: order_by
     id: order_by
     status_id: order_by
     term_id: order_by
@@ -4613,11 +5144,11 @@ input translations_on_conflict {
 "Ordering options when selecting data from \"translations\"."
 input translations_order_by {
     branch_language_id: order_by
+    created_at: order_by
     id: order_by
     project_language: branch_languages_order_by
     status: translation_statuses_order_by
     status_id: order_by
-    term: terms_order_by
     term_id: order_by
     translation_value: order_by
     uuid: order_by
@@ -4631,6 +5162,7 @@ input translations_pk_columns_input {
 "input type for updating data in table \"translations\""
 input translations_set_input {
     branch_language_id: Int
+    created_at: timestamp
     id: Int
     status_id: Int
     term_id: Int

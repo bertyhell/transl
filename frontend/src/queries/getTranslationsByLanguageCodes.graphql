@@ -1,5 +1,5 @@
 query getTranslationsByLanguageCodes($branchUuid: uuid, $languageCodes: [String!], $offset: Int) {
-    terms(where: {branch: {uuid: {_eq: $branchUuid}}}, limit: 100, offset: $offset) {
+    branch_terms(where: {branch: {uuid: {_eq: $branchUuid}}}, limit: 100, offset: $offset) {
         key
         description
         translations(where: {project_language: {language: {iso_code: {_in: $languageCodes}}}}) {
@@ -22,7 +22,7 @@ query getTranslationsByLanguageCodes($branchUuid: uuid, $languageCodes: [String!
         uuid
         id
     }
-    terms_aggregate(where: {branch: {uuid: {_eq: $branchUuid}}}, limit: 100, offset: $offset) {
+    branch_terms_aggregate(where: {branch: {uuid: {_eq: $branchUuid}}}, limit: 100, offset: $offset) {
         aggregate {
             count
         }

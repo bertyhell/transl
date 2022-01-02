@@ -9,11 +9,8 @@ import { TranslationInputField } from '../../components/TranslationInputField/Tr
 import { $t } from '../../helpers/i18n';
 import { useTableSort } from '../../hooks/useTableSort';
 import { DATABASE_CONFIG } from '../../queries/config/database.constants';
-import {
-  useGetTranslationsByLanguageCodesQuery,
-  useUpdateTranslationValueMutation,
-} from '../../queries/config/graphql-generated-types';
-import { Term } from '../../queries/type-aliasses';
+import { useGetTranslationsByLanguageCodesQuery } from '../../queries/config/graphql-generated-types';
+import { BranchTerm } from '../../queries/type-aliasses';
 import { AddTermModal } from '../modals/AddTermModal';
 
 export const ITEMS_PER_PAGE = 100;
@@ -35,7 +32,7 @@ export const TranslationEditor: FunctionComponent = () => {
       ? null
       : (searchParams.get('languageCodes') || '').split('|').map(code => code.trim());
 
-  const { data, refetch: refetchTranslations } = useGetTranslationsByLanguageCodesQuery(
+  const { data: terms, refetch: refetchTranslations } = useGetTranslationsByLanguageCodesQuery(
     DATABASE_CONFIG,
     {
       branchUuid,
@@ -44,18 +41,22 @@ export const TranslationEditor: FunctionComponent = () => {
     },
     { enabled: !!allLanguageCodes },
   );
-  const { mutateAsync: updateTranslation } = useUpdateTranslationValueMutation(DATABASE_CONFIG);
+  // const { mutateAsync: updateTranslation } = useUpdateTranslationValueMutation(DATABASE_CONFIG);
   const [filterString, setFilterString] = useState<string>('');
   const [sortColumn, sortOrder, handleSortClick] = useTableSort<ColumnId>('key');
 
-  const onValueChanged = async (languageCode: string, key: string, value: string) => {
+  const onValueChanged = async (languageCode: string, key: string | null, value: string) => {
     try {
-      await updateTranslation({
-        branchUuid,
-        languageCode,
-        translationKey: key,
-        translationValue: value,
-      });
+      if (!key) {
+        // todo show error toast
+        return;
+      }
+      // await updateTranslation({
+      //   branchUuid,
+      //   languageCode,
+      //   translationKey: key,
+      //   translationValue: value,
+      // });
       await refetchTranslations();
       console.log('changed: ' + key + ' => ' + value);
     } catch (err) {
@@ -64,18 +65,18 @@ export const TranslationEditor: FunctionComponent = () => {
     }
   };
 
-  const renderCell = (projectTerm: Term, columnId: ColumnId): ReactNode | null => {
+  const renderCell = (projectTerm: BranchTerm, columnId: ColumnId): ReactNode | null => {
     switch (columnId) {
       case 'key':
-        return <div>{projectTerm.key}</div>;
+        return <div>{projectTerm?.key}</div>;
 
       default:
         // language codes
         return (
           <TranslationInputField
-            onBlur={(newValue: string) => onValueChanged(columnId, projectTerm.key, newValue)}
+            onBlur={(newValue: string) => onValueChanged(columnId, projectTerm?.key || null, newValue)}
             value={
-              projectTerm.translations.find(translation => translation?.project_language?.language?.iso_code === columnId)
+              projectTerm?.translations.find(translation => translation?.project_language?.language?.iso_code === columnId)
                 ?.translation_value || ''
             }
           />
@@ -101,11 +102,11 @@ export const TranslationEditor: FunctionComponent = () => {
       <br />
       <Button label={$t('Add Term')} onClick={() => setIsAddTermModalOpen(true)} />
       <br />
-      {data?.terms?.length ? (
-        <Table<Term>
+      {terms?.branch_terms?.length ? (
+        <Table<BranchTerm>
           className='my-4'
           columns={getColumns()}
-          data={data.terms}
+          data={terms.branch_terms}
           emptyStateMessage={filterString ? $t('no data') : $t('no data for the selected filters')}
           onColumnClick={(columnId: string) => handleSortClick(columnId)}
           renderCell={renderCell}
@@ -119,7 +120,7 @@ export const TranslationEditor: FunctionComponent = () => {
       <Pagination
         currentPage={page}
         onPageChange={setPage}
-        pageCount={Math.ceil((data?.terms_aggregate?.aggregate?.count || 0) / ENTRIES_PER_PAGE)}
+        pageCount={Math.ceil((terms?.branch_terms_aggregate?.aggregate?.count || 0) / ENTRIES_PER_PAGE)}
       />
       <AddTermModal isOpen={isAddTermModalOpen} onClose={() => setIsAddTermModalOpen(false)} />
     </div>
