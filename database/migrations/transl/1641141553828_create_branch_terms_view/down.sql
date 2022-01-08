@@ -1,1 +1,0 @@
-drop view branch_terms;

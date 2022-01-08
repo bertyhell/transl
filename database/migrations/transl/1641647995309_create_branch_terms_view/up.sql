@@ -25,7 +25,7 @@ FROM
                     terms.created_at < ancestor_branch.created_at
             ORDER BY
                 terms."key",
-                branch_ancestors.ancestor_branch_id DESC
+                branch_ancestors.ancestor_level DESC
         ) UNION
         (
             SELECT
@@ -43,7 +43,7 @@ FROM
                     branch_ancestors.ancestor_level = 0
             ORDER BY
                 terms."key",
-                branch_ancestors.ancestor_branch_id DESC
+                branch_ancestors.ancestor_level DESC
         )
     ) AS branch_terms
 ORDER BY
